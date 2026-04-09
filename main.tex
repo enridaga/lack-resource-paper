@@ -1,0 +1,54 @@
+\documentclass[runningheads]{llncs}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{color}
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+
+\begin{document}
+
+\title{LACK: A Knowledge Graph of Actors and Relationships Involved in Lobbying Against Climate Knowledge}
+
+\author{Author One\inst{1} \and
+Author Two\inst{1} \and
+Author Three\inst{1}}
+
+\authorrunning{Author One et al.}
+
+\institute{Knowledge Media Institute, The Open University, Milton Keynes, UK \\
+\email{\{author.one, author.two, author.three\}@open.ac.uk}}
+
+\maketitle
+
+\begin{abstract}
+Organised lobbying against climate science is extensively documented by investigative platforms such as DeSmog and LobbyMap, yet the information they produce remains fragmented, heterogeneous, and difficult to analyse at scale.
+We present LACK (Lobbying Against Climate Knowledge), a knowledge graph of approximately 70,000 typed, temporally annotated relations between persons and organisations involved in climate lobbying, constructed from these sources and linked to Wikidata.
+LACK is described using a purpose-built OWL ontology, built via an LLM-based relation extraction pipeline, and published as Linked Open Data under CC BY 4.0 following FAIR principles.
+We demonstrate its analytical potential through a use case and validate its utility with domain experts from the investigative journalism and climate accountability sector.
+
+\keywords{Knowledge Graph \and Climate Lobbying \and Relation Extraction \and Ontology \and Linked Data \and FAIR Data}
+\end{abstract}
+
+%-----------------------------------------------------------------------
+
+\input{sections/introduction}
+\input{sections/related}
+\input{sections/extraction}
+\input{sections/ontology}
+\input{sections/construction}
+\input{sections/usecase}
+\input{sections/evaluation}
+\input{sections/resource}
+\input{sections/conclusion}
+
+%-----------------------------------------------------------------------
+
+\paragraph{Supplemental Material.}
+The LACK ontology and knowledge graph dump are available at: \url{PLACEHOLDER}.
+The resource is published under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence.
+
+\bibliographystyle{splncs04}
+\bibliography{main}
+
+\end{document}
