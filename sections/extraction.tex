@@ -68,36 +68,3 @@ Candidates are passed to the LLM, which selects the best matching QID or returns
 Selected QIDs are verified via SPARQL, retrieving canonical label, Wikipedia sitelink, and parent organisation (via \texttt{P749}/\texttt{P361}).
 For entities with no Wikidata match, a web fallback first evaluates the evidence link as a potential primary identifier, then issues an LLM-generated search query via the Google Custom Search API~\cite{googlecse}, with a primary-subject check confirming whether each result page is dedicated to the entity.
 The output is an enriched CSV containing Wikidata URIs, Wikipedia URLs, parent entity links, web page fallbacks, and confidence scores, produced at a total cost of approximately \$0.60--0.80 and around four days of processing time.
-\subsection{Quality control and error analysis}
-\paragraph{Sources} Our collection covers the DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety as of the time of collection, providing complete coverage with respect to these two curated entry points.
-With respect to DeSmog, the CDD represents the most systematically curated subset of the broader DeSmog site; other DeSmog databases — covering agribusiness, advertising and PR, and the Koch Network — are relevant to the climate lobbying ecosystem but fall outside the current scope and are left for future work.
-With respect to LobbyMap, the Scores leaderboard covers approximately 1,000 companies and 330 industry associations, but InfluenceMap hosts a broader set of content — including sector-level reports, country profiles, and policy engagement assessments — that was not included in the current collection.
-Extending coverage to these additional sources remains an important direction for future work.
-\paragraph{Relations}
-
-Relation extraction was evaluated on a sample of 300 relations drawn from 8 DeSmog profile pages.
-Three annotators (the authors) worked in pairs, each pair covering approximately 100 relations, with disagreements resolved by discussion.
-Each relation was assessed on three dimensions: truthfulness (is the relation supported by the source page?), validity (is the relation type and its domain and range correctly applied according to the schema?), and temporal correctness (are the temporal annotations accurate?).
-
-Truthfulness accuracy is 0.93 (0.99 with partial credit), validity 0.907 (0.95 with partial), and temporal correctness 0.797 (0.91 with partial), where partial credit captures approximately correct extractions.
-
-The main source of truthfulness errors is the conflation of specific sub-roles with the coarser schema relations: the model frequently uses \texttt{is president of} or \texttt{is director of} where the source text indicates a more specific role such as vice-president, deputy director, or departmental director.
-These cases will be addressed during ontology refinement and KG construction, where finer-grained role distinctions can be introduced.
-A recurrent validity issue is the misapplication of organisation-level relations to person-organisation pairs: for example, \texttt{has partner} was used when a person holds a partner title at a law or consulting firm, whereas the relation was intended to connect two organisations in a formal partnership.
-This reflects an ambiguity in the original relation schema that has since been refined.
-Temporal correctness is the weakest dimension, with errors arising from missing dates, incorrect inference of date ranges, and ambiguity in encoding point-in-time vs.\ interval information.
-
-This evaluation covers DeSmog extractions only, which we acknowledge as a limitation.
-LobbyMap was not formally evaluated; however, an informal review of a sample of LobbyMap extractions — whose pages share the same HTML structure and similar tabular layout as DeSmog profiles — suggested comparable extraction quality.
-
-\paragraph{Entities}
-
-Entity linking was evaluated on a sample of 225 entities annotated by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.
-Each entity was assessed on five dimensions: entity subtype correctness, Wikidata URI, Wikipedia URL, parent entity, and web page (where applicable); see-also links were assessed separately.
-
-Entity subtype accuracy is 0.951, Wikidata URI 0.920, Wikipedia URL 0.909, and web page 0.938, indicating that the pipeline reliably identifies and links entities across all primary output fields.
-Parent entity is the weakest dimension at 0.718; errors appear in part to stem from cases where the pipeline assigned a stock exchange as the parent organisation of publicly listed companies, an artefact of how Wikidata encodes P749/P361 relations.
-See-also links achieved perfect accuracy across all annotators.
-Of the 275 entities with see-also content, 25 included at least one novel URL beyond the evidence link, contributing 55 additional reference pages in total.
-
-As with the relation evaluation, this assessment covers DeSmog entities only, which we acknowledge as a limitation.
