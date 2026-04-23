@@ -5,3 +5,30 @@
 % and external link coverage (Wikidata, DBpedia); relation counts before and
 % after inferencing; breakdown by property; temporal data coverage;
 % number of distinct evidence sources.
+
+The LACK knowledge graph is published as Linked Open Data under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence. Version 1.0 was released in April 2026 and is accessible through multiple modalities at \url{https://climatesense-project.eu/lack/}: as a downloadable Turtle dump (\texttt{KG.ttl}), as a live SPARQL endpoint powered by QLever\footnote{\url{https://sparql.climatesense.kmi.tools/climatesense}}, and through an interactive exploration interface. The ontology is separately available in Turtle and OWL Manchester Syntax serialisations, identified by the persistent namespace URI \url{https://purl.net/climatesense/lack/ns#}. Table~\ref{tab:kg-stats} summarises the key statistics of the resource; a full breakdown of relation counts by property is available on the LACK website.
+
+\begin{table}[t]
+\centering
+\caption{LACK KG statistics. Full property breakdown and SPARQL endpoint available at \url{https://climatesense-project.eu/lack/}.}
+\label{tab:kg-stats}
+\small
+\begin{tabular}{lr}
+\toprule
+\textbf{Dimension} & \textbf{Count} \\
+\midrule
+Entities (Person / Collective / Total)
+  & 10,370 / 17,604 / \textbf{27,974} \\
+\quad Wikidata links (Person / Collective / Total)
+  & 2,911 / 5,369 / \textbf{8,280} \\
+\quad DBpedia links (Person / Collective / Total)
+  & 3,516 / 5,210 / \textbf{8,726} \\
+\midrule
+Relations (Asserted / Inferred / Total)
+  & 90,145 / 227,844 / \textbf{317,989} \\
+Evidence sources (Desmog / LobbyMap / InfluenceMap / Total)
+  & 943 / 964 / 338 / \textbf{2,245} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
