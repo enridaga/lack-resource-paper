@@ -26,9 +26,9 @@ The full vocabulary, including formal definitions and SPARQL examples for each c
 
 \begin{figure}[th]
     \centering
-    \includegraphics[width=\textwidth]{figures/lack-ontology-diagram.pdf}
+    \includegraphics[trim={0 3.5cm 0 0cm},clip,width=\textwidth]{figures/lack-ontology-diagram.pdf}
     \caption{Schema diagram of the LACK ontology.}
-    \label{fig:ontology}
+\label{fig:ontology}
 \end{figure}
 
 \begin{table}[t]
@@ -66,8 +66,8 @@ Source attribution is recorded using Dublin Core Terms~\cite{dcterms} (\texttt{d
 
 \paragraph{Temporal Representation.}
 Many relationships in the climate lobbying domain are time-bounded: a person leads an organisation for a period, funding flows during a specific interval, or a front group is active only around a key legislative event.
-LACK captures this through two mechanisms.
-Entity-level temporal bounds are recorded directly on \texttt{lack:Person} and \texttt{lack:Collective} instances using the datatype properties \texttt{lack:activeSince} and \texttt{lack:activeUntil} (range: \texttt{xsd:gYear}).
+\begin{sloppypar}LACK captures this through two mechanisms.
+Entity-level temporal bounds are recorded directly on \texttt{lack:Person} and \texttt{lack:Collective} instances using the datatype properties \texttt{lack:activeSince} and \texttt{lack:activeUntil} (range: \texttt{xsd:gYear}).\end{sloppypar}
 Relation-level temporal annotations are represented using RDF reification~\cite{rdfprimer}: each temporally annotated triple is reified as an \texttt{rdf:Statement} instance, to which \texttt{lack:since} and \texttt{lack:until} datatype properties are attached.
 When a source annotation indicates a point in time rather than an interval (\emph{when}), both \texttt{lack:since} and \texttt{lack:until} are set to the same year value.
 RDF reification was chosen over more recent alternatives such as RDF-star, named graphs, and singleton properties in order to ensure broad compatibility with current RDF databases and applications.

@@ -1,8 +1,57 @@
 \section{Knowledge Graph Construction}
 \label{sec:construction}
 
-\subsection{Reengineering into RDF}
+The LACK knowledge graph is produced by a four-phase pipeline that transforms the relation extraction outputs described in Section~\ref{sec:extraction} into a fully materialised, ontology-aligned RDF graph.
+Each phase is implemented as a SPARQL or SPARQL-Anything~\cite{sparqlanything} query, executed with the \texttt{fx} command-line tool, making the entire pipeline reproducible from the raw CSV inputs.
 
-\subsection{Remodelling with the LACK ontology}
+\subsection{Phase 1: Relation Alignment}
+\label{sec:construction:alignment}
 
-\subsection{Reasoning with the LACK ontology}
+The relation extraction pipeline produces relations expressed as natural-language surface forms (e.g.\ \emph{is a member of}, \emph{has funded}).
+The first phase enumerates the distinct relation types appearing across both the Desmog and LobbyMap extraction outputs --- 152 types in total, covering 78,734 relation instances --- and aligns them manually to LACK ontology properties.
+The result is a mapping table that associates each surface-form relation type with a canonical ontology IRI (e.g.\ \texttt{lack:memberOf}, \texttt{lack:fundedBy}), which is consumed by all subsequent phases.
+This manual alignment step is where domain judgment is applied: surface forms that are ambiguous, too infrequent, or not reliably mappable to any ontology property are flagged and excluded from the graph.
+
+\subsection{Phase 2: Entity URI Generation}
+\label{sec:construction:entities}
+
+Stable, dereferenceable IRIs are minted for each entity using a priority scheme over available external identifiers:
+
+\begin{enumerate}
+    \item Wikidata QID
+    \item Wikipedia page URL
+    \item Web page URL
+    \item Surface form + evidence link (fallback)
+\end{enumerate}
+
+\noindent Each entity IRI takes the form \texttt{lack-entity:\textit{SHA1}}, where the hash is computed from the highest-priority identifier available for that entity.
+This scheme ensures that entities with a known Wikidata entry receive a stable, semantically grounded IRI regardless of how they are named in the source data, while still providing a consistent IRI for entities that have no external presence.
+Each entity is assigned a top-level type (\texttt{lack:Person} or \texttt{lack:Collective}), a granular subtype (e.g.\ \texttt{lack-type:think\_tank}, \texttt{lack-type:company}), an \texttt{rdfs:label}, and where available an \texttt{owl:sameAs} link to the corresponding Wikidata entity.
+
+\subsection{Phase 3: Relation Graph Construction}
+\label{sec:construction:relations}
+
+With entity IRIs in place, the relation triples are constructed from the raw extraction outputs and the relation alignment mappings produced in Phase~1.
+A na\"ive join of all inputs would exceed memory constraints, so the phase is split into two steps: first, an entity index is built in memory (mapping surface-form + evidence-link pairs to entity IRIs); second, the index is used to rewrite each extracted relation as a triple using the appropriate LACK ontology property.
+
+Each relation is represented following the pattern established in the ontology (Section~\ref{sec:ontology}): a direct typed triple connects source and target entities, while a reified \texttt{rdf:Statement} carries the evidence URL (\texttt{dct:source}) and, where available, temporal bounds (\texttt{lack:since}, \texttt{lack:until}).
+The same logical relation may be attested by multiple evidence sources, yielding multiple reified instances for a single direct triple; the final graph contains 65,527 distinct relation triples and 77,168 reified instances.
+
+\subsection{Phase 4: Provenance}
+\label{sec:construction:provenance}
+
+A dedicated provenance query enriches each reified statement with PROV-O~\cite{provo} annotations.
+Each statement is linked to a shared \texttt{prov:Activity} representing the LACK extraction activity, and to a \texttt{prov:Agent} identifying the extraction pipeline, via \texttt{prov:wasGeneratedBy}. \texttt{prov:used} arcs collect all source web pages used in any \texttt{rdf:Statement} produced so far.
+%This step is kept separate from Phase~3 to maintain a clean separation between the structural construction of the graph and the attachment of process-level metadata.
+
+\subsection{Phase 5: OWL Inference Materialisation}
+\label{sec:construction:inference}
+
+Rather than relying on a full OWL reasoner at query time, we materialise the entailments of its ontology as explicit triples using a sequence of SPARQL CONSTRUCT queries.
+%This ensures that all queries over the graph are complete with respect to the ontology's axioms without requiring inference-capable infrastructure.
+%The materialisation pipeline proceeds in three steps.
+First, inverse property pairs are materialised (e.g.\ \texttt{memberOf} / \texttt{hasMember}, \texttt{fundedBy} / \texttt{hasFunder}) for all ten inverse pairs defined in the ontology.
+Second, sub-property entailments are propagated: \texttt{leadsAt} triples are promoted to \texttt{employedBy} triples (and correspondingly for their inverses), and all direct sub-properties of \texttt{associatedWith} generate \texttt{associatedWith} triples.
+Third, symmetry is closed for \texttt{associatedWith} and \texttt{hasPartner}.
+The steps are executed in this order so that triples generated in earlier steps are available as input to later ones, ensuring completeness of the inference closure.
+After materialisation, the graph grows from approximately 66,000 relation triples to over 264,000.
