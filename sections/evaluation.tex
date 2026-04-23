@@ -8,31 +8,9 @@ In this section, we evaluate the LACK KG against two dimensions: coverage with r
 
 %\subsubsection{Research Questions and Competency Questions}
 
-\paragraph{Questions}The following table maps each research question to the competency question(s) it corresponds to, and to the ontology relation(s) required to answer it.
+\paragraph{Questions}Table~\ref{tab:coverage} maps each research question to its competency question(s), the ontology relation(s) required to answer it, and the corresponding coverage statistics.
 
-\begin{table}[h]
-\centering
-\caption{Mapping of research questions to competency questions and ontology relations.}
-\label{tab:rq-cq-mapping}
-\begin{tabular}{p{0.5\textwidth} p{0.1\textwidth} >{\raggedright}p{0.35\textwidth}}
-\hline
-\textbf{RQ} & \textbf{CQ} & \textbf{Relation(s)} \tabularnewline
-\hline
-Who is involved in lobbying against climate science or policy? & CQ1 & \texttt{lack:Person}, \texttt{lack:Collective} (entity enumeration) \tabularnewline
-How are lobbying actors funded? & CQ2 & \texttt{lack:fundedBy} / \texttt{lack:hasFunder} \tabularnewline
-Who are the members of a given lobbying network? & CQ3 & \texttt{lack:memberOf} / \texttt{lack:hasMember} \tabularnewline
-Who leads lobbying organisations? & CQ4 & \texttt{lack:leadsAt} / \texttt{lack:hasLeader} \tabularnewline
-What is the employment history of key actors? & CQ5 & \texttt{lack:employedBy} / \texttt{lack:hasEmployee} \tabularnewline
-How are organisations structurally connected? & CQ6 & \texttt{lack:hasPartner}, \texttt{lack:sponsored} \tabularnewline
-Who founded a lobbying group? & CQ7 & \texttt{lack:founded} / \texttt{lack:wasFoundedBy} \tabularnewline
-Are there overlapping or derivative organisations? & CQ8 & \texttt{lack:derivedFrom} / \texttt{lack:hasDerivation} \tabularnewline
-What is the reach of a given actor's network? & CQ9 & \texttt{lack:associatedWith} (inferred) \tabularnewline
-How do actor networks change over time? & CQ10 & \texttt{lack:since} / \texttt{lack:until} (reification) \tabularnewline
-When were key actors and organisations active? & CQ11 & \texttt{lack:activeSince} / \texttt{lack:activeUntil} \tabularnewline
-Who has moved between organisations? & CQ10 + CQ5 & \texttt{lack:employedBy} + temporal reification \tabularnewline
-\hline
-\end{tabular}
-\end{table}
+
 
 %\subsubsection{Methodology}
 
@@ -144,25 +122,25 @@ Who has moved between organisations? & CQ10 + CQ5 & \texttt{lack:employedBy} + t
 
 \begin{table}[h]
 \centering
-\caption{Coverage of competency questions by relation and triple count.}
+\caption{Coverage of competency questions: mapping to research questions, ontology relations, triple counts (before and after inferencing), affected entities, and coverage tier.}
 \label{tab:coverage}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{p{0.08\textwidth} p{0.15\textwidth} p{0.2\textwidth} p{0.1\textwidth} p{0.1\textwidth} p{0.1\textwidth} p{0.1\textwidth}}
+\begin{tabular}{p{0.08\textwidth} p{0.18\textwidth} p{0.22\textwidth} p{0.14\textwidth} p{0.09\textwidth} p{0.09\textwidth}}
 \hline
-\textbf{CQ} & \textbf{RQ (summary)} & \textbf{Relation(s)} & \textbf{Triples (before inf.)} & \textbf{Triples (after inf.)} & \textbf{Affected entities} & \textbf{Coverage} \\
+\textbf{CQ} & \textbf{RQ (summary)} & \textbf{Relation(s)} & \textbf{Triples (before$\to$after)} & \textbf{Entities} & \textbf{Coverage} \\
 \hline
-CQ1  & Who is involved?              & entities                              & 27,974 & 27,974 & 27,974 & Strong \\
-CQ2  & How are actors funded?        & \texttt{fundedBy} / \texttt{hasFunder}       & 5,210  & 10,420 & 3,421  & Strong \\
-CQ3  & Who are the members?          & \texttt{memberOf} / \texttt{hasMember}       & 13,469 & 26,912 & 9,718  & Strong \\
-CQ4  & Who leads organisations?      & \texttt{leadsAt} / \texttt{hasLeader}        & 5,639  & 11,278 & 6,383  & Strong \\
-CQ5  & Employment history?           & \texttt{employedBy} / \texttt{hasEmployee}   & 5,463  & 21,276 & 10,943 & Strong \\
-CQ6  & Structural connections?       & \texttt{hasPartner}, \texttt{sponsored}      & 5,686  & 8,013  & 4,365  & Strong \\
-CQ7  & Who founded a group?          & \texttt{founded} / \texttt{wasFoundedBy}     & 73     & 146    & 108    & Weak \\
-CQ8  & Derivative organisations?     & \texttt{derivedFrom} / \texttt{hasDerivation}& 1,922  & 2,883  & 1,310  & Moderate \\
-CQ9  & Network reach?                & \texttt{associatedWith}                      & 3,216  & 91,219 & 26,169 & Strong \\
-CQ10 & Networks change over time?    & \texttt{since} / \texttt{until} (reif.)      & ---    & 14,361 stmts & --- & Moderate \\
-CQ11 & When were actors active?      & \texttt{activeSince} / \texttt{activeUntil}  & 836    & 836    & 734    & Weak \\
-CQ10+CQ5 & Who moved between orgs?  & \texttt{employedBy} + reif.                  & subset of 5,463 & subset of 21,276 & --- & Moderate \\
+CQ1  & Who is involved?           & entities                                      & 27,974 $\to$ 27,974   & 27,974 & Strong \\
+CQ2  & How are actors funded?     & \texttt{fundedBy} / \texttt{hasFunder}        & 5,210 $\to$ 10,420    & 3,421  & Strong \\
+CQ3  & Who are the members?       & \texttt{memberOf} / \texttt{hasMember}        & 13,469 $\to$ 26,912   & 9,718  & Strong \\
+CQ4  & Who leads organisations?   & \texttt{leadsAt} / \texttt{hasLeader}         & 5,639 $\to$ 11,278    & 6,383  & Strong \\
+CQ5  & Employment history?        & \texttt{employedBy} / \texttt{hasEmployee}    & 5,463 $\to$ 21,276    & 10,943 & Strong \\
+CQ6  & Structural connections?    & \texttt{hasPartner}, \texttt{sponsored}       & 5,686 $\to$ 8,013     & 4,365  & Strong \\
+CQ7  & Who founded a group?       & \texttt{founded} / \texttt{wasFoundedBy}      & 73 $\to$ 146          & 108    & Weak \\
+CQ8  & Derivative organisations?  & \texttt{derivedFrom} / \texttt{hasDerivation} & 1,922 $\to$ 2,883     & 1,310  & Moderate \\
+CQ9  & Network reach?             & \texttt{associatedWith}                       & 3,216 $\to$ 91,219    & 26,169 & Strong \\
+CQ10 & Networks change over time? & \texttt{since} / \texttt{until} (reif.)       & --- $\to$ 14,361      & ---    & Moderate \\
+CQ11 & When were actors active?   & \texttt{activeSince} / \texttt{activeUntil}   & 836 $\to$ 836         & 734    & Weak \\
+CQ10+CQ5 & Who moved between orgs? & \texttt{employedBy} + reif.                  & subset of CQ5/CQ10    & ---    & Moderate \\
 \hline
 \end{tabular}%
 }
@@ -173,7 +151,7 @@ CQ10+CQ5 & Who moved between orgs?  & \texttt{employedBy} + reif.               
 Coverage is strong across the core transparency and network structure competency questions. Membership, employment, leadership, and funding relations each involve thousands of triples and cover a substantial share of the entity population. The most striking result is the network reach (CQ9): after inferencing, 26,169 out of 27,974 entities --- 93.5\% of the total population --- are reachable via \texttt{associatedWith}, demonstrating that OWL inferencing transforms a sparse set of direct assertions into a near-complete connectivity structure. Employment coverage (CQ5) similarly benefits from inferencing, as leadership triples are promoted via the \texttt{leadsAt} sub-property hierarchy.
 
 Temporal coverage is partial but not negligible: 14,361 reified statements carry \texttt{lack:since} annotations, enabling time-bounded queries over a meaningful subset of relations. Entity-level temporal bounds (\texttt{activeSince}, \texttt{activeUntil}) cover only 734 entities (2.6\%), and should be treated as supplementary rather than comprehensive. Founding relations (CQ7) remain sparse at 108 affected entities, reflecting the difficulty of reliably extracting founding events from the source corpora.
-
+The composite row CQ10+CQ5 is listed separately because answering the question of who has moved between organisations requires both employment relations and temporal reification jointly; it is not subsumed under either CQ alone but draws on the same underlying triples.
 
 \subsection{Domain experts' feedback}
 

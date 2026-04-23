@@ -1,2 +1,80 @@
 \section{Background and Related Work}
 \label{sec:related}
+
+Organised efforts to obstruct climate science and delay policy action are extensively
+documented by a growing ecosystem of investigative platforms.
+DeSmog~\cite{desmog} maintains a database of profiles of individuals and organisations
+involved in climate science denial and fossil fuel lobbying; LobbyMap~\cite{lobbymap}
+tracks corporate engagement with climate policy across hundreds of companies and
+industry groups; SourceWatch catalogues front groups, think tanks, and their funding
+relationships.
+The scale and persistence of these campaigns have been analysed in depth by Oreskes
+and Conway~\cite{oreskes2011merchants}, whose work documents the deliberate strategies
+used to manufacture doubt about scientific consensus.
+Despite the breadth and rigour of the investigative work these platforms represent,
+the information they produce remains heterogeneous in format, siloed across sources,
+and not interlinked in a way that supports computational analysis at scale.
+Related efforts in the Semantic Web community have begun to address the broader
+problem of climate misinformation through structured resources: CimpleKG~\cite{burel2024cimplekg}
+is a continuously updated knowledge graph linking misinformation claims, fact-checks,
+and contextual factors; ClimaFactsKG~\cite{burel2025climafactskg} focuses on
+interlinking scientific evidence to support the rebuttal of climate misinformation.
+These resources are complementary to LACK rather than directly comparable: they are
+oriented towards claim verification and scientific evidence, whereas the domain of
+climate lobbying --- the networks of persons and organisations working to influence
+policy --- remains without a structured, machine-readable representation.
+
+Knowledge graphs have been increasingly adopted as infrastructure for investigative
+journalism and news analytics.
+Opdahl et al.~\cite{opdahl2022survey} provide a comprehensive review of semantic
+knowledge graph applications across the full news production pipeline, identifying
+actor network analysis and background knowledge enrichment as key but underserved
+use cases.
+Gallofr\'e Oca\~na and Opdahl~\cite{gallofre2022jkp} survey fourteen journalistic
+knowledge platforms in research and practice, finding that while metadata annotation
+and event monitoring are well supported, deeper investigative tasks --- such as tracing
+funding relationships or reconstructing organisational histories --- remain largely
+unaddressed.
+Berven et al.~\cite{berven2020kg} describe a concrete platform combining knowledge
+graphs, NLP, and machine learning to support newsroom workflows, demonstrating the
+practical viability of KG-based investigative infrastructure.
+At the level of knowledge representation, Alexander et al.~\cite{alexander2023manifesto}
+demonstrate KG construction from a journalistic archive, and Motta et
+al.~\cite{motta2025epistemology} develop an ontology-driven framework for structured
+news content representation, illustrating how formal models can underpin large-scale
+media analytics.
+Collectively, this body of work establishes the value of knowledge graphs for
+journalism, but focuses primarily on news content annotation and event extraction
+rather than on the domain of political and corporate actor networks as a primary
+investigative resource.
+
+The construction of LACK draws on recent advances in LLM-based knowledge graph
+construction and relation extraction.
+Trajanoska et al.~\cite{trajanoska2023llmkg} demonstrate that large language models
+can drive automated KG construction from unstructured text, outperforming specialised
+models on joint entity and relation extraction tasks.
+Papaluca et al.~\cite{papaluca2024zeroshot} show that LLMs are competitive with
+fully trained baselines for triplet extraction in zero- and few-shot settings,
+particularly when prompted with contextual information retrieved from an existing
+knowledge base.
+For the heterogeneous web sources from which LACK is constructed, the
+Fa\c{c}ade-X~\cite{asprino2023knowledge} approach and its SPARQL~Anything
+implementation~\cite{daga2021opinionated} provide a principled method for unified
+KG construction across structurally diverse inputs.
+Ontology design follows established reuse practices, drawing on
+Schema.org~\cite{schemaorg}, PROV-O~\cite{provo}, and DCMI terms~\cite{dcterms}
+for provenance and metadata, and Wikidata~\cite{wikidata} as the backbone for
+entity linking.
+The resource is published following the FAIR principles~\cite{wilkinson2016fair},
+ensuring findability, accessibility, interoperability, and reusability.
+
+Taken together, the existing landscape reveals a clear gap: investigative platforms
+document climate lobbying actors and their relationships in depth, but in formats
+that resist computational analysis; journalism knowledge graphs support news
+analytics but not the domain of political influence networks; and while LLM-based
+KG construction methods are maturing rapidly, they have not been applied to the
+climate accountability domain.
+A structured, typed, temporally annotated, and Wikidata-linked knowledge graph of
+lobbying actors and relationships --- built via an evaluated extraction pipeline and
+published as Linked Open Data --- would address all three dimensions of this gap,
+and is precisely what the remainder of this paper describes.
