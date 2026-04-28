@@ -107,5 +107,6 @@ This high NIL rate is not a pipeline failure but a domain characteristic: the cl
 By contrast, entities appearing in both sources --- those prominent enough to be independently documented by DeSmog and LobbyMap --- are linked at a rate of 95.7\% (488 out of 510), confirming that the pipeline reliably identifies well-known actors.
 NIL entities are resolvable within the KG via their LACK URI and retain their label and source provenance; web page and parent entity fields, captured during entity linking but not yet promoted to \texttt{owl:sameAs} assertions, offer a path to further grounding and are left to future work.
 
-As with the relation evaluation, this assessment covers DeSmog entities only, which we acknowledge as a limitation.
-
+A total of 29 entities appear with inconsistent type assignments across source 
+pages --- annotated as \texttt{lack:Person} in some pages and 
+\texttt{lack:Collective} in others --- a known data quality issue arising from the LLM extraction pipeline assigning types independently per page, to be resolved in a future release.
