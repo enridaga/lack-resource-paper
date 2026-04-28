@@ -1,8 +1,8 @@
 \section{Knowledge Acquisition}
 \label{sec:extraction}
 \subsection{Requirements and Competency Questions}
-Existing knowledge graphs addressing misinformation and climate communication~\cite{burel2024cimplekg,burel2025climafactskg} typically focus on claims and their veracity, but provide little structured information about the relationships between the actors involved — individuals, organisations, funding ties, and roles over time. 
-LACK addresses this gap by representing the relational fabric of the climate-change denial ecosystem.
+%Existing knowledge graphs addressing misinformation and climate communication~\cite{burel2024cimplekg,burel2025climafactskg} typically focus on claims and their veracity, but provide little structured information about the relationships between the actors involved — individuals, organisations, funding ties, and roles over time. 
+%LACK addresses this gap by representing the relational fabric of the climate-change denial ecosystem.
 Defining precise knowledge requirements was a prerequisite for both ontology design and knowledge acquisition. 
 Requirements were elicited through a thematic analysis of the primary sources, particularly DeSmog, whose profiles systematically document individuals' and organisations' involvement in climate lobbying. 
 Recurring themes identified across profiles include organisational affiliations, employment and leadership roles, funding relationships, and temporal activity spans (often summarised in tables). 
@@ -36,13 +36,14 @@ These themes were harmonised into a set of twelve competency questions (CQ1--CQ1
 \end{description}
 
 \subsection{Sources}
-LACK was built from two complementary web sources, together covering a broad range of actors in the climate lobbying ecosystem.
+LACK was built from two complementary web sources, together covering a broad range of actors in the climate lobbying ecosystem\footnote{The following paragraph refers to the web pages accessed in December 2025.}.
 \textbf{DeSmog Climate Disinformation Database}~\cite{desmog} is a curated, editorially maintained resource profiling individuals and organisations involved in climate science denial and disinformation. 
 We collected the profile pages of all entities listed in the database, yielding 943 pages. Profiles typically document an individual's or organisation's positions on climate science, affiliations, funding sources, and public statements.
 \textbf{LobbyMap}~\cite{lobbymap}, maintained by InfluenceMap, is the world's leading database of corporate and industry association engagement with climate policy, providing assessments and profiles for approximately 1,000 companies and 330 industry associations. 
 We collected profile pages for all entities listed in the LobbyMap Scores analysis (964 pages). 
-In addition, a further 338 organisation profiles were collected by following links to organisations referenced within those pages but not themselves included in LobbyMap Scores, yielding 1,302 pages in total\footnote{These data was collected in December 2025.}.
+In addition, a further 338 organisation profiles were collected by following links to organisations referenced within those pages but not themselves included in LobbyMap Scores, yielding 1,302 pages in total.
 The two sources are complementary in scope: DeSmog focuses primarily on individuals and think tanks involved in active disinformation, while LobbyMap covers corporations and industry associations engaging with climate policy. 
+However, they are also partially overlapping, as well-known actors are  present in both of them.
 Together, they provide broad coverage of the actors and relationships constituting the climate-change denial ecosystem.
 The initial set of pages was collected using SPARQL Anything~\cite{daga2021opinionated}, querying the HTML source of the DeSmog Climate Disinformation Database and the JSON feed underlying the LobbyMap Scores leaderboard table.
 \subsection{Extraction of relations from web pages}

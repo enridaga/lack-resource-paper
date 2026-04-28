@@ -1,7 +1,7 @@
 \section{Introduction}
 \label{sec:introduction}
 
-\paragraph{Background and Motivation.}
+%\paragraph{Background and Motivation.}
 Organised campaigns to undermine public trust in climate science and delay
 effective policy action are extensively documented by investigative journalists
 and civil society organisations.
@@ -11,7 +11,7 @@ This paper presents work carried out within the ClimateSense
 project~\cite{climatesense}, which builds tools to monitor and analyse climate
 misinformation across geospatial, temporal, and topical dimensions.
 
-\paragraph{Problem Description.}
+%\paragraph{Problem Description.}
 Consider an investigative journalist seeking to understand the network behind
 a prominent climate sceptic think tank: who funds it, who sits on its board,
 which staff have previously worked for fossil fuel companies, and whether those
@@ -25,33 +25,19 @@ organisations, funding arrangements begin and end, and front groups are created
 and dissolved --- yet this dynamic structure is difficult to query across
 existing sources in an integrated way.
 
-\paragraph{Proposed Solution.}
-We present LACK (Lobbying Against Climate Knowledge), a knowledge graph of
+%\paragraph{Proposed Solution.}
+In this paper, we present LACK (Lobbying Against Climate Knowledge), a knowledge graph of
 persons and organisations involved in lobbying against climate science and
-policy, together with the typed, temporally annotated relationships between
-them.
-LACK is constructed from large investigative corpora --- profile pages from
-DeSmog and entries from LobbyMap/InfluenceMap --- from which relations are
-extracted automatically using a large language model pipeline guided by a
-purpose-built lightweight ontology.
-Entities are linked to Wikidata, enabling cross-source deduplication and
-enrichment with biographical, sectoral, and geographic context.
-The resource is published following FAIR principles, with a persistent URI,
-an open licence (CC BY 4.0), and a machine-readable ontology description.
-The analytical potential of the resource is demonstrated through a use case
-in Section~\ref{sec:usecase}.
-
-\paragraph{Contributions.}
-This paper makes the following contributions:
+policy, constructed using a composite pipeline combining LLM, web search, and APIs, guided by a purpose-built lightweight ontology.
+%\paragraph{Contributions.}
+Specifically, we contribute:
 \begin{itemize}
     \item The \textbf{LACK ontology}, a purpose-built OWL vocabulary covering
     the key relation types in the climate lobbying domain, developed following
     ontology engineering best practices and reusing established vocabularies
     where appropriate.
-    \item The \textbf{LACK knowledge graph}, comprising 317,989 typed,
-    temporally annotated relations (90,145 asserted, 229,323 inferred) between
-    27,945 persons and organisations, extracted from 2,245 source documents
-    across DeSmog and LobbyMap/InfluenceMap, linked to Wikidata and DBpedia,
+    \item The \textbf{LACK knowledge graph}, comprising 213,147 typed relations between
+    27,945 persons and organisations, extracted from more then 2k source documents across DeSmog and LobbyMap/InfluenceMap, linked to Wikidata and DBpedia,
     and published as Linked Open Data under a CC BY 4.0 licence at a
     persistent URI following FAIR principles.
 %    \item An \textbf{LLM-based relation extraction pipeline}, a reusable and    evaluated method for extracting typed, temporally annotated relations from investigative journalism text.
@@ -63,7 +49,7 @@ This paper makes the following contributions:
 %    continued updates as source corpora expand.
 \end{itemize}
 
-\paragraph{Paper Structure.}
+%\paragraph{Paper Structure.}
 The remainder of this paper is structured as follows.
 Section~\ref{sec:related} situates LACK within the related literature on
 knowledge graphs for investigative journalism and climate misinformation.
@@ -71,10 +57,10 @@ Section~\ref{sec:extraction} describes the knowledge extraction pipeline.
 Section~\ref{sec:ontology} presents the LACK ontology.
 Section~\ref{sec:construction} describes the construction of the knowledge
 graph.
-Section~\ref{sec:usecase} illustrates the analytical potential of the resource
-through a use case scenario.
-Section~\ref{sec:evaluation} reports on the evaluation of the extraction
-pipeline and the assessment of the resource with domain experts.
 Section~\ref{sec:resource} provides the resource description, including
 availability, licence, and sustainability plan.
+Section~\ref{sec:usecase} illustrates the potential of the resource
+through case studies.
+Section~\ref{sec:evaluation} reports on the evaluation of the extraction
+pipeline and the assessment of the resource with domain experts.
 Section~\ref{sec:conclusion} concludes and outlines directions for future work.
