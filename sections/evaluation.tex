@@ -140,7 +140,7 @@ CQ8  & Derivative organisations?  & \texttt{derivedFrom} / \texttt{hasDerivation
 CQ9  & Network reach?             & \texttt{associatedWith}                       & 3,216 $\to$ 91,219    & 26,169 & Strong \\
 CQ10 & Networks change over time? & \texttt{since} / \texttt{until} (reif.)       & --- $\to$ 14,361      & ---    & Moderate \\
 CQ11 & When were actors active?   & \texttt{activeSince} / \texttt{activeUntil}   & 836 $\to$ 836         & 734    & Weak \\
-CQ10+CQ5 & Who moved between orgs? & \texttt{employedBy} + reif.                  & subset of CQ5/CQ10    & ---    & Moderate \\
+CQ10+ CQ5 & Who moved between orgs? & \texttt{employedBy} + reif.                  & subset of CQ5/CQ10    & ---    & Moderate \\
 \hline
 \end{tabular}%
 }
@@ -148,7 +148,7 @@ CQ10+CQ5 & Who moved between orgs? & \texttt{employedBy} + reif.                
 
 \paragraph{Discussion}
 
-Coverage is strong across the core transparency and network structure competency questions. Membership, employment, leadership, and funding relations each involve thousands of triples and cover a substantial share of the entity population. The most striking result is the network reach (CQ9): after inferencing, 26,169 out of 27,974 entities --- 93.5\% of the total population --- are reachable via \texttt{associatedWith}, demonstrating that OWL inferencing transforms a sparse set of direct assertions into a near-complete connectivity structure. Employment coverage (CQ5) similarly benefits from inferencing, as leadership triples are promoted via the \texttt{leadsAt} sub-property hierarchy.
+Coverage is strong across the core transparency and network structure competency questions. Membership, employment, leadership, and funding relations each involve thousands of triples and cover a substantial share of the entity population. The most striking result is the network reach (CQ9): after inferencing, 26,169 out of 27,974 entities --- 93.5\% of the total population --- are reachable via \texttt{associatedWith}, demonstrating that LACK transforms a sparse set of direct assertions into a near-complete connectivity structure. Employment coverage (CQ5) similarly benefits from inferencing, as leadership triples are promoted via the \texttt{leadsAt} sub-property hierarchy.
 
 Temporal coverage is partial but not negligible: 14,361 reified statements carry \texttt{lack:since} annotations, enabling time-bounded queries over a meaningful subset of relations. Entity-level temporal bounds (\texttt{activeSince}, \texttt{activeUntil}) cover only 734 entities (2.6\%), and should be treated as supplementary rather than comprehensive. Founding relations (CQ7) remain sparse at 108 affected entities, reflecting the difficulty of reliably extracting founding events from the source corpora.
 The composite row CQ10+CQ5 is listed separately because answering the question of who has moved between organisations requires both employment relations and temporal reification jointly; it is not subsumed under either CQ alone but draws on the same underlying triples.

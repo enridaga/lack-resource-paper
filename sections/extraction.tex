@@ -41,7 +41,7 @@ LACK was built from two complementary web sources, together covering a broad ran
 We collected the profile pages of all entities listed in the database, yielding 943 pages. Profiles typically document an individual's or organisation's positions on climate science, affiliations, funding sources, and public statements.
 \textbf{LobbyMap}~\cite{lobbymap}, maintained by InfluenceMap, is the world's leading database of corporate and industry association engagement with climate policy, providing assessments and profiles for approximately 1,000 companies and 330 industry associations. 
 We collected profile pages for all entities listed in the LobbyMap Scores analysis (964 pages). 
-In addition, a further 338 organisation profiles were collected by following links to organisations referenced within those pages but not themselves included in LobbyMap Scores, yielding 1,302 pages in total.
+In addition, a further 338 organisation profiles were collected by following links to organisations referenced within those pages but not themselves included in LobbyMap Scores, yielding 1,302 pages in total\footnote{These data was collected in December 2025.}.
 The two sources are complementary in scope: DeSmog focuses primarily on individuals and think tanks involved in active disinformation, while LobbyMap covers corporations and industry associations engaging with climate policy. 
 Together, they provide broad coverage of the actors and relationships constituting the climate-change denial ecosystem.
 The initial set of pages was collected using SPARQL Anything~\cite{daga2021opinionated}, querying the HTML source of the DeSmog Climate Disinformation Database and the JSON feed underlying the LobbyMap Scores leaderboard table.
@@ -101,7 +101,11 @@ Parent entity is the weakest dimension at 0.718; errors appear in part to stem f
 See-also links achieved perfect accuracy across all annotators.
 Of the 275 entities with see-also content, 25 included at least one novel URL beyond the evidence link, contributing 55 additional reference pages in total.
 
-\todo{NIL entities: Report the proportion of entities for which no external identifier (Wikidata, Wikipedia, web page) was found, and discuss implications for reusability and completeness.}
+% \todo{NIL entities: Report the proportion of entities for which no external identifier (Wikidata, Wikipedia, web page) was found, and discuss implications for reusability and completeness.}
+Of the 27,945 entities in the KG, 10,189 (36.5\%) are linked to Wikidata or DBpedia, while 17,756 (63.5\%) remain without an external identifier --- a proportion that is consistent across both sources: 64.4\% of DeSmog-only entities and 65.7\% of LobbyMap-only entities are NIL.
+This high NIL rate is not a pipeline failure but a domain characteristic: the climate lobbying ecosystem is densely populated with minor think tank staff, obscure industry consultants, short-lived coalitions, and regional trade bodies that are simply not represented in general-purpose knowledge bases such as Wikidata.
+By contrast, entities appearing in both sources --- those prominent enough to be independently documented by DeSmog and LobbyMap --- are linked at a rate of 95.7\% (488 out of 510), confirming that the pipeline reliably identifies well-known actors.
+NIL entities are resolvable within the KG via their LACK URI and retain their label and source provenance; web page and parent entity fields, captured during entity linking but not yet promoted to \texttt{owl:sameAs} assertions, offer a path to further grounding and are left to future work.
 
 As with the relation evaluation, this assessment covers DeSmog entities only, which we acknowledge as a limitation.
 
