@@ -96,7 +96,7 @@ confidence: "medium"\\
 match\_method: "wikidata\_llm"\\
 is\_concrete: "true"\\
 flag\_reason: "WIKIDATA:https://www.wikidata.org/entity/Q24083484"\\
-\caption{Entitly linking: example output.}\label{fig:linkingex}
+\vspace{-0.5cm}\caption{Entitly linking: example output.}\label{fig:linkingex}
 \end{figure}
 
 \subsection{Quality control and error analysis}
@@ -108,7 +108,7 @@ Extending coverage to these additional sources remains a direction for future wo
 \begin{table}
 \caption{Guidelines for the relation extraction evaluation}\label{tab:rel:eval}
 \centering
-\begin{tabular}{p{5cm} p{7cm} }
+\begin{tabular}{p{5cm} p{7cm}}\hline
 \textbf{Is it True? 
 (ignore time info)	}& Whether the source Web page includes the information. Yest: it does; Partly: it does to some extent; No: it does not.	\\
 \textbf{Why (partly) not True?} &	Provide an explanation if not	\\
@@ -116,15 +116,14 @@ Extending coverage to these additional sources remains a direction for future wo
 (ignore time info)}	 & Whether the relation is one of the possible listed below, and whether the domain (source) or range (target) are valid entities and entity types (persons, organisations, or XSD gYear)	\\
 \textbf{Why (partly) not Valid?}	& Provide an explanation if not\\
 \textbf{Is the time info correct?} &	Whether the time validity of the information is correct.\\
-\textbf{Why is it (partly) incorrect?} &	Provide an explanation if not\\
+\textbf{Why is it (partly) incorrect?} &	Provide an explanation if not\\\hline
 \end{tabular}
-
+\vspace{-1cm}
 \end{table}
 
 \paragraph{Relations} Relation extraction was evaluated on a sample of 300 relations drawn from 8 DeSmog profile pages.
 Three annotators (the authors) worked in pairs, each pair covering approximately 100 relations, with disagreements resolved by discussion.
 Each relation was assessed on three dimensions: truthfulness (is the relation supported by the source page?), validity (is the relation type and its domain and range correctly applied according to the schema?), and temporal correctness (are the temporal annotations accurate?) -- see Table~\ref{tab:rel:eval}.
-
 Truthfulness accuracy is 0.93 (0.99 with partial credit), validity 0.907 (0.95 with partial), and temporal correctness 0.797 (0.91 with partial), where partial credit captures approximately correct extractions.
 
 The main source of truthfulness errors is the conflation of specific sub-roles with the coarser schema relations: the model frequently uses \texttt{is president of} or \texttt{is director of} where the source text indicates a more specific role such as vice-president, deputy director, or departmental director.
@@ -134,11 +133,9 @@ This reflects an ambiguity in the original relation schema that has since been r
 Temporal correctness is the weakest dimension, with errors arising from missing dates, incorrect inference of date ranges, and ambiguity in encoding point-in-time vs.\ interval information (but still reach ~0.80\% of accuracy).
 
 This evaluation covers DeSmog extractions only, which we acknowledge as a limitation.
-LobbyMap was not formally evaluated; however, an informal review of a sample of LobbyMap extractions — whose pages share the same HTML structure and similar tabular layout as DeSmog profiles — suggested comparable extraction quality.
+However, an informal review of a sample of LobbyMap extractions suggested comparable quality.
 
-\paragraph{Entities}
-
-Entity linking was evaluated on a sample of 225 entities annotated by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.
+\vspace{-0.5cm}\paragraph{Entities} Entity linking was evaluated on a sample of 225 entities annotated by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.\todo{Change to curated gold standard + change scores}
 Each entity was assessed on five dimensions: entity subtype correctness, Wikidata URI, Wikipedia URL, parent entity, and web page (where applicable); see-also links were assessed separately.
 
 Entity subtype accuracy is 0.951, Wikidata URI 0.920, Wikipedia URL 0.909, and web page 0.938, indicating that the pipeline reliably identifies and links entities across all primary output fields.
