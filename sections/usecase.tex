@@ -3,4 +3,89 @@
 
 The following case studies illustrate connections that emerge from LACK's integration of multiple independent sources. Each case follows the same structure: two statements, each drawn from a different source — the Desmog Climate Disinformation Database and LobbyMap — share a common entity that acts as a bridge. Neither source mentions the entities cited in the other --- yet their combination, through the shared bridge entity, reveals a relationship that no single source makes visible.
 
-\todo{Use case content: Add 2--3 case studies following the structure described above. Each case: two statements from different sources sharing a bridge entity, the relationship revealed by integration. Include a SPARQL query or graph figure for at least one case.}
+% NOTE: This section requires \usepackage{listings} and \usepackage{tikz} in main.tex
+% The graph figure (Figure~\ref{fig:cs-bp}) could be moved to supplementary material
+% if page budget is tight. The SPARQL listing could likewise move to supplementary.
+
+\section{Use Cases}
+\label{sec:usecase}
+
+The following case studies illustrate connections that emerge from LACK's integration of multiple independent sources. Each case follows the same structure: two statements, each drawn from a different source — the DeSmog Climate Disinformation Database and LobbyMap — share a common entity that acts as a bridge. Neither source mentions the entities cited in the other — yet their combination, through the shared bridge entity, reveals a relationship that no single source makes visible. The connections revealed are structural, derived from publicly available data; they do not imply wrongdoing, shared intent, or direct collaboration, and should be treated as research leads rather than evidential claims.
+
+%-----------------------------------------------------------------------
+\subsection*{Case 1: Darren Woods $\rightarrow$ Exxon $\rightarrow$ Heartland Institute}
+
+\noindent\textbf{Source A (InfluenceMap):} Darren Woods \texttt{lack:leadsAt} Exxon.\\
+\textbf{Source B (DeSmog):} Exxon \texttt{lack:sponsored} Heartland Institute.\\
+\textbf{Bridge entity:} Exxon.
+
+\smallskip
+\noindent InfluenceMap documents Darren Woods as leading Exxon, while DeSmog records Exxon as a sponsor of the Heartland Institute, a think tank prominently associated with climate science denial. Neither source references the other's entity: InfluenceMap does not mention the Heartland Institute, and DeSmog does not mention Woods. LACK makes the chain explicit, linking a named corporate officer to a disinformation-adjacent organisation through his employer.
+
+\smallskip
+\noindent The SPARQL query in Listing~\ref{lst:sparql-cs1} generalises this pattern, retrieving all persons in LACK who lead an organisation that has sponsored another entity.
+
+\begin{lstlisting}[
+  caption={SPARQL query retrieving all persons who lead an organisation
+           that has sponsored another entity.},
+  label={lst:sparql-cs1},
+  basicstyle=\ttfamily\small,
+  frame=single,
+  breaklines=true
+]
+PREFIX lack: <https://purl.net/climatesense/lack/ns#>
+
+SELECT ?person ?org ?target
+FROM <https://purl.net/climatesense/lack>
+WHERE {
+  ?person  lack:leadsAt   ?org .
+  ?org     lack:sponsored ?target .
+}
+\end{lstlisting}
+
+%-----------------------------------------------------------------------
+\subsection*{Case 2: Cambridge Analytica $\rightarrow$ BP $\rightarrow$ Business Council of Australia}
+
+\noindent\textbf{Source A (DeSmog):} Cambridge Analytica \texttt{lack:hasPartner} BP.\\
+\textbf{Source B (InfluenceMap):} BP \texttt{lack:memberOf} Business Council of Australia.\\
+\textbf{Bridge entity:} BP.
+
+\smallskip
+\noindent DeSmog records a partnership between Cambridge Analytica, the data and political consultancy firm, and BP. InfluenceMap separately documents BP's membership of the Business Council of Australia, an industry body with a documented record of opposing climate legislation. The two facts originate from different investigative contexts — one focused on political data operations, the other on fossil fuel industry lobbying in Australia — and share only BP as a common entity. Their integration in LACK surfaces a cross-domain, cross-jurisdictional structural connection that neither source makes visible on its own.
+
+\smallskip
+\noindent Figure~\ref{fig:cs-bp} shows the graph representation of this two-hop path as it appears in LACK.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}[
+      entity/.style={draw, rounded corners=3pt, fill=gray!10,
+                     text width=3cm, align=center, font=\small},
+      every edge/.style={draw, ->, >=stealth, font=\footnotesize}
+    ]
+    \node[entity] (ca)  {Cambridge\\Analytica};
+    \node[entity] (bp)  [right=1.2cm of ca]  {BP};
+    \node[entity] (bca) [right=1.2cm of bp]  {Business Council\\of Australia};
+
+    \draw (ca)  edge[bend left=15]  node[above] {\texttt{hasPartner}} (bp);
+    \draw (bp)  edge[bend left=15]  node[above] {\texttt{memberOf}}   (bca);
+
+    \node[font=\scriptsize, text=gray, below=0.15cm of ca]  {DeSmog};
+    \node[font=\scriptsize, text=gray, below=0.15cm of bca] {InfluenceMap};
+  \end{tikzpicture}
+  \caption{Two-hop path connecting Cambridge Analytica to the Business Council
+           of Australia via BP, integrating statements from DeSmog and
+           InfluenceMap. Source annotations indicate the origin of each
+           endpoint statement; BP is the bridge entity present in both sources.}
+  \label{fig:cs-bp}
+\end{figure}
+
+%-----------------------------------------------------------------------
+\subsection*{Case 3: Nick Stavropoulos $\rightarrow$ PG\&E $\rightarrow$ ZETA}
+
+\noindent\textbf{Source A (DeSmog):} Nick Stavropoulos \texttt{lack:leadsAt} PG\&E.\\
+\textbf{Source B (LobbyMap):} PG\&E \texttt{lack:memberOf} Zero Emission Transportation Association (ZETA).\\
+\textbf{Bridge entity:} PG\&E.
+
+\smallskip
+\noindent DeSmog profiles Nick Stavropoulos as an executive at PG\&E, the Californian utility. LobbyMap independently records PG\&E's membership of the Zero Emission Transportation Association, an electric vehicle industry coalition. Unlike the preceding cases, the target organisation here is not associated with climate denial; ZETA actively advocates for EV adoption. This case illustrates that LACK captures the full complexity of influence networks — including actors whose affiliations span both fossil fuel infrastructure and clean energy advocacy — rather than mapping only clear-cut disinformation actors.
