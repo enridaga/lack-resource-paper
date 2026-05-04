@@ -5,7 +5,7 @@
 \vspace{-0.2cm}\paragraph{Phase 1: Relation Alignment}
 \label{sec:construction:alignment}
 The relation extraction pipeline produces relations expressed as natural-language surface forms (e.g.\ \emph{is a member of}, \emph{has funded}).
-The first phase enumerates the distinct relation types appearing across both the Desmog and LobbyMap extraction outputs --- 152 types in total, covering 90,145 relation instances --- and aligns them to LACK ontology properties. We performed this task with Claude assistance and manually curated the result: a mapping table that associates each surface-form relation type with a canonical ontology IRI (e.g.\ \texttt{lack:memberOf}, \texttt{lack:fundedBy}), which is consumed by all subsequent phases\footnote{See this Google Sheet: \url{https://docs.google.com/spreadsheets/d/15ONtto0QDvNVl95B0bmanpdIdOb90fznK1FGM_E1-mo/edit?usp=sharing}.}.
+The first phase enumerates the distinct relation types appearing across both the Desmog and LobbyMap extraction outputs --- 152 types in total, covering 90,145 relation instances --- and aligns them to LACK ontology properties. We performed this task with Claude assistance and manually curated the result: a mapping table that associates each surface-form relation type with a canonical ontology IRI (e.g.\ \texttt{lack:memberOf}, \texttt{lack:fundedBy}), which is consumed by all subsequent phases\footnote{See this Google Sheet: \url{https://bit.ly/lack_4w4RdjH}.}.
 
 \vspace{-0.2cm}\paragraph{Phase 2: Entity URI Generation}
 \label{sec:construction:entities}
