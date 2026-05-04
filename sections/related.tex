@@ -1,16 +1,26 @@
 \section{Background and Related Work}
 \label{sec:related}
 
-Organised efforts to obstruct climate change policies are extensively documented by investigative platforms: DeSmog~\cite{desmog} profiles individuals and organisations involved in denial and lobbying; LobbyMap~\cite{lobbymap} tracks corporate engagement with climate policy; SourceWatch\footnote{\url{https://www.sourcewatch.org/}} catalogues front groups and funding relationships. Oreskes and Conway~\cite{oreskes2011merchants} analyse the deliberate strategies used to manufacture doubt about scientific consensus. 
-However, the information remains heterogeneous, siloed, and not interlinked for computational analysis. In the Semantic Web community, CimpleKG~\cite{burel2024cimplekg} and ClimaFactsKG~\cite{burel2025climafactskg} address climate misinformation through structured resources, but are oriented towards claim verification rather than the lobbying actor networks that LACK represents.
+Corporate lobbying has demonstrable consequences for climate policy outcomes.
+Brulle~\cite{brulle2018climate} maps US climate-lobbying expenditure across industry sectors, and Meng and Rode~\cite{meng2019social} estimate that lobbying lowered the probability of enacting the Waxman--Markey Cap-and-Trade Bill by 13 percentage points, with an estimated welfare loss in the order of \$60 billion.
+Leippold, Sautner and Yu~\cite{leippold2024corporate} document a recent \emph{camouflaging trend}, whereby firms increasingly conceal climate lobbying behind opaque legislative bill codes rather than explicit climate keywords, making purely text-based detection progressively unreliable.
+Baehr, Bare and Heddesheimer~\cite{baehr2026climate} measure firm-level \emph{climate exposure}---how much climate-related opportunities, regulatory pressures and physical risks figure in a firm's own earnings-call disclosures---across more than 11{,}000 publicly traded firms.
+They show that this exposure systematically predicts whether the firm lobbies, how much it spends, and which political entities it targets.
+Lobbying is thus consequential, increasingly opaque, and fundamentally relational---a structure that atomic facts or aggregate spending statistics cannot capture.
 
-Knowledge graphs have been increasingly adopted as infrastructure for investigative journalism. Opdahl et al.~\cite{opdahl2022semantic} survey KG applications across the news production pipeline, identifying actor network analysis as a key but underserved use case; Gallofrè Ocaña and Opdahl~\cite{gallofre2022jkp} find that deeper investigative tasks such as tracing funding relationships remain largely unaddressed. Berven et al.~\cite{berven2020kg} demonstrate the practical viability of KG-based newsroom infrastructure, while Alexander et al.~\cite{alexander2023manifesto} and Motta et al.~\cite{motta2025epistemology} show how formal models can underpin large-scale media analytics. This body of work establishes the value of KGs for journalism, but focuses on news content and event extraction rather than political and corporate actor networks.
+\begin{sloppypar}Investigative platforms partly address the documentation challenge.
+DeSmog~\cite{desmog} profiles individuals and organisations involved in denial and lobbying;
+LobbyMap~\cite{lobbymap} tracks corporate engagement with climate policy;
+SourceWatch\footnote{\url{https://www.sourcewatch.org/}} catalogues front groups and funding relationships;
+and Oreskes and Conway~\cite{oreskes2011merchants} analyse strategies used to manufacture doubt about scientific consensus.
+These resources are invaluable but heterogeneous, siloed and not interlinked in any form amenable to computational analysis.
+The recognised need for better support is reflected in concurrent efforts such as the UCL \emph{AI-Powered Climate Lobbying Database}~\cite{uclclimatelobbying}, which automates text extraction, network-graph construction and policy-position analysis using large language models.\end{sloppypar}
 
-The construction of LACK draws on recent advances in LLM-based knowledge graph construction. Trajanoska et al.~\cite{trajanoska2023llmkg} demonstrate that LLMs can drive automated KG construction from unstructured text, outperforming specialised models on entity and relation extraction; Papaluca et al.~\cite{papaluca2024zeroshot} show that LLMs are competitive in zero- and few-shot triplet extraction settings. 
+In the Semantic Web community, CimpleKG~\cite{burel2024cimplekg} and ClimaFactsKG~\cite{burel2025climafactskg} address climate misinformation through structured resources, but target claim verification rather than the lobbying actor networks LACK represents---networks that matter because climate-policy influence flows through coordinated relationships (funding ties, shared board memberships, trade-association affiliations) that single-claim evaluation cannot expose.
+Knowledge graphs have also been adopted as infrastructure for investigative journalism~\cite{opdahl2022semantic,gallofre2022jkp,berven2020kg,alexander2023manifesto,motta2025epistemology}, but this work focuses on news content and event extraction rather than political and corporate actor networks.
 
-% To build the RDF graph with the knowledge extraction output, Façade-X~\cite{asprino2023knowledge} and its SPARQL Anything implementation~\cite{daga2021opinionated} provide a principled method for KG construction from files. 
-% Ontology design draws on Schema.org~\cite{schemaorg}, PROV-O~\cite{provo}, and DCMI terms~\cite{dcterms} for provenance and metadata, with Wikidata~\cite{wikidata} as the backbone for entity linking. 
-% Finally, the resource is published following the FAIR principles~\cite{wilkinson2016fair}.
+The gap is therefore threefold: social-science work establishes that climate lobbying obstructs policy and is becoming increasingly opaque but provides no machine-readable substrate;
+investigative platforms document the phenomenon but in unlinked, human-oriented form;
+and adjacent KG work has not been applied to climate-lobbying actor networks.
+LACK addresses all three as a Wikidata-linked knowledge graph of lobbying actors, built via an evaluated extraction pipeline and published as Linked Open Data.
 
-The existing landscape reveals a clear gap: investigative platforms document climate lobbying in depth but are unfit for computational analysis; journalism KGs support news analytics but not political influence networks; and LLM-based KG construction has not been applied to climate lobby networks. 
-LACK addresses all three dimensions as a structured, Wikidata-linked knowledge graph of lobbying actors, built via an evaluated extraction pipeline and published as Linked Open Data.
