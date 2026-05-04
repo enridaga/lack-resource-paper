@@ -6,7 +6,7 @@
 Defining precise knowledge requirements was a prerequisite for both ontology design and knowledge acquisition. 
 Requirements were elicited through a thematic analysis of the primary sources, particularly DeSmog, whose profiles systematically document individuals' and organisations' involvement in climate lobbying. 
 Recurring themes identified across profiles include organisational affiliations, employment and leadership roles, funding relationships, and temporal activity spans (often summarised in tables). 
-These themes were harmonised into a set of twelve competency questions (CQ1--CQ12), intended to be validated with domain experts, which drove both the ontology engineering process and the extraction pipeline described in the following subsections.
+These themes were harmonised into a set of twelve competency questions (CQ1--CQ12), intended to be validated with domain experts, which drove both the ontology engineering process and the extraction pipeline described in the following subsections. \todo{Release code and data}
 
 \begin{description}
   \item[\textit{Transparency and Disclosure}]~
@@ -100,7 +100,7 @@ flag\_reason: "WIKIDATA:https://www.wikidata.org/entity/Q24083484"\\
 \end{figure}
 
 \subsection{Quality control and error analysis}
-\paragraph{Sources} Our collection covers the DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety as of the time of collection, providing complete coverage with respect to these two curated entry points.
+\paragraph{Sources:} Our collection covers the DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety as of the time of collection, providing complete coverage with respect to these two curated entry points.
 With respect to DeSmog, the CDD represents the most systematically curated subset of the broader DeSmog site; other DeSmog databases — covering agribusiness, advertising and PR, and the Koch Network — are relevant to the climate lobbying ecosystem but are left for future work.
 With respect to LobbyMap, the Scores leaderboard covers approximately 1,000 companies and 330 industry associations, but InfluenceMap hosts a broader set of content — including sector-level reports, country profiles, and policy engagement assessments — that was not included in the current collection.
 Extending coverage to these additional sources remains a direction for future work.
@@ -121,7 +121,7 @@ Extending coverage to these additional sources remains a direction for future wo
 \vspace{-1cm}
 \end{table}
 
-\paragraph{Relations} Relation extraction was evaluated on a sample of 300 relations drawn from 8 DeSmog profile pages.
+\paragraph{Relations:} Relation extraction was evaluated on a sample of 300 relations drawn from 8 DeSmog profile pages.
 Three annotators (the authors) worked in pairs, each pair covering approximately 100 relations, with disagreements resolved by discussion.
 Each relation was assessed on three dimensions: truthfulness (is the relation supported by the source page?), validity (is the relation type and its domain and range correctly applied according to the schema?), and temporal correctness (are the temporal annotations accurate?) -- see Table~\ref{tab:rel:eval}.
 Truthfulness accuracy is 0.93 (0.99 with partial credit), validity 0.907 (0.95 with partial), and temporal correctness 0.797 (0.91 with partial), where partial credit captures approximately correct extractions.
@@ -135,7 +135,7 @@ Temporal correctness is the weakest dimension, with errors arising from missing 
 This evaluation covers DeSmog extractions only, which we acknowledge as a limitation.
 However, an informal review of a sample of LobbyMap extractions suggested comparable quality.
 
-\vspace{-0.5cm}\paragraph{Entities} Entity linking was evaluated on a sample of 225 entities annotated by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.\todo{Change to curated gold standard + change scores}
+\vspace{-0.5cm}\paragraph{Entities:} Entity linking was evaluated on a sample of 225 entities annotated by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.\todo{Change to curated gold standard + change scores}
 Each entity was assessed on five dimensions: entity subtype correctness, Wikidata URI, Wikipedia URL, parent entity, and web page (where applicable); see-also links were assessed separately.
 
 Entity subtype accuracy is 0.951, Wikidata URI 0.920, Wikipedia URL 0.909, and web page 0.938, indicating that the pipeline reliably identifies and links entities across all primary output fields.

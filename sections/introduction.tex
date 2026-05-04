@@ -2,16 +2,13 @@
 \label{sec:introduction}
 
 %\paragraph{Background and Motivation.}
-Organised campaigns to undermine public trust in climate science and delay
-effective policy action are extensively documented by investigative journalists
-and civil society organisations.
-Despite the breadth of this work, information remains siloed, heterogeneous
+Lobbying networks to undermine public trust in climate science and delay effective policy action are extensively documented by investigative journalists and civil society organisations.
+Despite the breadth of such work, information remains siloed, heterogeneous
 in format, and difficult to query or analyse computationally at scale.
 This paper presents work carried out within the ClimateSense
 project~\cite{climatesense}, which builds tools to monitor and analyse climate
 misinformation across geospatial, temporal, and topical dimensions.
 
-%\paragraph{Problem Description.}
 Consider an investigative journalist seeking to understand the network behind
 a prominent climate sceptic think tank: who funds it, who sits on its board,
 which staff have previously worked for fossil fuel companies, and whether those
@@ -20,30 +17,27 @@ The information needed exists --- spread across DeSmog, LobbyMap, and Wikidata
 --- but in incompatible formats, organised around different entity models, and
 not linked across sources, making even this single question require hours of
 manual cross-referencing.
-The problem is compounded by the temporal dimension: people move between
-organisations, funding arrangements begin and end, and front groups are created
+The problem is compounded by the temporal dimension: people scatter across
+organisations, funding arrangements may be indirect, and front groups are created
 and dissolved --- yet this dynamic structure is difficult to query across
 existing sources in an integrated way.
 
-%\paragraph{Proposed Solution.}
 In this paper, we present LACK (Lobbying Against Climate Knowledge), a knowledge graph of
 persons and organisations involved in lobbying against climate science and
 policy, constructed using a composite pipeline combining LLM, web search, and APIs, guided by a purpose-built lightweight ontology.
-%\paragraph{Contributions.}
+
 Specifically, we contribute:
 \begin{itemize}
     \item The \textbf{LACK ontology}, a purpose-built OWL vocabulary covering
     the key relation types in the climate lobbying domain, developed following
     ontology engineering best practices and reusing established vocabularies
     where appropriate.
-    \item The \textbf{LACK knowledge graph}, comprising 213,147 typed relations between
-    27,945 persons and organisations, extracted from more then 2k source documents across DeSmog and LobbyMap/InfluenceMap, linked to Wikidata and DBpedia,
+    \item The \textbf{LACK knowledge graph}, comprising relations between persons and organisations, extracted from more than 2k source documents across two authoritative sources, linked to Wikidata and DBpedia,
     and published as Linked Open Data under a CC BY 4.0 licence at a
     persistent URI following FAIR principles.
 %    \item An \textbf{LLM-based relation extraction pipeline}, a reusable and    evaluated method for extracting typed, temporally annotated relations from investigative journalism text.
-%    \item An \textbf{evaluation with domain experts} from the investigative
-%    journalism and climate accountability sector, assessing the utility and
-%    value of the resource for real-world investigative tasks.
+    \item An \textbf{evaluation with domain experts} from the investigative    journalism and climate accountability sector, assessing the utility and
+    value of the resource for real-world investigative tasks.
 %    \item A \textbf{sustainability and maintenance plan}, situating LACK within
 %    the ongoing ClimateSense project~\cite{climatesense} and committing to
 %    continued updates as source corpora expand.
@@ -51,16 +45,4 @@ Specifically, we contribute:
 
 %\paragraph{Paper Structure.}
 The remainder of this paper is structured as follows.
-Section~\ref{sec:related} situates LACK within the related literature on
-knowledge graphs for investigative journalism and climate misinformation.
-Section~\ref{sec:extraction} describes the knowledge extraction pipeline.
-Section~\ref{sec:ontology} presents the LACK ontology.
-Section~\ref{sec:construction} describes the construction of the knowledge
-graph.
-Section~\ref{sec:resource} provides the resource description, including
-availability, licence, and sustainability plan.
-Section~\ref{sec:usecase} illustrates the potential of the resource
-through case studies.
-Section~\ref{sec:evaluation} reports on the evaluation of the extraction
-pipeline and the assessment of the resource with domain experts.
-Section~\ref{sec:conclusion} concludes and outlines directions for future work.
+Section~\ref{sec:related} situates LACK in the related literature. Section~\ref{sec:extraction} describes the knowledge extraction pipeline, and Section~\ref{sec:ontology} presents the ontology. Section~\ref{sec:construction} covers knowledge graph construction, while Section~\ref{sec:resource} details availability, licensing, and sustainability. Section~\ref{sec:usecase} illustrates case studies, and Section~\ref{sec:evaluation} reports on pipeline evaluation and expert assessment. Section~\ref{sec:conclusion} concludes with directions for future work.
