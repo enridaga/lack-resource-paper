@@ -1,41 +1,11 @@
 \section{Knowledge Acquisition}
 \label{sec:extraction}
-\subsection{Requirements and Competency Questions}
-%Existing knowledge graphs addressing misinformation and climate communication~\cite{burel2024cimplekg,burel2025climafactskg} typically focus on claims and their veracity, but provide little structured information about the relationships between the actors involved — individuals, organisations, funding ties, and roles over time. 
-%LACK addresses this gap by representing the relational fabric of the climate-change denial ecosystem.
-Defining precise knowledge requirements was a prerequisite for both ontology design and knowledge acquisition. 
-Requirements were elicited through a thematic analysis of the primary sources, particularly DeSmog, whose profiles systematically document individuals' and organisations' involvement in climate lobbying. 
-Recurring themes identified across profiles include organisational affiliations, employment and leadership roles, funding relationships, and temporal activity spans (often summarised in tables). 
-% These themes were harmonised into a set of twelve competency questions (CQ1--CQ12), intended to be validated with domain experts, which drove both the ontology engineering process and the extraction pipeline described in the following subsections. \todo{Release code and data}
+\paragraph{Requirements and Competency Questions.}
+Knowledge requirements were elicited through a thematic analysis of the primary sources --- particularly DeSmog, whose profiles systematically document individuals' and organisations' involvement in climate lobbying --- and harmonised into twelve competency questions (CQ1--CQ12) covering four areas: \textit{Transparency and Disclosure}, \textit{Network Structure}, \textit{Temporal Reasoning}, and \textit{Identity and Deduplication}.
+The first eleven (CQ1--CQ11) are listed in Table~\ref{tab:coverage} and drove the design of both the ontology (Section~\ref{sec:ontology}) and the extraction pipeline; CQ12, on identity and deduplication, is addressed by the entity linking step described later in this section.
+The full text of each question is available on the LACK website\footnote{\url{https://climatesense-project.eu/lack/ontology.html}}.
 
-\begin{description}
-  \item[\textit{Transparency and Disclosure}]~
-  \begin{description}
-    \item[CQ1] Which persons and organisations are involved in lobbying against climate science or policy?
-    \item[CQ2] Which organisations fund a given person or organisation, and what is the evidence for each funding relationship?
-    \item[CQ3] Which persons are members of a given organisation, and during which period?
-    \item[CQ4] Who are the leaders of a given organisation, and when did they hold that role?
-    \item[CQ5] Which organisations has a given person been employed by, and in what time periods?
-  \end{description}
-  \item[\textit{Network Structure}]~
-  \begin{description}
-    \item[CQ6] Which organisations are partners of a given organisation?
-    \item[CQ7] Which organisations were founded by a given person or organisation?
-    \item[CQ8] Which organisations is a given organisation derived from, or has acquired?
-    \item[CQ9] Which persons or organisations are associated with a given entity (direct and indirect connections)?
-  \end{description}
-  \item[\textit{Temporal Reasoning}]~
-  \begin{description}
-    \item[CQ10] Which relationships involving a given entity were active during a specific time interval?
-    \item[CQ11] Which organisations were active during a given period?
-  \end{description}
-  \item[\textit{Identity and Deduplication}]~
-  \begin{description}
-    \item[CQ12] Which entities in the graph refer to the same real-world person or organisation?
-  \end{description}
-\end{description}
-
-\subsection{Sources}
+\paragraph{Sources}
 LACK was built from two complementary web sources, together covering a broad range of actors in the climate lobbying ecosystem\footnote{The following paragraph refers to the web pages accessed in December 2025.}.
 \textbf{DeSmog Climate Disinformation Database}~\cite{desmog} is a curated, editorially maintained resource profiling individuals and organisations involved in climate science denial and disinformation. 
 For example, the profile of Cambridge Analytica\footnote{\url{https://www.desmog.com/cambridge-analytica/}} documents the organisation's background, its connections to fossil fuel interests, funding relationships, key personnel with their tenure periods, and a chronological record of notable actions.
@@ -44,11 +14,12 @@ We collected the profile pages of all entities listed in the database, yielding 
 For example, the profile of the Business Council of Australia\footnote{\url{https://lobbymap.org/influencer/The-Business-Council-of-Australia}} provides an overall climate policy engagement assessment, a narrative summary of the organisation's positions across policy areas, a scored evidence matrix broken down by policy query and data source, and links to the primary evidence underpinning each score.
 We collected profile pages for all entities listed in the LobbyMap Scores analysis (964 pages). 
 In addition, a further 338 organisation profiles were collected by following links to organisations referenced within those pages but not themselves included in LobbyMap Scores, yielding 1,302 pages in total.
-The two sources are complementary in scope: DeSmog focuses primarily on individuals and think tanks involved in active disinformation, while LobbyMap covers corporations and industry associations engaging with climate policy. 
-However, they are also partially overlapping, as well-known actors are  present in both of them.
-Together, they provide broad coverage of the actors and relationships constituting the climate-change denial ecosystem.
+The two sources are complementary in scope: DeSmog focuses primarily on individuals and think tanks involved in active disinformation, while LobbyMap covers % corporations and industry associations engaging with climate policy.
+% However, they are also partially overlapping, as well-known actors are  present in both of them.
+% Together, they provide broad coverage of the actors and relationships constituting the climate-change denial ecosystem.
+However, they are also partially overlapping, as well-known actors are present in both of them.
 The initial set of pages was collected using SPARQL Anything~\cite{daga2021opinionated}, querying the HTML source of the DeSmog Climate Disinformation Database and the JSON feed underlying the LobbyMap Scores leaderboard table.
-\subsection{Extraction of relations from web pages}
+\paragraph{Extraction of relations from web pages}
 The competency questions were translated into a defined set of typed relations between two top-level entity types (Person and Organisation), forming the schema for the extraction pipeline.
 Relation extraction was performed by prompting Gemini 2.5 Flash~\cite{gemini25} with a structured prompt applied to each profile page.
 The prompt specifies the allowed relation types with their definitions, a strict JSON output schema (a list of \texttt{Relation} objects, each with source, target, relation type, optional temporal annotations as \texttt{xsd:gYear}, a natural language description, and evidence URLs), and constraints requiring the model to use only the provided page as evidence and return valid JSON only.
@@ -56,13 +27,15 @@ For DeSmog, page content was fetched directly by the model via Gemini's native U
 For LobbyMap, HTML pages were fetched separately and passed as input to the model.
 The pipeline iterates over all collected profile URLs, invoking the model once per page and storing output as one JSON file per profile, with resumption logic to skip already-processed pages.
 After each run, a validation routine identified and deleted malformed or empty outputs; the extraction was then re-run on failed pages, repeating until all pages were successfully processed.
-The process, implemented in a Google Colab notebook (deposited~\cite{lack-re}), outputs a CSV file for each data source with a row for each relation, for example:
-\vspace{-0.7cm}\begin{figure}[H]\scriptsize
-source,source\_type,relation,target,target\_type,since,until,when,description,evidence\_link
-\\Cambridge Analytica,organization,was funded by,Robert Mercer,person,,,,Robert Mercer is one of the largest investors in the data science firm Cambridge Analytica. The Mercers invested approximately \$5 million in the company.,https://www.desmog.com/robert-mercer/
-\end{figure}
+The process, implemented in a Google Colab notebook (deposited~\cite{lack-re}), outputs a CSV file for each data source with a row for each relation, with columns for source, target, their types, relation type, temporal annotations, a natural-language description, and the evidence URL.
 
-\subsection{Entity Linking}
+% , for example:
+% \vspace{-0.7cm}\begin{figure}[H]\scriptsize
+% source,source\_type,relation,target,target\_type,since,until,when,description,evidence\_link
+% \\Cambridge Analytica,organization,was funded by,Robert Mercer,person,,,,Robert Mercer is one of the largest investors in the data science firm Cambridge Analytica. The Mercers invested approximately \$5 million in the company.,https://www.desmog.com/robert-mercer/
+% \end{figure}
+
+\paragraph{Entity Linking}
 The relation extraction step produces entities as surface form strings rather than authoritative identifiers, requiring three further operations: deduplication, entity resolution, and linking to Wikidata~\cite{wikidata}, with Wikipedia as a secondary target or, where no knowledge base entry exists, identification via a dedicated public web page.
 The input to this step is a pair of (entity name, evidence link) — the surface form and the source profile page where it appeared — augmented by natural language context sentences aggregated from the previous step.
 The same surface form on the same page is treated as a single entity; the same surface form across different pages is not assumed to refer to the same entity.
@@ -76,55 +49,58 @@ Because the \texttt{organisation} type in our data spans a wide range of entity 
 Candidates are passed to the LLM, which selects the best matching QID or returns null, also detecting when a candidate represents a broader parent entity rather than the specific entity itself.
 Selected QIDs are verified via SPARQL, retrieving canonical label, Wikipedia sitelink, and parent organisation (via \texttt{P749}/\texttt{P361}).
 For entities with no Wikidata match, a web fallback first evaluates the evidence link as a potential primary identifier, then issues an LLM-generated search query via the Google Custom Search API~\cite{googlecse}, with a primary-subject check confirming whether each result page is dedicated to the entity.
-The output is an enriched CSV of entities, containing Wikidata URIs, Wikipedia URLs, parent entity links, web page fallbacks, and confidence scores - see Figure~\ref{fig:linkingex}. All code and data are published~\cite{lack-el}.
-\begin{figure}[htpb]\scriptsize
-entity: "Cambridge Analytica"\\
-type: "organisation"\\
-evidence\_link: "https://www.desmog.com/rebekah-mercer/"\\
-context: (...)\\
-subtype: "consulting\_firm"\\
-subtype\_desc: "British political consulting firm specializing in data analytics"\\
-wikidata: "https://www.wikidata.org/entity/Q24083484"\\
-wikidata\_label: "Cambridge Analytica"\\
-wikidata\_desc: "2013–2018 British political consulting firm"\\
-wikipedia\_url: "https://en.wikipedia.org/wiki/Cambridge\_Analytica"\\
-parent\_entity: "https://www.wikidata.org/entity/Q24298808"\\
-parent\_entity\_label: "SCL Group"\\
-web\_page: (empty)\\
-see\_also: "https://www.desmog.com/rebekah-mercer/"\\
-confidence: "medium"\\
-match\_method: "wikidata\_llm"\\
-is\_concrete: "true"\\
-flag\_reason: "WIKIDATA:https://www.wikidata.org/entity/Q24083484"\\
-\vspace{-0.5cm}\caption{Entitly linking: example output.}\label{fig:linkingex}
-\end{figure}
+The output is an enriched CSV of entities, containing Wikidata URIs, Wikipedia URLs, parent entity links, web page fallbacks, and confidence scores. All code and data are published~\cite{lack-el}.
+% The output is an enriched CSV of entities, containing Wikidata URIs, Wikipedia URLs, parent entity links, web page fallbacks, and confidence scores - see Figure~\ref{fig:linkingex}. All code and data are published~\cite{lack-el}.
+% \begin{figure}[htpb]\scriptsize
+% entity: "Cambridge Analytica"\\
+% type: "organisation"\\
+% evidence\_link: "https://www.desmog.com/rebekah-mercer/"\\
+% context: (...)\\
+% subtype: "consulting\_firm"\\
+% subtype\_desc: "British political consulting firm specializing in data analytics"\\
+% wikidata: "https://www.wikidata.org/entity/Q24083484"\\
+% wikidata\_label: "Cambridge Analytica"\\
+% wikidata\_desc: "2013–2018 British political consulting firm"\\
+% wikipedia\_url: "https://en.wikipedia.org/wiki/Cambridge\_Analytica"\\
+% parent\_entity: "https://www.wikidata.org/entity/Q24298808"\\
+% parent\_entity\_label: "SCL Group"\\
+% web\_page: (empty)\\
+% see\_also: "https://www.desmog.com/rebekah-mercer/"\\
+% confidence: "medium"\\
+% match\_method: "wikidata\_llm"\\
+% is\_concrete: "true"\\
+% flag\_reason: "WIKIDATA:https://www.wikidata.org/entity/Q24083484"\\
+% \vspace{-0.5cm}\caption{Entitly linking: example output.}\label{fig:linkingex}
+% \end{figure}
 
-\subsection{Evaluation of the extraction output}
-This section evaluates the extracted data: source coverage, the accuracy of extracted relations and entity links, and known limitations.
-\paragraph{Sources:} Our collection covers the DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety as of the time of collection, providing complete coverage with respect to these two curated entry points.
+\paragraph{Evaluation of the extraction output}
+We now evaluate the extracted data: source coverage, the accuracy of extracted relations and entity links, and known limitations.
+%\paragraph{Sources:} 
+Our collection covers the DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety as of the time of collection, providing complete coverage with respect to these two curated entry points.
 % With respect to DeSmog, the CDD represents the most systematically curated subset of the broader DeSmog site; other DeSmog databases — covering agribusiness, advertising and PR, and the Koch Network — are relevant to the climate lobbying ecosystem but are left for future work.
 With respect to LobbyMap, the Scores leaderboard covers approximately 1,000 companies and 330 industry associations, but InfluenceMap hosts a broader set of content — including sector-level reports, country profiles, and policy engagement assessments — that was not included in the current collection.
 Extending coverage to these additional sources remains a direction for future work.
+%
+% \begin{table}[t]
+% \caption{Guidelines for the relation extraction evaluation}\label{tab:rel:eval}
+% \centering
+% \begin{tabular}{p{5cm} p{7cm}}\hline
+% \textbf{Is it True?
+% (ignore time info)	}& Whether the source Web page includes the information. Yest: it does; Partly: it does to some extent; No: it does not.	\\
+% \textbf{Why (partly) not True?} &	Provide an explanation if not	\\
+% \textbf{Is it Valid?
+% (ignore time info)}	 & Whether the relation is one of the possible listed below, and whether the domain (source) or range (target) are valid entities and entity types (persons, organisations, or XSD gYear)	\\
+% \textbf{Why (partly) not Valid?}	& Provide an explanation if not\\
+% \textbf{Is the time info correct?} &	Whether the time validity of the information is correct.\\
+% \textbf{Why is it (partly) incorrect?} &	Provide an explanation if not\\\hline
+% \end{tabular}
+% %\vspace{-1cm}
+% \end{table}
 
-\begin{table}[t]
-\caption{Guidelines for the relation extraction evaluation}\label{tab:rel:eval}
-\centering
-\begin{tabular}{p{5cm} p{7cm}}\hline
-\textbf{Is it True? 
-(ignore time info)	}& Whether the source Web page includes the information. Yest: it does; Partly: it does to some extent; No: it does not.	\\
-\textbf{Why (partly) not True?} &	Provide an explanation if not	\\
-\textbf{Is it Valid?
-(ignore time info)}	 & Whether the relation is one of the possible listed below, and whether the domain (source) or range (target) are valid entities and entity types (persons, organisations, or XSD gYear)	\\
-\textbf{Why (partly) not Valid?}	& Provide an explanation if not\\
-\textbf{Is the time info correct?} &	Whether the time validity of the information is correct.\\
-\textbf{Why is it (partly) incorrect?} &	Provide an explanation if not\\\hline
-\end{tabular}
-%\vspace{-1cm}
-\end{table}
-
-\paragraph{Relations:} Relation extraction was evaluated on a sample of 300 relations drawn from 8 randomly selected DeSmog profile pages.
+%\paragraph{Relations:} 
+Relation extraction was evaluated on a sample of 300 relations drawn from 8 randomly selected DeSmog profile pages.
 Three annotators (the authors) worked in pairs, each pair covering approximately 100 relations, with disagreements resolved by discussion.
-Each relation was assessed on three dimensions: truthfulness (is the relation supported by the source page?), validity (is the relation type and its domain and range correctly applied according to the schema?), and temporal correctness (are the temporal annotations accurate?) -- see Table~\ref{tab:rel:eval}.
+Each relation was assessed on three dimensions: truthfulness (is the relation supported by the source page?), validity (is the relation type and its domain and range correctly applied according to the schema?), and temporal correctness (are the temporal annotations accurate?)\footnote{Full annotation guidelines: \todo{add URL to evaluation guidelines spreadsheet}.}.
 Truthfulness accuracy is 0.93 (0.99 with partial credit), validity 0.907 (0.95 with partial), and temporal correctness 0.797 (0.91 with partial), where partial credit captures approximately correct extractions.
 
 The main source of partly correct answers relates to the conflation of specific sub-roles with the coarser schema relations: the model frequently uses \texttt{is president of} or \texttt{is director of} where the source text indicates a more specific role such as vice-president, deputy director, or departmental director.
@@ -144,7 +120,7 @@ Temporal correctness is the least accurate dimension, with errors arising from m
 % Parent entity is the weakest dimension at 0.718; errors appear in part to stem from cases where the pipeline assigned a stock exchange as the parent organisation of publicly listed companies, an artefact of how Wikidata encodes P749/P361 relations.
 % See-also links achieved perfect accuracy across all annotators.
 % Of the 275 entities with see-also content, only 25 included at least one novel URL beyond the evidence link, contributing 55 additional reference pages in total (~10\%).
-\paragraph{Entities:}
+% \paragraph{Entities:}
 Entity linking was evaluated on the 225 entities from the same pages as the previous evaluation, against a curated gold standard produced by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.
 Each entity was assessed on five dimensions: entity subtype correctness, Wikidata URI, Wikipedia URL, parent entity, and web page (where applicable); see-also links were assessed separately.
 Accuracy is high across most dimensions, with see-also at 0.96, parent entity at 0.94, Wikidata URI and Wikipedia URL at 0.88, entity subtype at 0.86, and web page at 0.84, indicating that the pipeline reliably identifies and links entities across all primary output fields.
@@ -158,6 +134,6 @@ Of the 27,945 entities in the KG, 10,189 (36.5\%) are linked to Wikidata or DBpe
 This high NIL rate is not a pipeline failure but a domain characteristic: the climate lobbying ecosystem is densely populated with minor think tank staff, obscure industry consultants, short-lived coalitions, and regional trade bodies that are simply not represented in general-purpose knowledge bases such as Wikidata.
 By contrast, entities appearing in both sources --- those prominent enough to be independently documented by DeSmog and LobbyMap --- are linked at a rate of 95.7\% (488 out of 510), confirming that the pipeline reliably identifies well-known actors.
 NIL entities will be resolvable within the KG via their LACK URI and retain their label and source provenance; web page and parent entity fields, included as \textit{see also} statements, captured during entity linking but not yet promoted to \texttt{owl:sameAs} assertions, offer a path to further grounding and are left to future work.
-
-A total of 29 entities appear with inconsistent type assignments across source 
-pages --- annotated as \texttt{person} in some pages and \texttt{organisation} in others --- a known data quality issue arising from the LLM extraction pipeline assigning types independently per page, to be resolved in a future release.
+A residual data quality issue --- 29 entities with inconsistent type assignments across pages --- will be resolved in a future release.
+% A total of 29 entities appear with inconsistent type assignments across source
+% pages --- annotated as \texttt{person} in some pages and \texttt{organisation} in others --- a known data quality issue arising from the LLM extraction pipeline assigning types independently per page, to be resolved in a future release.
