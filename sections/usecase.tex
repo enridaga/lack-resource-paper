@@ -3,73 +3,16 @@
 
 \paragraph{LACK enables integration of multiple independent sources}. Each case follows the same structure: two statements, each drawn from a different source — the DeSmog Climate Disinformation Database and LobbyMap — share a common entity that acts as a bridge. Neither source mentions the entities cited in the other — yet their combination, through the shared bridge entity, reveals a relationship that no single source makes visible\footnote{The connections revealed are structural, derived from publicly available data; they do not imply wrongdoing, shared intent, or direct collaboration, and are presented as research leads rather than evidential claims.}.
 
-%-----------------------------------------------------------------------
-\subsection*{Case 1: Darren Woods $\rightarrow$ Exxon $\rightarrow$ Heartland Institute}
+\paragraph{(Case 1): Darren Woods $\rightarrow$ Exxon $\rightarrow$ Heartland Institute}
+\noindent\textbf{Bridge entity:} Exxon. \textbf{(InfluenceMap)} Darren Woods \texttt{lack:leadsAt} Exxon; \textbf{(DeSmog)} Exxon \texttt{lack:sponsored} Heartland Institute.
+InfluenceMap documents Woods leading Exxon; DeSmog records Exxon as a sponsor of the Heartland Institute, a think tank prominently associated with climate science denial.
+Neither source references the other's entity, yet LACK makes the chain explicit, linking a named corporate officer to a disinformation-adjacent organisation through his employer --- a pattern generalised by joining \texttt{lack:leadsAt} with \texttt{lack:sponsored} in a single SPARQL query.
 
-\noindent\textbf{Source A (InfluenceMap):} Darren Woods \texttt{lack:leadsAt} Exxon.\\
-\textbf{Source B (DeSmog):} Exxon \texttt{lack:sponsored} Heartland Institute.\\
-\textbf{Bridge entity:} Exxon.
+\paragraph{(Case 2): Cambridge Analytica $\rightarrow$ BP $\rightarrow$ Business Council of Australia}
+\noindent\textbf{Bridge entity:} BP. \textbf{(DeSmog)} Cambridge Analytica \texttt{lack:hasPartner} BP; \textbf{(InfluenceMap)} BP \texttt{lack:memberOf} Business Council of Australia.
+DeSmog records a partnership between the data and political consultancy firm Cambridge Analytica and BP, while InfluenceMap separately documents BP's membership of the Business Council of Australia, an industry body with a record of opposing climate legislation.
+The two facts originate from different investigative contexts --- political data operations vs.\ fossil fuel industry lobbying in Australia --- and share only BP, yet LACK surfaces this cross-domain, cross-jurisdictional structural connection that neither source exposes alone.
 
-\smallskip
-\noindent InfluenceMap documents Darren Woods as leading Exxon, while DeSmog records Exxon as a sponsor of the Heartland Institute, a think tank prominently associated with climate science denial. Neither source references the other's entity: InfluenceMap does not mention the Heartland Institute, and DeSmog does not mention Woods. LACK makes the chain explicit, linking a named corporate officer to a disinformation-adjacent organisation through his employer.
-
-\smallskip
-\noindent The SPARQL query in Listing~\ref{lst:sparql-cs1} generalises this pattern, retrieving all persons in LACK who lead an organisation that has sponsored another entity.
-
-\begin{lstlisting}[
-  caption={SPARQL query retrieving all persons who lead an organisation
-           that has sponsored another entity.},
-  label={lst:sparql-cs1},
-  basicstyle=\ttfamily\small,
-  frame=single,
-  breaklines=true
-]
-PREFIX lack: <https://purl.net/climatesense/lack/ns#>
-
-SELECT ?person ?org ?target
-FROM <https://purl.net/climatesense/lack>
-WHERE {
-  ?person  lack:leadsAt   ?org .
-  ?org     lack:sponsored ?target .
-}
-\end{lstlisting}
-
-%-----------------------------------------------------------------------
-\subsection*{Case 2: Cambridge Analytica $\rightarrow$ BP $\rightarrow$ Business Council of Australia}
-
-\noindent\textbf{Source A (DeSmog):} Cambridge Analytica \texttt{lack:hasPartner} BP.\\
-\textbf{Source B (InfluenceMap):} BP \texttt{lack:memberOf} Business Council of Australia.\\
-\textbf{Bridge entity:} BP.
-
-\smallskip
-\noindent DeSmog records a partnership between Cambridge Analytica, the data and political consultancy firm, and BP. InfluenceMap separately documents BP's membership of the Business Council of Australia, an industry body with a documented record of opposing climate legislation. The two facts originate from different investigative contexts — one focused on political data operations, the other on fossil fuel industry lobbying in Australia — and share only BP as a common entity. Their integration in LACK surfaces a cross-domain, cross-jurisdictional structural connection that neither source makes visible on its own.
-
-\smallskip
-\noindent Figure~\ref{fig:cs-bp} shows the graph representation of this two-hop path as it appears in LACK.
-
-\begin{figure}[t]
-  \centering
-  \begin{tikzpicture}[
-      entity/.style={draw, rounded corners=3pt, fill=gray!10,
-                     text width=3cm, align=center, font=\small},
-      every edge/.style={draw, ->, >=stealth, font=\footnotesize}
-    ]
-    \node[entity] (ca)  {Cambridge\\Analytica};
-    \node[entity] (bp)  [right=1.2cm of ca]  {BP};
-    \node[entity] (bca) [right=1.2cm of bp]  {Business Council\\of Australia};
-
-    \draw (ca)  edge[bend left=15]  node[above] {\texttt{hasPartner}} (bp);
-    \draw (bp)  edge[bend left=15]  node[above] {\texttt{memberOf}}   (bca);
-
-    \node[font=\scriptsize, text=gray, below=0.15cm of ca]  {DeSmog};
-    \node[font=\scriptsize, text=gray, below=0.15cm of bca] {InfluenceMap};
-  \end{tikzpicture}
-  \caption{Two-hop path connecting Cambridge Analytica to the Business Council
-           of Australia via BP, integrating statements from DeSmog and
-           InfluenceMap. Source annotations indicate the origin of each
-           endpoint statement; BP is the bridge entity present in both sources.}
-  \label{fig:cs-bp}
-\end{figure}
 
 % %-----------------------------------------------------------------------
 % \subsection*{Case 3: Nick Stavropoulos $\rightarrow$ PG\&E $\rightarrow$ ZETA}
@@ -83,10 +26,14 @@ WHERE {
 % \paragraph{LACK as a selective filter on COP30 attendance.}
 % Crossing LACK with the COP30 participant list shows that the resource functions as a curated filter on the climate-policy field rather than as a comprehensive registry of attendees. Of 47{,}308 registered delegates and 19{,}298 distinct organisations, 0.11\% and 2.87\% respectively are present in LACK, concentrated in the corporate, financial, and lobby-aligned segments LACK is designed to track. The match rate varies fivefold across UNFCCC participation categories---from 2.2\% for government bodies to 10.2\% for the Global Climate Action cluster---and across national delegations, from 8.1\% for Australia and 6.5\% for France to 0\% for several small states. This unevenness reflects LACK's design (corporate-focused, anglophone, Western-centric) and makes the COP30 cross-reference a useful external probe of the resource's effective scope. 
 % %Presence in LACK identifies an attendee as a member of the broader climate-policy field; absence carries no such inference.
-
 \paragraph{Case study: LACK's central collectives at COP30.}
-We cross-referenced LACK's 1{,}000 most heavily-described \texttt{lack:Collective} entities (ranked by outgoing IRI links) with the COP30 participant list (with a heuristic match on the labels). 
-Of 944 distinct delegate matches, roughly 70\% flow through observer accreditation channels, 18\% appear in high-income national delegations (EU institutions, BNP Paribas, METI, the World Economic Forum), and only 43 in lower- or low-income country delegations. 
-A qualitative anchor at the top-20 scope reveals that LACK's most densely documented entities are the US climate countermovement (Heartland, Cato, ALEC, Heritage, Manhattan Institute, and similar)---of which only three (US Chamber of Commerce, Shell, ExxonMobil) appear at COP30 at all. 
-The cross-reference therefore surfaces three findings invisible to either resource alone: the US climate countermovement does not engage with the UNFCCC track; observer accreditation rather than national delegation embedding is the dominant channel through which LACK-tracked organisations participate in COP. 
-This is one example of the broader family of analyses LACK enables when paired with any external roster of named climate-policy actors.
+We cross-referenced LACK's 1{,}000 most heavily-described \texttt{lack:Collective} entities (ranked by outgoing IRI links) with the COP30 participant list (heuristic label match).
+Of 944 distinct delegate matches, roughly 70\% flow through observer accreditation channels, 18\% appear in high-income national delegations (EU institutions, BNP Paribas, METI, the World Economic Forum), and only 43 in lower- or low-income country delegations.
+A qualitative anchor at the top-20 scope reveals that LACK's most densely documented entities are the US climate countermovement (Heartland, Cato, ALEC, Heritage, Manhattan Institute) --- of which only three (US Chamber of Commerce, Shell, ExxonMobil) appear at COP30 at all.
+The cross-reference surfaces two findings invisible to either resource alone: the US climate countermovement does not engage with the UNFCCC track, and observer accreditation rather than national delegation is the dominant channel through which LACK-tracked organisations participate in COP.
+% \paragraph{Case study: LACK's central collectives at COP30.}
+% We cross-referenced LACK's 1{,}000 most heavily-described \texttt{lack:Collective} entities (ranked by outgoing IRI links) with the COP30 participant list (with a heuristic match on the labels).
+% Of 944 distinct delegate matches, roughly 70\% flow through observer accreditation channels, 18\% appear in high-income national delegations (EU institutions, BNP Paribas, METI, the World Economic Forum), and only 43 in lower- or low-income country delegations.
+% A qualitative anchor at the top-20 scope reveals that LACK's most densely documented entities are the US climate countermovement (Heartland, Cato, ALEC, Heritage, Manhattan Institute, and similar)---of which only three (US Chamber of Commerce, Shell, ExxonMobil) appear at COP30 at all.
+% The cross-reference therefore surfaces three findings invisible to either resource alone: the US climate countermovement does not engage with the UNFCCC track; observer accreditation rather than national delegation embedding is the dominant channel through which LACK-tracked organisations participate in COP.
+This is one example of the broader family of analyses LACK enables when paired with any external roster of named climate-policy agents.

@@ -9,38 +9,56 @@ The first phase enumerates the distinct relation types appearing across both the
 
 \vspace{-0.2cm}\paragraph{Phase 2: Entity URI Generation}
 \label{sec:construction:entities}
-Stable, dereferenceable IRIs are minted for each entity using a priority scheme over available external identifiers:
-\begin{enumerate*}
-    \item Wikidata QID
-    \item Wikipedia page URL
-    \item Web page URL
-    \item Surface form + evidence link (fallback).
-\end{enumerate*}
-Each entity IRI takes the form \texttt{lack-entity:\textit{SHA1}}, where the hash is computed from the highest-priority identifier available for that entity.
-This scheme ensures that entities with a known Wikidata entry receive a stable, semantically grounded IRI regardless of how they are named in the source data, while still providing a consistent IRI for entities that have no external presence.
-Each entity is assigned a top-level type (\texttt{lack:Person} or \texttt{lack:Collective}), a granular subtype (e.g.\ \texttt{lack-type:think\_tank}, \texttt{lack-type:company}), an \texttt{rdfs:label}, and where available an \texttt{owl:sameAs} link to the corresponding Wikidata and/or DBpedia entity (by rewriting the Wikipedia url).
+Stable, dereferenceable IRIs of the form \texttt{lack-entity:\textit{SHA1}} are minted for each entity, hashing the highest-priority identifier available: Wikidata QID, then Wikipedia URL, then web page URL, with surface form + evidence link as fallback.
+Each entity is assigned a top-level type (\texttt{lack:Person} or \texttt{lack:Collective}), a granular subtype (e.g.\ \texttt{lack-type:think\_tank}), an \texttt{rdfs:label}, and where available an \texttt{owl:sameAs} link to Wikidata and/or DBpedia.
+
+% \vspace{-0.2cm}\paragraph{Phase 2: Entity URI Generation}
+% \label{sec:construction:entities}
+% Stable, dereferenceable IRIs are minted for each entity using a priority scheme over available external identifiers:
+% \begin{enumerate*}
+%     \item Wikidata QID
+%     \item Wikipedia page URL
+%     \item Web page URL
+%     \item Surface form + evidence link (fallback).
+% \end{enumerate*}
+% Each entity IRI takes the form \texttt{lack-entity:\textit{SHA1}}, where the hash is computed from the highest-priority identifier available for that entity.
+% This scheme ensures that entities with a known Wikidata entry receive a stable, semantically grounded IRI regardless of how they are named in the source data, while still providing a consistent IRI for entities that have no external presence.
+% Each entity is assigned a top-level type (\texttt{lack:Person} or \texttt{lack:Collective}), a granular subtype (e.g.\ \texttt{lack-type:think\_tank}, \texttt{lack-type:company}), an \texttt{rdfs:label}, and where available an \texttt{owl:sameAs} link to the corresponding Wikidata and/or DBpedia entity (by rewriting the Wikipedia url).
+
+% \vspace{-0.2cm}\paragraph{Phase 3: Relation Graph Construction}
+% \label{sec:construction:relations}
+% With entity IRIs in place, the relation triples are constructed from the raw extraction outputs and the relation alignment mappings produced in Phase~1, in two steps.
+% First, an entity index is built in memory (mapping surface-form + evidence-link pairs to entity IRIs); second, the index is used to rewrite each extracted relation as a triple using the appropriate LACK ontology property.
+%
+% Each relation is represented following the pattern established in the ontology (Section~\ref{sec:ontology}): a direct typed triple connects source and target entities, while a reified \texttt{rdf:Statement} carries the evidence URL (\texttt{dct:source}) and, where available, temporal bounds (\texttt{lack:since}, \texttt{lack:until}).
+% The same logical relation may be attested by multiple evidence sources, yielding multiple reified instances for a single direct triple; the output graph contains 47,450 relations and 836 attributes with 51,848 corresponding reified statements, 17,449 \texttt{owl:sameAs}, and 104,757 \texttt{rdfs:seeAlso} links\footnote{Reified statements are more than triples, as the same triple may have more than one provenance URL.}.
 
 \vspace{-0.2cm}\paragraph{Phase 3: Relation Graph Construction}
 \label{sec:construction:relations}
-With entity IRIs in place, the relation triples are constructed from the raw extraction outputs and the relation alignment mappings produced in Phase~1, in two steps.
-First, an entity index is built in memory (mapping surface-form + evidence-link pairs to entity IRIs); second, the index is used to rewrite each extracted relation as a triple using the appropriate LACK ontology property.
+An in-memory index maps surface-form + evidence-link pairs to entity IRIs and is used to rewrite each extracted relation as a typed triple with the LACK property from Phase~1, following the ontology's reification pattern (Section~\ref{sec:ontology}): a direct triple between source and target, plus a reified \texttt{rdf:Statement} carrying the evidence URL (\texttt{dct:source}) and, where available, temporal bounds.
+The same logical relation may be attested by multiple sources (yielding multiple reified instances per direct triple); the output graph contains 47,450 relations and 836 attributes with 51,848 reified statements, 17,449 \texttt{owl:sameAs}, and 104,757 \texttt{rdfs:seeAlso} links.
 
-Each relation is represented following the pattern established in the ontology (Section~\ref{sec:ontology}): a direct typed triple connects source and target entities, while a reified \texttt{rdf:Statement} carries the evidence URL (\texttt{dct:source}) and, where available, temporal bounds (\texttt{lack:since}, \texttt{lack:until}).
-The same logical relation may be attested by multiple evidence sources, yielding multiple reified instances for a single direct triple; the output graph contains 47,450 relations and 836 attributes with 51,848 corresponding reified statements, 17,449 \texttt{owl:sameAs}, and 104,757 \texttt{rdfs:seeAlso} links\footnote{Reified statements are more than triples, as the same triple may have more than one provenance URL.}.
+% \vspace{-0.2cm}\paragraph{Phase 4: Provenance.}
+% \label{sec:construction:provenance}
+% A dedicated provenance query enriches each reified statement with PROV-O~\cite{provo} annotations.
+% Each statement is linked to a shared \texttt{prov:Activity} representing the LACK extraction activity, and to a \texttt{prov:Agent} identifying the extraction pipeline, via \texttt{prov:wasGeneratedBy}. \texttt{prov:used} arcs collect all source web pages used in any \texttt{rdf:Statement} produced so far.
+%This step is kept separate from Phase~3 to maintain a clean separation between the structural construction of the graph and the attachment of process-level metadata.
 
 \vspace{-0.2cm}\paragraph{Phase 4: Provenance.}
 \label{sec:construction:provenance}
-A dedicated provenance query enriches each reified statement with PROV-O~\cite{provo} annotations.
-Each statement is linked to a shared \texttt{prov:Activity} representing the LACK extraction activity, and to a \texttt{prov:Agent} identifying the extraction pipeline, via \texttt{prov:wasGeneratedBy}. \texttt{prov:used} arcs collect all source web pages used in any \texttt{rdf:Statement} produced so far.
-%This step is kept separate from Phase~3 to maintain a clean separation between the structural construction of the graph and the attachment of process-level metadata.
+A final query attaches PROV-O~\cite{provo} annotations to each reified statement, linking it to a shared \texttt{prov:Activity} (the extraction) and a \texttt{prov:Agent} (the pipeline) via \texttt{prov:wasGeneratedBy}, with \texttt{prov:used} arcs collecting all source web pages.
 
+% \begin{sloppypar}\paragraph{Phase 5: Inference Materialisation.}
+% \label{sec:construction:inference}
+% We materialise the entailments of its ontology as explicit triples using a sequence of SPARQL CONSTRUCT queries.
+% %This ensures that all queries over the graph are complete with respect to the ontology's axioms without requiring inference-capable infrastructure.
+% %The materialisation pipeline proceeds in three steps.
+% First, inverse property pairs are materialised (e.g.\ \texttt{memberOf} / \texttt{hasMember}, \texttt{fundedBy} / \texttt{hasFunder}) for all ten inverse pairs defined in the ontology.
+% Second, sub-property entailments are propagated: \texttt{leadsAt} triples are promoted to \texttt{employedBy} triples (and correspondingly for their inverses), and all direct sub-properties of \texttt{associatedWith} generate \texttt{associatedWith} triples.
+% Third, symmetry is closed for \texttt{associatedWith} and \texttt{hasPartner}.
+% The steps are executed in this order so that triples generated in earlier steps are available as input to later ones, ensuring completeness of the inference closure.
+% After materialisation, the graph grows from 47,450 extracted relations to 188,862 (adding 142,737 inferred triples).\end{sloppypar}
 \begin{sloppypar}\paragraph{Phase 5: Inference Materialisation.}
 \label{sec:construction:inference}
-We materialise the entailments of its ontology as explicit triples using a sequence of SPARQL CONSTRUCT queries.
-%This ensures that all queries over the graph are complete with respect to the ontology's axioms without requiring inference-capable infrastructure.
-%The materialisation pipeline proceeds in three steps.
-First, inverse property pairs are materialised (e.g.\ \texttt{memberOf} / \texttt{hasMember}, \texttt{fundedBy} / \texttt{hasFunder}) for all ten inverse pairs defined in the ontology.
-Second, sub-property entailments are propagated: \texttt{leadsAt} triples are promoted to \texttt{employedBy} triples (and correspondingly for their inverses), and all direct sub-properties of \texttt{associatedWith} generate \texttt{associatedWith} triples.
-Third, symmetry is closed for \texttt{associatedWith} and \texttt{hasPartner}.
-The steps are executed in this order so that triples generated in earlier steps are available as input to later ones, ensuring completeness of the inference closure.
-After materialisation, the graph grows from 47,450 extracted relations to 188,862 (adding 142,737 inferred triples).\end{sloppypar}
+Ontology entailments are materialised via a sequence of SPARQL CONSTRUCT queries, applied in order so that earlier outputs feed later steps: (i) all ten inverse property pairs (e.g.\ \texttt{memberOf}/\texttt{hasMember}); (ii) sub-property entailments (\texttt{leadsAt}~$\to$~\texttt{employedBy}, and all sub-properties of \texttt{associatedWith}); (iii) symmetric closure of \texttt{associatedWith} and \texttt{hasPartner}.
+The graph grows from 47,450 to 188,862 triples (142,737 inferred).\end{sloppypar}
