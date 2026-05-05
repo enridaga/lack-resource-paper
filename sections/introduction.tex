@@ -13,28 +13,20 @@ Consider an investigative journalist seeking to understand the network behind
 a prominent climate sceptic think tank: who funds it, who sits on its board,
 which staff have previously worked for fossil fuel companies, and whether those
 individuals are linked to other lobbying groups.
-The information needed exists --- spread across DeSmog, LobbyMap, and Wikidata
---- but in incompatible formats, organised around different entity models, and
-not linked across sources, making even this single question require hours of
-manual cross-referencing.
+The information needed exists, spread across DeSmog, LobbyMap, and Wikidata, but in incompatible formats, organised around different rationales, and
+not linked, making even this single question require hours of manual cross-referencing.
 The problem is compounded by the temporal dimension: people scatter across
 organisations, funding arrangements may be indirect, and front groups are created
-and dissolved --- yet this dynamic structure is difficult to query across
-existing sources in an integrated way.
+and dissolved; yet this dynamic structure is difficult to query across sources in an integrated way.
 
-In this paper, we present LACK (Lobbying Against Climate Knowledge), a knowledge graph of
-persons and organisations involved in lobbying against climate science and
-policy, constructed using a composite pipeline combining LLM, web search, and APIs, guided by a purpose-built lightweight ontology.
+In this paper, we present LACK (Lobbying Agents, Climate, and Knowledge), a knowledge graph of persons and organisations involved in lobbying against climate science and policy, constructed using a composite pipeline combining LLM, web search, and APIs, guided by a purpose-built lightweight ontology.
 
 Specifically, we contribute:
 \begin{itemize}
     \item The \textbf{LACK ontology}, a purpose-built OWL vocabulary covering
-    the key relation types in the climate lobbying domain, developed following
-    ontology engineering best practices and reusing established vocabularies
-    where appropriate.
+    the key relation types in the climate lobbying domain.
     \item The \textbf{LACK knowledge graph}, comprising relations between persons and organisations, extracted from more than 2k source documents across two authoritative sources, linked to Wikidata and DBpedia,
-    and published as Linked Open Data under a CC BY 4.0 licence at a
-    persistent URI following FAIR principles.
+    and published as Linked Open Data under a CC BY 4.0 licence.
 %    \item An \textbf{LLM-based relation extraction pipeline}, a reusable and    evaluated method for extracting typed, temporally annotated relations from investigative journalism text.
     \item An \textbf{evaluation with domain experts} from the investigative    journalism and climate accountability sector, assessing the utility and
     value of the resource for real-world investigative tasks.
