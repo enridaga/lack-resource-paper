@@ -76,7 +76,7 @@ Because the \texttt{organisation} type in our data spans a wide range of entity 
 Candidates are passed to the LLM, which selects the best matching QID or returns null, also detecting when a candidate represents a broader parent entity rather than the specific entity itself.
 Selected QIDs are verified via SPARQL, retrieving canonical label, Wikipedia sitelink, and parent organisation (via \texttt{P749}/\texttt{P361}).
 For entities with no Wikidata match, a web fallback first evaluates the evidence link as a potential primary identifier, then issues an LLM-generated search query via the Google Custom Search API~\cite{googlecse}, with a primary-subject check confirming whether each result page is dedicated to the entity.
-The output is an enriched CSV of entities, containing Wikidata URIs, Wikipedia URLs, parent entity links, web page fallbacks, and confidence scores - see Figure~\ref{fig:linkingex}.
+The output is an enriched CSV of entities, containing Wikidata URIs, Wikipedia URLs, parent entity links, web page fallbacks, and confidence scores - see Figure~\ref{fig:linkingex}. All code and data are published~\cite{lack-el}.
 \begin{figure}[htpb]\scriptsize
 entity: "Cambridge Analytica"\\
 type: "organisation"\\
@@ -99,7 +99,7 @@ flag\_reason: "WIKIDATA:https://www.wikidata.org/entity/Q24083484"\\
 \vspace{-0.5cm}\caption{Entitly linking: example output.}\label{fig:linkingex}
 \end{figure}
 
-\subsection{Evaluation of the extarction output}
+\subsection{Evaluation of the extraction output}
 This section evaluates the extracted data: source coverage, the accuracy of extracted relations and entity links, and known limitations.
 \paragraph{Sources:} Our collection covers the DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety as of the time of collection, providing complete coverage with respect to these two curated entry points.
 % With respect to DeSmog, the CDD represents the most systematically curated subset of the broader DeSmog site; other DeSmog databases — covering agribusiness, advertising and PR, and the Koch Network — are relevant to the climate lobbying ecosystem but are left for future work.
