@@ -14,9 +14,7 @@ We collected the profile pages of all entities listed in the database, yielding 
 For example, the profile of the Business Council of Australia\footnote{\url{https://lobbymap.org/influencer/The-Business-Council-of-Australia}} provides an overall climate policy engagement assessment, a narrative summary of the organisation's positions across policy areas, a scored evidence matrix broken down by policy query and data source, and links to the primary evidence underpinning each score.
 We collected profile pages for all entities listed in the LobbyMap Scores analysis (964 pages). 
 In addition, a further 338 organisation profiles were collected by following links to organisations referenced within those pages but not themselves included in LobbyMap Scores, yielding 1,302 pages in total.
-The two sources are complementary in scope: DeSmog focuses primarily on individuals and think tanks involved in active disinformation, while LobbyMap covers % corporations and industry associations engaging with climate policy.
-% However, they are also partially overlapping, as well-known actors are  present in both of them.
-% Together, they provide broad coverage of the actors and relationships constituting the climate-change denial ecosystem.
+The two sources are complementary in scope: DeSmog focuses primarily on individuals and think tanks involved in active disinformation, while LobbyMap covers corporations and industry associations engaging with climate policy.
 However, they are also partially overlapping, as well-known actors are present in both of them.
 The initial set of pages was collected using SPARQL Anything~\cite{daga2021opinionated}, querying the HTML source of the DeSmog Climate Disinformation Database and the JSON feed underlying the LobbyMap Scores leaderboard table.
 \paragraph{Extraction of relations from web pages}
@@ -28,12 +26,6 @@ For LobbyMap, HTML pages were fetched separately and passed as input to the mode
 The pipeline iterates over all collected profile URLs, invoking the model once per page and storing output as one JSON file per profile, with resumption logic to skip already-processed pages.
 After each run, a validation routine identified and deleted malformed or empty outputs; the extraction was then re-run on failed pages, repeating until all pages were successfully processed.
 The process, implemented in a Google Colab notebook (deposited~\cite{lack-re}), outputs a CSV file for each data source with a row for each relation, with columns for source, target, their types, relation type, temporal annotations, a natural-language description, and the evidence URL.
-
-% , for example:
-% \vspace{-0.7cm}\begin{figure}[H]\scriptsize
-% source,source\_type,relation,target,target\_type,since,until,when,description,evidence\_link
-% \\Cambridge Analytica,organization,was funded by,Robert Mercer,person,,,,Robert Mercer is one of the largest investors in the data science firm Cambridge Analytica. The Mercers invested approximately \$5 million in the company.,https://www.desmog.com/robert-mercer/
-% \end{figure}
 
 \paragraph{Entity Linking}
 The relation extraction step produces entities as surface form strings rather than authoritative identifiers, requiring three further operations: deduplication, entity resolution, and linking to Wikidata~\cite{wikidata}, with Wikipedia as a secondary target or, where no knowledge base entry exists, identification via a dedicated public web page.
@@ -50,28 +42,6 @@ Candidates are passed to the LLM, which selects the best matching QID or returns
 Selected QIDs are verified via SPARQL, retrieving canonical label, Wikipedia sitelink, and parent organisation (via \texttt{P749}/\texttt{P361}).
 For entities with no Wikidata match, a web fallback first evaluates the evidence link as a potential primary identifier, then issues an LLM-generated search query via the Google Custom Search API~\cite{googlecse}, with a primary-subject check confirming whether each result page is dedicated to the entity.
 The output is an enriched CSV of entities, containing Wikidata URIs, Wikipedia URLs, parent entity links, web page fallbacks, and confidence scores. All code and data are published~\cite{lack-el}.
-% The output is an enriched CSV of entities, containing Wikidata URIs, Wikipedia URLs, parent entity links, web page fallbacks, and confidence scores - see Figure~\ref{fig:linkingex}. All code and data are published~\cite{lack-el}.
-% \begin{figure}[htpb]\scriptsize
-% entity: "Cambridge Analytica"\\
-% type: "organisation"\\
-% evidence\_link: "https://www.desmog.com/rebekah-mercer/"\\
-% context: (...)\\
-% subtype: "consulting\_firm"\\
-% subtype\_desc: "British political consulting firm specializing in data analytics"\\
-% wikidata: "https://www.wikidata.org/entity/Q24083484"\\
-% wikidata\_label: "Cambridge Analytica"\\
-% wikidata\_desc: "2013–2018 British political consulting firm"\\
-% wikipedia\_url: "https://en.wikipedia.org/wiki/Cambridge\_Analytica"\\
-% parent\_entity: "https://www.wikidata.org/entity/Q24298808"\\
-% parent\_entity\_label: "SCL Group"\\
-% web\_page: (empty)\\
-% see\_also: "https://www.desmog.com/rebekah-mercer/"\\
-% confidence: "medium"\\
-% match\_method: "wikidata\_llm"\\
-% is\_concrete: "true"\\
-% flag\_reason: "WIKIDATA:https://www.wikidata.org/entity/Q24083484"\\
-% \vspace{-0.5cm}\caption{Entitly linking: example output.}\label{fig:linkingex}
-% \end{figure}
 
 \paragraph{Evaluation of the extraction output}
 We now evaluate the extracted data: source coverage, the accuracy of extracted relations and entity links, and known limitations.
