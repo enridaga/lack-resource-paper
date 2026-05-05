@@ -137,13 +137,21 @@ Temporal correctness is the least accurate dimension, with errors arising from m
 % However, an informal review of a sample of LobbyMap extractions suggested comparable quality.
 
 %\vspace{-0.5cm}
-\paragraph{Entities:} Entity linking was evaluated on the 225 entities from the same pages as the previous evaluation, annotated by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.\todo{Change to curated gold standard + change scores}
+% \paragraph{Entities:} Entity linking was evaluated on the 225 entities from the same pages as the previous evaluation, annotated by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.\todo{Change to curated gold standard + change scores}
+% Each entity was assessed on five dimensions: entity subtype correctness, Wikidata URI, Wikipedia URL, parent entity, and web page (where applicable); see-also links were assessed separately.
+%
+% Entity subtype accuracy is 0.951, Wikidata URI 0.920, Wikipedia URL 0.909, and web page 0.938, indicating that the pipeline reliably identifies and links entities across all primary output fields.
+% Parent entity is the weakest dimension at 0.718; errors appear in part to stem from cases where the pipeline assigned a stock exchange as the parent organisation of publicly listed companies, an artefact of how Wikidata encodes P749/P361 relations.
+% See-also links achieved perfect accuracy across all annotators.
+% Of the 275 entities with see-also content, only 25 included at least one novel URL beyond the evidence link, contributing 55 additional reference pages in total (~10\%).
+\paragraph{Entities:}
+Entity linking was evaluated on the 225 entities from the same pages as the previous evaluation, against a curated gold standard produced by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.
 Each entity was assessed on five dimensions: entity subtype correctness, Wikidata URI, Wikipedia URL, parent entity, and web page (where applicable); see-also links were assessed separately.
-
-Entity subtype accuracy is 0.951, Wikidata URI 0.920, Wikipedia URL 0.909, and web page 0.938, indicating that the pipeline reliably identifies and links entities across all primary output fields.
-Parent entity is the weakest dimension at 0.718; errors appear in part to stem from cases where the pipeline assigned a stock exchange as the parent organisation of publicly listed companies, an artefact of how Wikidata encodes P749/P361 relations.
-See-also links achieved perfect accuracy across all annotators.
-Of the 275 entities with see-also content, only 25 included at least one novel URL beyond the evidence link, contributing 55 additional reference pages in total (~10\%).
+Accuracy is high across most dimensions, with see-also at 0.96, parent entity at 0.94, Wikidata URI and Wikipedia URL at 0.88, entity subtype at 0.86, and web page at 0.84, indicating that the pipeline reliably identifies and links entities across all primary output fields.
+For the two fields whose gold reference can be precisely defined---Wikidata URI and Wikipedia URL---precision and recall are also balanced (0.93/0.85 and 0.88/0.88 respectively), confirming that the pipeline neither over- nor under-produces links for these dimensions.
+The weakest dimension in terms of precision is web page (0.49 precision, 0.59 recall), reflecting the difficulty of identifying a single canonical web presence for organisations that have several plausible candidates.
+Parent entity, despite high overall accuracy, exhibits the most informative error pattern (precision 0.79, recall 0.73): the dominant failure mode is over-eager parent assignment for foundations, transition teams, and political campaigns where no real parent organisation exists in Wikidata, alongside a smaller number of cases in which a meaningful parent was missed entirely.
+Of the 219 entities with see-also content in the gold standard, only 19 included at least one novel URL beyond the evidence link, contributing 44 additional reference pages in total ($\approx 8.4\%$).
 
 % \todo{NIL entities: Report the proportion of entities for which no external identifier (Wikidata, Wikipedia, web page) was found, and discuss implications for reusability and completeness.}
 Of the 27,945 entities in the KG, 10,189 (36.5\%) are linked to Wikidata or DBpedia, while 17,756 (63.5\%) remain without an external identifier --- a proportion that is consistent across both sources: 64.4\% of DeSmog-only entities and 65.7\% of LobbyMap-only entities are NIL.
