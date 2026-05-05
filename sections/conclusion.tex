@@ -1,8 +1,9 @@
 \section{Conclusion}
 \label{sec:conclusion}
-
-\paragraph{Summary of contribution}
-\paragraph{Limitations}
-\paragraph{Future work}: include more sources such as DeSmog KoCH Network and Air Pollution databases, as well as SourceWatch.
-
-NIL entities.
+LACK is, to our knowledge, the first knowledge graph dedicated to climate lobbying networks: a purpose-built OWL ontology and a Wikidata/DBpedia-linked Linked Open Data resource of approximately 28k entities and 213k typed, temporally-annotated, provenance-tracked relations, extracted from over 2k investigative profiles via a reusable LLM-based pipeline, and assessed by domain experts.
+By turning fragmented investigative reporting into a structured, queryable substrate, LACK has the potential to support investigative journalists, fact-checkers, NGOs and policy researchers --- a need confirmed by our expert survey --- and to enable analyses that no single source makes visible, as illustrated by the cross-source bridging cases and the COP30 cross-reference.
+For the Semantic Web community, LACK contributes a reusable ontology, a FAIR linked dataset, and a transferable methodology for constructing actor-network knowledge graphs from heterogeneous web profiles in other accountability-oriented domains.
+Two lessons stand out.
+First, temporal information is the hardest dimension to capture systematically --- a limit shared by the extraction pipeline and the source material itself, despite being one of the most valued by experts.
+Second, a high NIL rate (63.5\%) is a domain characteristic rather than a pipeline failure: actor networks of this kind are densely populated by minor staff, obscure consultants, and short-lived coalitions absent from general-purpose knowledge bases --- which in turn motivated a deliberately data-driven ontology design (e.g.\ the broad \texttt{Collective} type) representing only what could be reliably extracted.
+Future work proceeds along three lines: (i) broadening source coverage --- incorporating the DeSmog Koch Network and Air Pollution databases, SourceWatch, OpenSecrets, and lobbying registers --- and extending toward the political sphere, the most frequently cited unmet expert need, by linking lobbying actors to policymakers and parliamentary disclosure data; (ii) deepening coverage of weakly represented dimensions, particularly temporal annotations and founding relations where user demand exceeds current yield, and refining the ontology to distinguish intermediary actor types (lobby consultancies, law firms, PR agencies); (iii) improving entity grounding for NIL entities, by promoting captured \texttt{rdfs:seeAlso} web pages and parent-entity links to \texttt{owl:sameAs} assertions and resolving residual type-assignment inconsistencies.
