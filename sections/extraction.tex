@@ -6,7 +6,7 @@
 Defining precise knowledge requirements was a prerequisite for both ontology design and knowledge acquisition. 
 Requirements were elicited through a thematic analysis of the primary sources, particularly DeSmog, whose profiles systematically document individuals' and organisations' involvement in climate lobbying. 
 Recurring themes identified across profiles include organisational affiliations, employment and leadership roles, funding relationships, and temporal activity spans (often summarised in tables). 
-These themes were harmonised into a set of twelve competency questions (CQ1--CQ12), intended to be validated with domain experts, which drove both the ontology engineering process and the extraction pipeline described in the following subsections. \todo{Release code and data}
+% These themes were harmonised into a set of twelve competency questions (CQ1--CQ12), intended to be validated with domain experts, which drove both the ontology engineering process and the extraction pipeline described in the following subsections. \todo{Release code and data}
 
 \begin{description}
   \item[\textit{Transparency and Disclosure}]~
@@ -56,7 +56,7 @@ For DeSmog, page content was fetched directly by the model via Gemini's native U
 For LobbyMap, HTML pages were fetched separately and passed as input to the model.
 The pipeline iterates over all collected profile URLs, invoking the model once per page and storing output as one JSON file per profile, with resumption logic to skip already-processed pages.
 After each run, a validation routine identified and deleted malformed or empty outputs; the extraction was then re-run on failed pages, repeating until all pages were successfully processed.
-The process, implemented in a Google Colab notebook, outputs a CSV file for each data source with a row for each relation, for example:
+The process, implemented in a Google Colab notebook (deposited~\cite{lack-re}), outputs a CSV file for each data source with a row for each relation, for example:
 \vspace{-0.7cm}\begin{figure}[H]\scriptsize
 source,source\_type,relation,target,target\_type,since,until,when,description,evidence\_link
 \\Cambridge Analytica,organization,was funded by,Robert Mercer,person,,,,Robert Mercer is one of the largest investors in the data science firm Cambridge Analytica. The Mercers invested approximately \$5 million in the company.,https://www.desmog.com/robert-mercer/
