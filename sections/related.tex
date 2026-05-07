@@ -2,26 +2,23 @@
 \label{sec:related}
 
 Corporate lobbying has demonstrable consequences for climate policy outcomes.
-Brulle~\cite{brulle2018climate} maps US climate-lobbying expenditure across industry sectors, and Meng and Rode~\cite{meng2019social} estimate that lobbying lowered the probability of enacting the Waxman--Markey Cap-and-Trade Bill (a crucial climate action bill in the US) by 13 percentage points, with an estimated welfare loss in the order of \$60 billion.
-Leippold, Sautner and Yu~\cite{leippold2024corporate} document a recent \emph{camouflaging trend}, whereby firms increasingly conceal climate lobbying behind opaque legislative references. % codes rather than explicit climate keywords, making purely text-based detection progressively unreliable.
-Baehr, Bare and Heddesheimer~\cite{baehr2026climate} measure firm-level \emph{climate exposure}---how much climate-related opportunities, regulatory pressures and physical risks figure in a firm's own earnings-call disclosures---across more than 11{,}000 publicly traded firms.
-They show that this exposure systematically predicts whether the firm lobbies, how much it spends, and which political entities it targets.
-Lobbying is thus consequential, increasingly opaque, and fundamentally relational---a structure that atomic facts or aggregate spending statistics cannot capture.
-However, studying the network of organisations against climate action, and trace their related investments is an important, unsolved, and difficult challenge.
+Brulle~\cite{brulle2018climate} maps US climate-lobbying expenditure across industry sectors, and Meng and Rode~\cite{meng2019social} estimate that lobbying lowered the probability of enacting the Waxman--Markey Cap-and-Trade Bill (a crucial climate action bill in the US) by 13 percentage points, with an estimated welfare loss of roughly \$60 billion.
+More recently, Leippold, Sautner and Yu~\cite{leippold2024corporate} document a \emph{camouflaging trend}, whereby firms increasingly conceal climate lobbying behind opaque legislative references, while Baehr, Bare and Heddesheimer~\cite{baehr2026climate} show across more than 11{,}000 firms that earnings-call \emph{climate exposure} systematically predicts whether, how much, and where a firm lobbies.
+Understanding lobbying therefore requires more than aggregate spending figures: it requires modelling the underlying network of actors, funders, and affiliations through which climate-policy influence is organised and exerted.
 
 \begin{sloppypar}Investigative platforms partly address the documentation challenge.
-DeSmog~\cite{desmog} profiles individuals and organisations involved in denial and lobbying;
-LobbyMap~\cite{lobbymap} tracks corporate engagement with climate policy;
-%SourceWatch\footnote{\url{https://www.sourcewatch.org/}} catalogues front groups and funding relationships;
-and Oreskes and Conway~\cite{oreskes2011merchants} analyse strategies used to manufacture doubt about scientific consensus.
-These resources are invaluable but heterogeneous, siloed and not interlinked in any form amenable to computational analysis.
-The recognised need for better support is reflected in concurrent efforts such as the UCL \emph{AI-Powered Climate Lobbying Database}~\cite{uclclimatelobbying}, which automates text extraction, network and policy-position analysis using large language models.\end{sloppypar}
+DeSmog~\cite{desmog} profiles individuals and organisations involved in denial and lobbying; LobbyMap~\cite{lobbymap} tracks corporate engagement with climate policy; Skeptical Science~\cite{skepticalscience} curates statements attributed to prominent misinformation actors; and Oreskes and Conway~\cite{oreskes2011merchants} analyse strategies used to manufacture doubt about scientific consensus.
+These resources are invaluable but heterogeneous, siloed, and not interlinked in any form amenable to computational analysis.
+Concurrent efforts such as the UCL \emph{AI-Powered Climate Lobbying Database}~\cite{uclclimatelobbying} reflect the recognised need for better support, automating text extraction and network analysis using large language models.\end{sloppypar}
 
-In the Semantic Web community, CimpleKG~\cite{burel2024cimplekg} and ClimaFactsKG~\cite{burel2025climafactskg} address climate misinformation through structured resources, but target claim verification rather than the lobbying actor networks LACK represents---networks that matter because climate-policy influence flows through coordinated relationships (funding ties, shared board memberships, trade-association affiliations) that single-claim evaluation cannot expose.
-Knowledge graphs have been adopted as infrastructure for investigative journalism~\cite{opdahl2022semantic,gallofre2022jkp,berven2020kg,alexander2023manifesto,motta2025epistemology}, but focusing on news content and event extraction rather than political and corporate actor networks.
+In the Semantic Web community, CimpleKG~\cite{burel2024cimplekg} provides a continuously updated knowledge graph on misinformation and fact-checks across domains, currently being extended within the ClimateSense project~\cite{climatesense} with climate-specific classifiers, while ClimaFactsKG~\cite{burel2025climafactskg} structures scientific evidence countering climate misinformation; both, however, target claim verification rather than lobbying actor networks.
+Knowledge graphs have also been adopted as infrastructure for investigative journalism~\cite{opdahl2022semantic,gallofre2022jkp,berven2020kg,alexander2023manifesto,motta2025epistemology}, but with a focus on news content and event extraction rather than political and corporate actors.
+Adjacent Linked Open Data efforts cover political discourse, including the European Parliament debates~\cite{van2016debates} and the digitised Canadian parliamentary record~\cite{beelen2017digitization}, but model what political actors say in formal proceedings rather than the off-stage networks of funding, affiliation, and personnel through which lobbying influence operates.
 
-The gap is therefore threefold: social-science work establishes that climate lobbying obstructs policy and is becoming increasingly opaque but provides no machine-readable substrate;
-investigative platforms document the phenomenon but in unlinked, human-oriented form;
-and adjacent KG work has not been applied to climate-lobbying actor networks.
-LACK addresses all three as a Wikidata-linked knowledge graph of lobbying actors, built via an evaluated extraction pipeline and published as Linked Open Data.
+Constructing such a graph requires entity resolution and entity linking, both well-studied: recent surveys cover end-to-end ER pipelines~\cite{christophides2020er} and neural EL methods~\cite{sevgili2022neural}, with state-of-the-art systems combining candidate retrieval, learned similarity, and graph-aware disambiguation~\cite{ayoola2022refined}.
+Large language models have more recently been applied directly to entity matching, often matching or exceeding supervised baselines without task-specific training~\cite{peeters2025llmem}.
+LLM-driven approaches fit the climate-lobbying setting: source documents demand contextual disambiguation, and many mentions are long-tail entities absent from general-purpose knowledge bases.
+LACK's hybrid pipeline (Section~\ref{sec:extraction}) reflects these constraints, combining knowledge-base candidate retrieval, LLM-based disambiguation, and a web search fallback.
 
+What is missing is a machine-readable representation of the actors and relationships at the core of climate lobbying.
+LACK fills this gap as a Wikidata-linked knowledge graph built from investigative sources through an evaluated extraction pipeline and published as Linked Open Data.

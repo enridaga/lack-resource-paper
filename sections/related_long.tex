@@ -1,0 +1,37 @@
+\section{Background and Related Work}
+\label{sec:related}
+
+Corporate lobbying has demonstrable consequences for climate policy outcomes.
+Brulle~\cite{brulle2018climate} maps US climate-lobbying expenditure across industry sectors, and Meng and Rode~\cite{meng2019social} estimate that lobbying lowered the probability of enacting the Waxman--Markey Cap-and-Trade Bill (a crucial climate action bill in the US) by 13 percentage points, with an estimated welfare loss in the order of \$60 billion.
+Leippold, Sautner and Yu~\cite{leippold2024corporate} document a recent \emph{camouflaging trend}, whereby firms increasingly conceal climate lobbying behind opaque legislative references. % codes rather than explicit climate keywords, making purely text-based detection progressively unreliable.
+Baehr, Bare and Heddesheimer~\cite{baehr2026climate} measure firm-level \emph{climate exposure}, that is, how much climate-related opportunities, regulatory pressures and physical risks figure in a firm's own earnings-call disclosures, across more than 11{,}000 publicly traded firms.
+They show that this exposure systematically predicts whether the firm lobbies, how much it spends, and which political entities it targets.
+Lobbying is thus consequential, increasingly opaque, and fundamentally relational, a structure that atomic facts or aggregate spending statistics cannot capture.
+However, studying the network of organisations against climate action, and trace their related investments is an important, unsolved, and difficult challenge.
+
+\begin{sloppypar}Investigative platforms partly address the documentation challenge.
+DeSmog~\cite{desmog} profiles individuals and organisations involved in denial and lobbying;
+LobbyMap~\cite{lobbymap} tracks corporate engagement with climate policy;
+Skeptical Science~\cite{skepticalscience} curates statements attributed to prominent climate misinformation actors;
+%SourceWatch\footnote{\url{https://www.sourcewatch.org/}} catalogues front groups and funding relationships;
+and Oreskes and Conway~\cite{oreskes2011merchants} analyse strategies used to manufacture doubt about scientific consensus.
+These resources are invaluable but heterogeneous, siloed and not interlinked in any form amenable to computational analysis.
+The recognised need for better support is reflected in concurrent efforts such as the UCL \emph{AI-Powered Climate Lobbying Database}~\cite{uclclimatelobbying}, which automates text extraction, network and policy-position analysis using large language models.\end{sloppypar}
+
+In the Semantic Web community, CimpleKG~\cite{burel2024cimplekg} provides a continuously updated knowledge graph on misinformation and fact-checks across domains, currently being extended within the ClimateSense project~\cite{climatesense} with climate-specific classifiers, while ClimaFactsKG~\cite{burel2025climafactskg} structures scientific evidence countering climate misinformation. Both target claim verification rather than the lobbying actor networks LACK represents. Such networks matter because climate-policy influence flows through coordinated relationships (funding ties, shared board memberships, trade-association affiliations) that single-claim evaluation cannot expose.
+Knowledge graphs have been adopted as infrastructure for investigative journalism~\cite{opdahl2022semantic,gallofre2022jkp,berven2020kg,alexander2023manifesto,motta2025epistemology}, but focusing on news content and event extraction rather than political and corporate actor networks.
+Adjacent efforts have applied Linked Open Data to political discourse, including the European Parliament debates~\cite{van2016debates} and the digitised Canadian parliamentary record~\cite{beelen2017digitization}, but these resources model what political actors say in formal proceedings rather than the off-stage networks of funding, affiliation, and personnel through which lobbying influence operates.
+
+
+A substantial body of work addresses entity resolution and entity linking, both central to constructing knowledge graphs from heterogeneous text. Recent surveys cover end-to-end entity resolution pipelines~\cite{christophides2020er} and neural entity linking methods~\cite{sevgili2022neural}, with state-of-the-art systems combining candidate retrieval, learned similarity, and graph-aware disambiguation~\cite{ayoola2022refined}. Large language models have more recently been applied directly to entity matching and disambiguation, often matching or exceeding supervised baselines without task-specific training~\cite{peeters2025llmem}. The climate lobbying setting poses two challenges that make this LLM-driven family of approaches a natural fit: source documents are long-form, prose-rich, and require contextual disambiguation that classical similarity features struggle to capture; and a substantial fraction of mentions refer to long-tail entities (minor staff, short-lived coalitions, regional bodies) that are absent from general-purpose knowledge bases, requiring graceful NIL handling rather than supervised training data. LACK's hybrid pipeline (Section~\ref{sec:extraction}) reflects these constraints, combining knowledge-base candidate retrieval, LLM-based disambiguation, and a web search fallback.
+
+
+Social-science studies show that climate lobbying obstructs policy and is becoming harder to detect, what is missing is a machine-readable representation of the actors and relationships at the core of climate lobbying. 
+LACK fills this gap as a Wikidata-linked knowledge graph built from investigative sources through an evaluated extraction pipeline and published as Linked Open Data.
+
+%
+% The gap is therefore threefold: social-science work establishes that climate lobbying obstructs policy and is becoming increasingly opaque but provides no machine-readable substrate;
+% investigative platforms document the phenomenon but in unlinked, human-oriented form;
+% and adjacent KG work has not been applied to climate-lobbying actor networks.
+% LACK addresses all three as a Wikidata-linked knowledge graph of lobbying actors, built via an evaluated extraction pipeline and published as Linked Open Data.
+

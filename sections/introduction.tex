@@ -1,13 +1,15 @@
 \section{Introduction}
 \label{sec:introduction}
 
-%\paragraph{Background and Motivation.}
-Lobbying networks to undermine public trust in climate science and delay effective policy action are extensively documented by investigative journalists and civil society organisations.
-Despite the breadth of such work, information remains siloed, heterogeneous
-in format, and difficult to query or analyse computationally at scale.
-This paper presents work carried out within the ClimateSense
-project~\cite{climatesense}, which builds tools to monitor and analyse climate
-misinformation across geospatial, temporal, and topical dimensions.
+Lobbying networks to undermine public trust in climate science and delay effective policy action are extensively documented by investigative journalists and civil society organisations, including dedicated platforms such as DeSmog~\cite{desmog} and InfluenceMap's LobbyMap~\cite{lobbymap}.
+Despite the breadth of such work, the resulting information remains siloed across heterogeneous platforms and is published primarily in long-form prose, organised around organisations rather than around the individuals, roles, and relationships that constitute lobbying networks. 
+As a consequence, even basic questions, such as who funds a given think tank, which staff previously worked for fossil fuel companies, or which board members sit across multiple front groups, require hours of manual cross-referencing across sites with incompatible structures. 
+Representing this domain as a knowledge graph makes such relational knowledge explicit and queryable at scale.
+% Despite the breadth of such work, information remains siloed, heterogeneous
+% in format, and difficult to query or analyse computationally at scale.
+% This paper presents work carried out within the ClimateSense
+% project~\cite{climatesense}, which builds tools to monitor and analyse climate
+% misinformation across geospatial, temporal, and topical dimensions.
 % Consider an investigative journalist seeking to understand the network behind
 % a prominent climate sceptic think tank: who funds it, who sits on its board,
 % which staff have previously worked for fossil fuel companies, and whether those
@@ -27,8 +29,8 @@ Specifically, we contribute:
     \item The \textbf{LACK knowledge graph}, comprising relations between persons and organisations, extracted from more than 2k source documents across two authoritative sources, linked to Wikidata and DBpedia,
     and published as Linked Open Data under a CC BY 4.0 licence.
 %    \item An \textbf{LLM-based relation extraction pipeline}, a reusable and    evaluated method for extracting typed, temporally annotated relations from investigative journalism text.
-    \item An \textbf{evaluation with domain experts} from the investigative    journalism and climate accountability sector, assessing the utility and
-    value of the resource for real-world investigative tasks.
+    \item A demonstration of the \textbf{utility of LACK for real-world investigative tasks} in the climate accountability sector, validated through evaluation with domain experts from investigative journalism.
+%	\item An \textbf{evaluation with domain experts} from the investigative    journalism and climate accountability sector, assessing the utility and value of the resource for real-world investigative tasks.
 %    \item A \textbf{sustainability and maintenance plan}, situating LACK within
 %    the ongoing ClimateSense project~\cite{climatesense} and committing to
 %    continued updates as source corpora expand.

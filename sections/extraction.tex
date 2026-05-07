@@ -1,40 +1,52 @@
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/lack-acquisition-pipeline.pdf}
+  \caption{The LACK knowledge acquisition pipeline.
+  Each stage is annotated with the model or tool used and the artefact produced.
+  The final output feeds into knowledge graph construction (Section~\ref{sec:construction}).}
+  \label{fig:acquisition-pipeline}\vspace{-0.3cm}
+\end{figure}
 \section{Knowledge Acquisition}
 \label{sec:extraction}
 \paragraph{Requirements and Competency Questions.}
-Knowledge requirements were elicited through a thematic analysis of the primary sources --- particularly DeSmog, whose profiles systematically document individuals' and organisations' involvement in climate lobbying --- and harmonised into twelve competency questions (CQ1--CQ12) covering four areas: \textit{Transparency and Disclosure}, \textit{Network Structure}, \textit{Temporal Reasoning}, and \textit{Identity and Deduplication}.
+Knowledge requirements were elicited by the authors through informal inductive analysis of ten DeSmog profile pages, manually tagging recurring information types, with emphasis on relations between persons, organisations, and policy actors.
+The resulting categories were consolidated into twelve competency questions (CQ1--CQ12) covering four areas (\textit{Transparency and Disclosure}, \textit{Network Structure}, \textit{Temporal Reasoning}, \textit{Identity and Deduplication}), with the resulting ontology subsequently validated for relevance with domain experts (Section~\ref{sec:evaluation}).
 The first eleven (CQ1--CQ11) are listed in Table~\ref{tab:coverage} and drove the design of both the ontology (Section~\ref{sec:ontology}) and the extraction pipeline; CQ12, on identity and deduplication, is addressed by the entity linking step described later in this section.
 The full text of each question is available on the LACK website\footnote{\url{https://climatesense-project.eu/lack/ontology.html}}.
 
-\paragraph{Sources}
-LACK was built from two complementary web sources, together covering a broad range of actors in the climate lobbying ecosystem\footnote{The following paragraph refers to the web pages accessed in December 2025.}.
-\textbf{DeSmog Climate Disinformation Database}~\cite{desmog} is a curated, editorially maintained resource profiling individuals and organisations involved in climate science denial and disinformation. 
-For example, the profile of Cambridge Analytica\footnote{\url{https://www.desmog.com/cambridge-analytica/}} documents the organisation's background, its connections to fossil fuel interests, funding relationships, key personnel with their tenure periods, and a chronological record of notable actions.
-We collected the profile pages of all entities listed in the database, yielding 943 pages. Profiles typically document an individual's or organisation's positions on climate science, affiliations, funding sources, and public statements.
-\textbf{LobbyMap}~\cite{lobbymap}, maintained by InfluenceMap, is the world's leading database of corporate and industry association engagement with climate policy, providing assessments and profiles for approximately 1,000 companies and 330 industry associations. 
-For example, the profile of the Business Council of Australia\footnote{\url{https://lobbymap.org/influencer/The-Business-Council-of-Australia}} provides an overall climate policy engagement assessment, a narrative summary of the organisation's positions across policy areas, a scored evidence matrix broken down by policy query and data source, and links to the primary evidence underpinning each score.
-We collected profile pages for all entities listed in the LobbyMap Scores analysis (964 pages). 
-In addition, a further 338 organisation profiles were collected by following links to organisations referenced within those pages but not themselves included in LobbyMap Scores, yielding 1,302 pages in total.
-The two sources are complementary in scope: DeSmog focuses primarily on individuals and think tanks involved in active disinformation, while LobbyMap covers corporations and industry associations engaging with climate policy.
-However, they are also partially overlapping, as well-known actors are present in both of them.
+\paragraph{Sources.}
+LACK was built from the two most comprehensive English-language databases dedicated to climate-lobbying actors\footnote{Pages accessed in December 2025.}; other relevant sources, such as Sceptical Science~\cite{skepticalscience} and SourceWatch, are left to future work.
+\textbf{DeSmog Climate Disinformation Database}~\cite{desmog} is maintained by DeSmog, an international investigative journalism organisation founded in 2006, philanthropically funded, with editorial standards regulated in the UK by IMPRESS, and widely cited by journalists, academics, and policymakers.
+The profile of Cambridge Analytica\footnote{\url{https://www.desmog.com/cambridge-analytica/}}, for example, documents background, fossil fuel connections, funding, key personnel with tenure periods, and a chronological record of notable actions.
+We collected all 943 profile pages listed in the database, typically covering positions on climate science, affiliations, funding sources, and public statements.
+\textbf{LobbyMap}~\cite{lobbymap}, maintained by InfluenceMap (an independent, non-profit think tank founded in 2015), provides analyst-scored assessments of corporate and industry association engagement with climate policy for approximately 1,000 companies and 330 associations, benchmarked against IPCC science.
+The profile of the Business Council of Australia\footnote{\url{https://lobbymap.org/influencer/The-Business-Council-of-Australia}}, for example, provides an overall engagement assessment, a narrative summary of positions across policy areas, a scored evidence matrix by policy query and source, and links to the primary evidence.
+We collected the 964 profile pages from the LobbyMap Scores analysis, plus a further 338 obtained by following links to organisations referenced within them but not themselves in LobbyMap Scores (1,302 pages in total).
+The two sources are complementary: DeSmog focuses on individuals and think tanks involved in active disinformation, while LobbyMap covers corporations and industry associations engaging with policy; well-known actors appear in both.
 The initial set of pages was collected using SPARQL Anything~\cite{daga2021opinionated}, querying the HTML source of the DeSmog Climate Disinformation Database and the JSON feed underlying the LobbyMap Scores leaderboard table.
-\paragraph{Extraction of relations from web pages}
+
+\paragraph{Extraction of relations from web pages.}
+Figure~\ref{fig:acquisition-pipeline} summarises the full acquisition pipeline.
 The competency questions were translated into a defined set of typed relations between two top-level entity types (Person and Organisation), forming the schema for the extraction pipeline.
-Relation extraction was performed by prompting Gemini 2.5 Flash~\cite{gemini25} with a structured prompt applied to each profile page.
-The prompt specifies the allowed relation types with their definitions, a strict JSON output schema (a list of \texttt{Relation} objects, each with source, target, relation type, optional temporal annotations as \texttt{xsd:gYear}, a natural language description, and evidence URLs), and constraints requiring the model to use only the provided page as evidence and return valid JSON only.
+Relation extraction was performed by prompting Gemini 2.5 Flash~\cite{gemini25}, chosen for its native URL-context tool (which fetches DeSmog pages directly, avoiding bespoke scraping) and the team's available access.
+The prompt specifies the allowed relation types with their definitions, a strict JSON output schema (\texttt{Relation} objects with source, target, type, optional \texttt{xsd:gYear} temporal annotations, a description, and evidence URLs), and a constraint to use only the provided page as evidence.
 For DeSmog, page content was fetched directly by the model via Gemini's native URL context tool.
 For LobbyMap, HTML pages were fetched separately and passed as input to the model.
 The pipeline iterates over all collected profile URLs, invoking the model once per page and storing output as one JSON file per profile, with resumption logic to skip already-processed pages.
 After each run, a validation routine identified and deleted malformed or empty outputs; the extraction was then re-run on failed pages, repeating until all pages were successfully processed.
 The process, implemented in a Google Colab notebook (deposited~\cite{lack-re}), outputs a CSV file for each data source with a row for each relation, with columns for source, target, their types, relation type, temporal annotations, a natural-language description, and the evidence URL.
 
-\paragraph{Entity Linking}
+\paragraph{Entity Linking.}
 The relation extraction step produces entities as surface form strings rather than authoritative identifiers, requiring three further operations: deduplication, entity resolution, and linking to Wikidata~\cite{wikidata}, with Wikipedia as a secondary target or, where no knowledge base entry exists, identification via a dedicated public web page.
 The input to this step is a pair of (entity name, evidence link) — the surface form and the source profile page where it appeared — augmented by natural language context sentences aggregated from the previous step.
 The same surface form on the same page is treated as a single entity; the same surface form across different pages is not assumed to refer to the same entity.
-A preliminary quality step filters out generic non-entities using Groq-hosted Llama 3.3 70B~\cite{llama33}.
+%A preliminary quality step filters out generic non-entities using Groq-hosted Llama 3.3 70B~\cite{llama33}.
+A preliminary quality step filters out generic non-entities using Groq-hosted Llama 3.3 70B~\cite{llama33}, selected for production cost-efficiency at scale.
 An LLM classifier distinguishes concrete named entities from purely descriptive or quantitative strings, flagging expressions such as \texttt{"14 lobbyists"}, \texttt{"200 civil society groups"}, or \texttt{"Gas lobby"} for removal, while retaining named events, initiatives, and borderline collectives that carry a proper name.
-For the remaining entities, we apply a hybrid linking pipeline co-designed with Claude~\cite{claude}, combining Wikidata API candidate retrieval, LLM-based disambiguation, and SPARQL-based verification, with a web search fallback for entities absent from Wikidata.
-The pipeline was designed and prototyped using Claude Sonnet 4.6~\cite{claudesonnet46} and executed at scale using Groq-hosted Llama 3.3 70B~\cite{llama33} for cost efficiency.
+For the remaining entities, we apply a hybrid linking pipeline combining Wikidata API candidate retrieval, LLM-based disambiguation, and SPARQL-based verification, with a web search fallback for entities absent from Wikidata.
+The pipeline was prototyped using Claude Sonnet 4.6~\cite{claudesonnet46}, chosen for stronger reasoning during design, and executed at scale on Llama 3.3 70B~\cite{llama33} (already justified above) for production cost-efficiency; a larger model may have improved recall on long-tail entities, and we leave this comparison to future work.
+% For the remaining entities, we apply a hybrid linking pipeline co-designed with Claude~\cite{claude}, combining Wikidata API candidate retrieval, LLM-based disambiguation, and SPARQL-based verification, with a web search fallback for entities absent from Wikidata.
+% The pipeline was designed and prototyped using Claude Sonnet 4.6~\cite{claudesonnet46} and executed at scale using Groq-hosted Llama 3.3 70B~\cite{llama33} for cost efficiency.
 Candidate Wikidata entries are retrieved via the Wikidata API, with a Wikipedia search API fallback for entities not indexed there, resolving article titles to Wikidata QIDs.
 When a Wikipedia page is found, we produce DBpedia resource links.
 Because the \texttt{organisation} type in our data spans a wide range of entity classes — companies, think tanks, PACs, government agencies, events, journals, and coalitions — type-based filtering in Wikidata is unreliable; entity subtype is instead inferred by the LLM from context.
@@ -43,7 +55,7 @@ Selected QIDs are verified via SPARQL, retrieving canonical label, Wikipedia sit
 For entities with no Wikidata match, a web fallback first evaluates the evidence link as a potential primary identifier, then issues an LLM-generated search query via the Google Custom Search API~\cite{googlecse}, with a primary-subject check confirming whether each result page is dedicated to the entity.
 The output is an enriched CSV of entities, containing Wikidata URIs, Wikipedia URLs, parent entity links, web page fallbacks, and confidence scores. All code and data are published~\cite{lack-el}.
 
-\paragraph{Evaluation of the extraction output}
+\paragraph{Evaluation of the extraction output.}
 We now evaluate the extracted data: source coverage, the accuracy of extracted relations and entity links, and known limitations.
 
 Our collection covers the DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety as of the time of collection, providing complete coverage with respect to these two curated entry points.
