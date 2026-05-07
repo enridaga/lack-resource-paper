@@ -74,16 +74,22 @@ The output is an enriched CSV of entities, containing Wikidata URIs, Wikipedia U
 We evaluate source coverage, relation accuracy, entity-linking accuracy, and known limitations.
 All annotators are knowledge engineers; both tasks below were preceded by a sample run to align on the assessment dimensions.
 
-Our collection covers the DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety as of the time of collection, providing complete coverage with respect to these two curated entry points.
-With respect to LobbyMap, the Scores leaderboard covers approximately 1,000 companies and 330 industry associations, but InfluenceMap hosts a broader set of content (including sector-level reports, country profiles, and policy engagement assessments) that was not included in the current collection.
-Extending coverage to these additional sources remains a direction for future work.
+Our collection covers DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety at the time of collection.
+InfluenceMap hosts further content (sector-level reports, country profiles, and additional policy engagement assessments) not included here, which we leave to future work.
+
+% Our collection covers the DeSmog Climate Disinformation Database and the LobbyMap Scores leaderboard in their entirety as of the time of collection, providing complete coverage with respect to these two curated entry points.
+% With respect to LobbyMap, the Scores leaderboard covers approximately 1,000 companies and 330 industry associations, but InfluenceMap hosts a broader set of content (including sector-level reports, country profiles, and policy engagement assessments) that was not included in the current collection.
+% Extending coverage to these additional sources remains a direction for future work.
 
 Relation extraction was evaluated on a sample of 300 relations drawn from 8 randomly selected DeSmog profile pages.
 Three annotators (the authors) worked in pairs, each pair covering approximately 100 relations, with disagreements resolved by discussion.
 Each relation was assessed on three dimensions: truthfulness (is the relation supported by the source page?), validity (is the relation type and its domain and range correctly applied according to the schema?), and temporal correctness (are the temporal annotations accurate?)\footnote{Full annotation guidelines: \url{https://bit.ly/lack_42bhqzl}.}.
 Truthfulness accuracy is 0.93 (0.99 with partial credit), validity 0.907 (0.95 with partial), and temporal correctness 0.797 (0.91 with partial), where partial credit captures approximately correct extractions.
-The main source of partly correct answers relates to the conflation of specific sub-roles with the coarser schema relations: the model frequently uses \texttt{is president of} or \texttt{is director of} where the source text indicates a more specific role such as vice-president, deputy director, or departmental director.
-A recurrent validity issue is the misapplication of organisation-level relations to person-organisation pairs: for example, \texttt{has partner} was used when a person holds a partner title at a law or consulting firm, whereas the relation was intended to connect two organisations in a formal partnership.
+%
+% The main source of partly correct answers relates to the conflation of specific sub-roles with the coarser schema relations: the model frequently uses \texttt{is president of} or \texttt{is director of} where the source text indicates a more specific role such as vice-president, deputy director, or departmental director.
+% A recurrent validity issue is the misapplication of organisation-level relations to person-organisation pairs: for example, \texttt{has partner} was used when a person holds a partner title at a law or consulting firm, whereas the relation was intended to connect two organisations in a formal partnership.
+Partly correct answers mostly stem from sub-role conflation (e.g., \texttt{is president of} used for vice-presidents).
+A recurrent validity issue is the misapplication of organisation-level relations to person-organisation pairs (e.g., \texttt{has partner} used for a partner title at a law firm rather than a partnership between two organisations).
 Temporal correctness is the least accurate dimension (~0.80\%), with errors from missing dates, incorrect inference of date ranges, and ambiguity in encoding point-in-time vs.\ interval information.
 
 Entity linking was evaluated on 225 entities from the same pages as the previous evaluation, against a curated gold standard\footnote{Gold standard preparation: \url{https://bit.ly/lack_3QQPRsD}} produced by four annotators (the authors), each covering approximately 56 entities, with a subset supervised by a second annotator and disagreements resolved by discussion.
@@ -92,7 +98,7 @@ Accuracy is high across most dimensions, with see-also at 0.96, parent entity at
 For the two fields whose gold reference can be precisely defined, Wikidata URI and Wikipedia URL, precision and recall are also balanced (0.93/0.85 and 0.88/0.88 respectively), confirming that the pipeline neither over- nor under-produces links for these dimensions.
 The weakest dimension in terms of precision is web page (0.49 precision, 0.59 recall), reflecting the difficulty of identifying a single canonical web presence.
 Parent entity, despite high overall accuracy, exhibits the most informative error pattern (precision 0.79, recall 0.73): the dominant failure mode is over-eager parent assignment for foundations, transition teams, and political campaigns where no real parent organisation exists in Wikidata, alongside a smaller number of cases in which a meaningful parent was missed entirely.
-Of the 219 entities with see-also content in the gold standard, only 19 included at least one novel URL beyond the evidence link, contributing 44 additional reference pages in total ($\approx 8.4\%$).
+%Of the 219 entities with see-also content in the gold standard, only 19 included at least one novel URL beyond the evidence link, contributing 44 additional reference pages in total ($\approx 8.4\%$).
 
 Of the 27,945 entities in the KG, 10,189 (36.5\%) are linked to Wikidata or DBpedia, while 17,756 (63.5\%) remain without an external identifier, a proportion that is consistent across both sources: 64.4\% of DeSmog-only entities and 65.7\% of LobbyMap-only entities are NIL.
 This high NIL rate is not a pipeline failure but a domain characteristic: the climate lobbying ecosystem is densely populated with minor think tank staff, obscure industry consultants, short-lived coalitions, and regional trade bodies that are simply not represented in general-purpose knowledge bases such as Wikidata.
