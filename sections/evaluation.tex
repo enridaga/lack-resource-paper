@@ -1,67 +1,104 @@
-\section{Evaluation}
+\vspace{-0.3cm}\section{Evaluation}
 \label{sec:evaluation}
 We evaluate LACK along two dimensions: coverage with respect to the competency questions, and utility, through a questionnaire with domain experts.
-
 \subsection{Resource Coverage}
 We assess the extent to which the KG answers the competency questions that drove its design.
-For each CQ, Table~\ref{tab:coverage} reports the ontology relation(s) involved, triple counts before and after inferencing, and the number of distinct entities affected, obtained via SPARQL queries against the ClimateSense endpoint\footnote{\url{https://sparql.climatesense.kmi.tools/climatesense}, graph \texttt{<https://purl.net/climatesense/lack>}}.
-Coverage is classified into three tiers: \textbf{Strong} ($>5{,}000$ triples), \textbf{Moderate} ($1{,}000$--$5{,}000$), and \textbf{Weak} ($<1{,}000$); for temporal CQs (CQ10, CQ11), the figures reflect the share of statements or entities carrying \texttt{lack:since}/\texttt{lack:until} or \texttt{lack:activeSince}/\texttt{lack:activeUntil}.
+For each CQ, Table~\ref{tab:coverage} reports the ontology relation(s) involved, triple counts before and after inferencing, the number of distinct entities affected, and the resulting coverage ratio (entities affected over the 27{,}974 total entities; for the temporal CQ10, reified statements carrying \texttt{lack:since}/\texttt{lack:until} over 51{,}848 total reified statements). Counts are obtained via SPARQL queries against the ClimateSense endpoint\footnote{\url{https://sparql.climatesense.kmi.tools/climatesense}, graph \texttt{<https://purl.net/climatesense/lack>}}.
+We classify CQs into three tiers --- \textbf{Strong}, \textbf{Moderate}, \textbf{Weak} --- using natural breaks in the empirical distribution of coverage ratios: the largest gap (7.5\,pp, between 12.2\% and 4.7\%) separates Weak from the rest, and the next largest (7.2\,pp, between 22.8\% and 15.6\%) separates Strong from Moderate.
+CQ9 is excluded from this partition and reported separately, since \texttt{associatedWith} is the top-level relation in the hierarchy and its coverage is heavily inflated by inference; CQ1 is degenerate (every entity satisfies it) and reported as N/A.
+
+% \subsection{Resource Coverage}
+% We assess the extent to which the KG answers the competency questions that drove its design.
+% For each CQ, Table~\ref{tab:coverage} reports the ontology relation(s) involved, triple counts before and after inferencing, and the number of distinct entities affected, obtained via SPARQL queries against the ClimateSense endpoint\footnote{\url{https://sparql.climatesense.kmi.tools/climatesense}, graph \texttt{<https://purl.net/climatesense/lack>}}.
+% Coverage is classified into three tiers: \textbf{Strong} ($>5{,}000$ triples), \textbf{Moderate} ($1{,}000$--$5{,}000$), and \textbf{Weak} ($<1{,}000$); for temporal CQs (CQ10, CQ11), the figures reflect the share of statements or entities carrying \texttt{lack:since}/\texttt{lack:until} or \texttt{lack:activeSince}/\texttt{lack:activeUntil}.
+
 
 \begin{table}[t]
 \centering
-\caption{Coverage of competency questions: mapping to research questions, ontology relations, triple counts (before and after inferencing), affected entities, and coverage tier.}
+\caption{Coverage of competency questions: mapping to research questions, ontology relations, triple counts (before and after inferencing), affected entities, coverage ratio (entities affected / 27{,}974 total entities; for CQ10, reified statements with \texttt{lack:since}/\texttt{lack:until} / 51{,}848 total reified statements), and coverage tier.}
 \label{tab:coverage}
 % \resizebox{\textwidth}{!}{%
-\begin{tabular}{p{0.08\textwidth} >{\raggedright}p{0.20\textwidth} >{\raggedright}p{0.20\textwidth} >{\raggedright}p{0.25\textwidth} >{\raggedright}p{0.11\textwidth} p{0.12\textwidth}}
+\begin{tabular}{p{0.07\textwidth} >{\raggedright}p{0.18\textwidth} >{\raggedright}p{0.18\textwidth} >{\raggedright}p{0.22\textwidth} >{\raggedright}p{0.11\textwidth} >{\raggedright}p{0.08\textwidth} p{0.10\textwidth}}
 \hline
-\textbf{CQ} & \textbf{RQ (summary)} & \textbf{Relation(s)} & \textbf{Triples (before$\to$after)} & \textbf{Entities} & \textbf{Coverage} \\
+\textbf{CQ} & \textbf{RQ (summary)} & \textbf{Relation(s)} & \textbf{Triples (before$\to$after)} & \textbf{Entities} & \textbf{(\%)} & \textbf{Tier} \\
 \hline
-CQ1  & Who is involved?           & (entities)                                      & 27,974 $\to$ 27,974   & 27,974 & Strong \\
-CQ2  & How are actors funded?     & \texttt{fundedBy} / \texttt{hasFunder}        & 5,210 $\to$ 10,420    & 3,421  & Strong \\
-CQ3  & Who are the members?       & \texttt{memberOf} / \texttt{hasMember}        & 13,469 $\to$ 26,912   & 9,718  & Strong \\
-CQ4  & Who leads organisations?   & \texttt{leadsAt} / \texttt{hasLeader}         & 5,639 $\to$ 11,278    & 6,383  & Strong \\
-CQ5  & Employment history?        & \texttt{employedBy} / \texttt{hasEmployee}    & 5,463 $\to$ 21,276    & 10,943 & Strong \\
-CQ6  & Structural connections?    & \texttt{hasPartner}, \texttt{sponsored}       & 5,686 $\to$ 8,013     & 4,365  & Strong \\
-CQ7  & Who founded a group?       & \texttt{founded} / \texttt{wasFoundedBy}      & 73 $\to$ 146          & 108    & Weak \\
-CQ8  & Derivative organisations?  & \texttt{derivedFrom} / \texttt{hasDerivation} & 1,922 $\to$ 2,883     & 1,310  & Moderate \\
-CQ9  & Network reach?             & \texttt{associatedWith}                       & 3,216 $\to$ 91,219    & 26,169 & Strong \\
-CQ10 & Networks change over time? & \texttt{since} / \texttt{until} (reif.)       & 14,361 $\to$ 14,361      & ---    & Moderate \\
-CQ11 & When were actors active?   & \texttt{activeSince} / \texttt{activeUntil}   & 836 $\to$ 836         & 734    & Weak \\
-CQ10+ CQ5 & Who moved between orgs? & \texttt{employedBy} + reif.                  & (subset of CQ5/CQ10)    & ---    & Moderate \\
+CQ1  & Who is involved?           & (entities)                                      & 27,974 $\to$ 27,974   & 27,974 & 100.0 & N/A \\
+CQ2  & How are actors funded?     & \texttt{fundedBy} / \texttt{hasFunder}        & 5,210 $\to$ 10,420    & 3,421  & 12.2  & Moderate \\
+CQ3  & Who are the members?       & \texttt{memberOf} / \texttt{hasMember}        & 13,469 $\to$ 26,912   & 9,718  & 34.7  & Strong \\
+CQ4  & Who leads organisations?   & \texttt{leadsAt} / \texttt{hasLeader}         & 5,639 $\to$ 11,278    & 6,383  & 22.8  & Strong \\
+CQ5  & Employment history?        & \texttt{employedBy} / \texttt{hasEmployee}    & 5,463 $\to$ 21,276    & 10,943 & 39.1  & Strong \\
+CQ6  & Structural connections?    & \texttt{hasPartner}, \texttt{sponsored}       & 5,686 $\to$ 8,013     & 4,365  & 15.6  & Moderate \\
+CQ7  & Who founded a group?       & \texttt{founded} / \texttt{wasFoundedBy}      & 73 $\to$ 146          & 108    & 0.4   & Weak \\
+CQ8  & Derivative organisations?  & \texttt{derivedFrom} / \texttt{hasDerivation} & 1,922 $\to$ 2,883     & 1,310  & 4.7   & Weak \\
+CQ9  & Network reach?             & \texttt{associatedWith}                       & 3,216 $\to$ 91,219    & 26,169 & 93.5  & (Strong) \\
+CQ10 & Networks change over time? & \texttt{since} / \texttt{until} (reif.)       & 14,361 $\to$ 14,361   & ---    & 27.7  & Strong \\
+CQ11 & When were actors active?   & \texttt{activeSince} / \texttt{activeUntil}   & 836 $\to$ 836         & 734    & 2.6   & Weak \\
+CQ10+ CQ5 & Who moved between orgs? & \texttt{employedBy} + reif.                & (subset of CQ5/CQ10)  & ---    & ---   & --- \\
 \hline
 \end{tabular}%
 % }
 \vspace{-0.5cm}
 \end{table}
+% \begin{table}[t]
+% \centering
+% \caption{Coverage of competency questions: mapping to research questions, ontology relations, triple counts (before and after inferencing), affected entities, and coverage tier.}
+% \label{tab:coverage}
+% % \resizebox{\textwidth}{!}{%
+% \begin{tabular}{p{0.08\textwidth} >{\raggedright}p{0.20\textwidth} >{\raggedright}p{0.20\textwidth} >{\raggedright}p{0.25\textwidth} >{\raggedright}p{0.11\textwidth} p{0.12\textwidth}}
+% \hline
+% \textbf{CQ} & \textbf{RQ (summary)} & \textbf{Relation(s)} & \textbf{Triples (before$\to$after)} & \textbf{Entities} & \textbf{Coverage} \\
+% \hline
+% CQ1  & Who is involved?           & (entities)                                      & 27,974 $\to$ 27,974   & 27,974 & Strong \\
+% CQ2  & How are actors funded?     & \texttt{fundedBy} / \texttt{hasFunder}        & 5,210 $\to$ 10,420    & 3,421  & Strong \\
+% CQ3  & Who are the members?       & \texttt{memberOf} / \texttt{hasMember}        & 13,469 $\to$ 26,912   & 9,718  & Strong \\
+% CQ4  & Who leads organisations?   & \texttt{leadsAt} / \texttt{hasLeader}         & 5,639 $\to$ 11,278    & 6,383  & Strong \\
+% CQ5  & Employment history?        & \texttt{employedBy} / \texttt{hasEmployee}    & 5,463 $\to$ 21,276    & 10,943 & Strong \\
+% CQ6  & Structural connections?    & \texttt{hasPartner}, \texttt{sponsored}       & 5,686 $\to$ 8,013     & 4,365  & Strong \\
+% CQ7  & Who founded a group?       & \texttt{founded} / \texttt{wasFoundedBy}      & 73 $\to$ 146          & 108    & Weak \\
+% CQ8  & Derivative organisations?  & \texttt{derivedFrom} / \texttt{hasDerivation} & 1,922 $\to$ 2,883     & 1,310  & Moderate \\
+% CQ9  & Network reach?             & \texttt{associatedWith}                       & 3,216 $\to$ 91,219    & 26,169 & Strong \\
+% CQ10 & Networks change over time? & \texttt{since} / \texttt{until} (reif.)       & 14,361 $\to$ 14,361      & ---    & Moderate \\
+% CQ11 & When were actors active?   & \texttt{activeSince} / \texttt{activeUntil}   & 836 $\to$ 836         & 734    & Weak \\
+% CQ10+ CQ5 & Who moved between orgs? & \texttt{employedBy} + reif.                  & (subset of CQ5/CQ10)    & ---    & Moderate \\
+% \hline
+% \end{tabular}%
+% % }
+% \vspace{-0.5cm}
+% \end{table}
 
 \paragraph{Discussion}
-Coverage is strong across transparency and network-structure CQs.
+%Coverage is strong across transparency and network-structure CQs.
+Coverage is solid across the core transparency and network-structure CQs, with employment, membership, leadership, and temporal annotations all in the Strong tier.
 The most striking result is network reach (CQ9): after inferencing, 93.5\% of entities are reachable via \texttt{associatedWith}, transforming a sparse set of assertions into a near-complete connectivity structure; employment (CQ5) similarly benefits via the \texttt{leadsAt} sub-property hierarchy.
 Temporal coverage is partial: 14{,}361 reified statements carry \texttt{lack:since}, enabling meaningful time-bounded queries, while entity-level bounds (\texttt{activeSince}/\texttt{activeUntil}) cover only 2.6\% of entities and should be treated as supplementary.
 Founding relations (CQ7) remain sparse, reflecting the difficulty of reliably extracting founding events.
 The composite CQ10+CQ5 row is listed separately because tracing movement between organisations requires both employment and temporal reification jointly.
 
-\subsection{Domain experts' feedback}
-
-To complement the coverage analysis with an external perspective, we conducted a structured expert evaluation of the LACK resource. A 14-question online questionnaire was distributed to researchers, fact-checkers, investigative journalists, NGO professionals, and policy analysts whose work involves climate lobbying networks. Respondents were recruited through purposive sampling across 25 organisational groups spanning academic networks (e.g., CSSN, Brown Climate and Development Lab), fact-checking organisations (e.g., Climate Feedback, Full Fact), investigative outlets (e.g., DeSmog, Inside Climate News), NGOs (e.g., Corporate Europe Observatory, InfluenceMap, Transparency International), and international bodies. A total of 68 invitations were sent, yielding 9 completed responses (13.2\% response rate). While the sample is small, it represents a diverse cross-section of the primary user communities that LACK is designed to serve, and the consistency of responses across professional backgrounds lends confidence to the findings.
-
 % \subsection{Domain experts' feedback}
-% A 14-question online questionnaire was distributed via purposive sampling to researchers, fact-checkers, investigative journalists, NGO professionals, and policy analysts working on climate lobbying networks, across 25 organisational groups spanning academic networks, fact-checking organisations, investigative outlets, NGOs, and international bodies.
-% Of 68 invitations, 9 were completed (13.2\%); while small, the sample spans the primary user communities, and the consistency of responses across professional backgrounds lends confidence to the findings.
 
-\paragraph{Demand validation.} Respondents unanimously confirmed the value of a structured, searchable resource for climate lobbying networks, rating its overall importance at M=4.62 on a 5-point scale. The ability to search across multiple sources in a single system was rated equally highly (M=4.62), directly validating the integration approach that underpins LACK.
+% To complement the coverage analysis with an external perspective, we conducted a structured expert evaluation of the LACK resource. A 14-question online questionnaire was distributed to researchers, fact-checkers, investigative journalists, NGO professionals, and policy analysts whose work involves climate lobbying networks. Respondents were recruited through purposive sampling across 25 organisational groups spanning academic networks (e.g., CSSN, Brown Climate and Development Lab), fact-checking organisations (e.g., Climate Feedback, Full Fact), investigative outlets (e.g., DeSmog, Inside Climate News), NGOs (e.g., Corporate Europe Observatory, InfluenceMap, Transparency International), and international bodies. A total of 68 invitations were sent, yielding 9 completed responses (13.2\% response rate). While the sample is small, it represents a diverse cross-section of the primary user communities that LACK is designed to serve, and the consistency of responses across professional backgrounds lends confidence to the findings.
 
-% \paragraph{Demand validation.} Respondents unanimously rated both the overall value of such a resource and the ability to search across multiple sources at M=4.62 on a 5-point scale, directly validating LACK's integration approach.
+\vspace{-0.2cm}\subsection{Domain experts' feedback}
+A 14-question online questionnaire was distributed via purposive sampling to researchers, fact-checkers, investigative journalists, NGO professionals, and policy analysts working on climate lobbying networks, across 25 organisational groups spanning academic networks, fact-checking organisations, investigative outlets, NGOs, and international bodies.
+Of 68 invitations, 9 were completed (13.2\%); while small, the sample spans the primary user communities, and the consistency of responses across professional backgrounds lends confidence to the findings.
+
+% \paragraph{Demand validation.} Respondents unanimously confirmed the value of a structured, searchable resource for climate lobbying networks, rating its overall importance at M=4.62 on a 5-point scale. The ability to search across multiple sources in a single system was rated equally highly (M=4.62), directly validating the integration approach that underpins LACK.
+
+\vspace{-0.3cm}\paragraph{Demand validation.} Respondents unanimously rated both the overall value of such a resource and the ability to search across multiple sources at M=4.62 on a 5-point scale, directly validating LACK's integration approach.
 
 % \paragraph{Priority relation types.} When asked to rate the importance of different connection types, funding flows received the highest mean rating (M=4.75), followed by employment history (M=4.50), membership (M=4.38), sponsorship (M=4.38), and founding relations (M=4.38). Comparing these priorities with the coverage statistics in Table~\ref{tab:coverage} reveals both strengths and gaps. Funding relations (CQ2), the top-rated category, are represented by 5,210 asserted triples covering 3,421 entities, classified as \textbf{Strong}. Employment (CQ5) and membership (CQ3) similarly show \textbf{Strong} coverage with 10,943 and 9,718 affected entities respectively, well-matched to expert demand. However, founding relations (CQ7), rated 4.38 by experts, represent the most significant gap: only 73 asserted triples covering 108 entities (\textbf{Weak}), reflecting the difficulty of reliably extracting founding events from unstructured source text. This mismatch between high user demand and low extraction yield identifies founding data as a priority for future enrichment, potentially through targeted manual curation or dedicated information extraction pipelines.
 
-\paragraph{Priority relation types.} Funding flows received the highest mean rating (M=4.75), followed by employment (M=4.50), and membership, sponsorship, and founding (each M=4.38).
-Cross-referencing with Table~\ref{tab:coverage}, the top-rated categories --- funding (CQ2), employment (CQ5), and membership (CQ3) --- show \textbf{Strong} coverage and are well-matched to expert demand.
+\vspace{-0.2cm}\paragraph{Priority relation types.} Funding flows received the highest mean rating (M=4.75), followed by employment (M=4.50), and membership, sponsorship, and founding (each M=4.38).
+%Cross-referencing with Table~\ref{tab:coverage}, the top-rated categories --- funding (CQ2), employment (CQ5), and membership (CQ3) --- show \textbf{Strong} coverage and are well-matched to expert demand.
+Cross-referencing with Table~\ref{tab:coverage}, employment (CQ5) and membership (CQ3) fall in the \textbf{Strong} tier, well-matched to expert demand; funding (CQ2), the top-rated category, is only \textbf{Moderate} (12.2\%), inline with feedback from the experts on the difficulty of obtaining this information. %ing a partial mismatch between user priority and current coverage.
+Leadership (CQ4, M=4.25) is similarly well served, falling in the \textbf{Strong} tier with 22.8\% entity coverage.
 Founding relations (CQ7) are the most significant mismatch (\textbf{Weak}, 108 entities), identifying founding data as a priority for future enrichment via targeted curation or dedicated extraction.
 
 % \paragraph{Temporal and geographic dimensions.} Temporal information (when connections started and ended) received a mean importance rating of 3.88 and was flagged by half the respondents as one of the hardest types of information to find. This aligns closely with the coverage analysis: while 14,361 reified statements carry \texttt{lack:since} annotations (\textbf{Moderate}), entity-level temporal bounds (\texttt{activeSince}, \texttt{activeUntil}) cover only 734 entities (2.6\% of the total population), confirming that the temporal dimension remains the hardest to capture systematically. Several respondents noted that temporal data is critical for tracking revolving doors and organisational evolution but acknowledged that reliable temporal evidence is scarce even in the source material. Geographic information, though rated somewhat lower (M=3.75), was identified as a dimension that could support regional analyses and expand coverage beyond the current Anglo-American focus of the source databases.
 
-\paragraph{Temporal and geographic dimensions.} Temporal information was rated M=3.88 and flagged by half the respondents as one of the hardest dimensions to find --- consistent with our coverage analysis and with respondents' own acknowledgement that reliable temporal evidence is scarce even in the source material, despite being critical for tracking revolving doors and organisational evolution.
+\vspace{-0.2cm}\paragraph{Temporal and geographic dimensions.} 
+%Temporal information was rated M=3.88 and flagged by half the respondents as one of the hardest dimensions to find --- consistent with our coverage analysis and with respondents' own acknowledgement that reliable temporal evidence is scarce even in the source material, despite being critical for tracking revolving doors and organisational evolution.
+Temporal information was rated M=3.88 and flagged by half the respondents as one of the hardest dimensions to find. Statement-level temporal annotation (CQ10) reaches the Strong tier (27.7\%), but entity-level activity bounds (CQ11) cover only 2.6\% of entities --- consistent with respondents' acknowledgement that reliable temporal evidence is scarce even in the source material, despite being critical for tracking revolving doors and organisational evolution.
 Geographic information (M=3.75) was identified as a dimension that could support regional analyses beyond the current Anglo-American focus.
 
 % \paragraph{Use cases and the political sphere.} The most frequently selected competency questions were those related to funding chains (5/9), revolving doors between industry and government (4/9), and tracing multi-hop connections between corporations and advocacy groups (4/9). The latter aligns well with LACK's demonstrated network reach: after inferencing, 93.5\% of entities are reachable via \texttt{associatedWith} (CQ9), enabling the kind of path-tracing queries that experts value most. However, multiple respondents identified a gap that falls outside LACK's current scope: direct connections to the political sphere, including which politicians received funding from lobbying actors, who met with which decision-makers, and what policy positions resulted. Several respondents recommended integrating additional sources such as EU Transparency Register data, LobbyFacts, and parliamentary disclosure records. This feedback points toward a natural extension of the knowledge graph that would connect the corporate influence networks already captured in LACK with the policymaking processes they seek to affect.
@@ -70,9 +107,9 @@ Geographic information (M=3.75) was identified as a dimension that could support
 %
 %
 % In summary, the expert feedback validates LACK's core design choices, particularly the integration of multiple sources and the emphasis on funding, employment, and membership relations, all of which show \textbf{Strong} coverage. At the same time, the evaluation highlights three areas for development: enriching temporal annotations, which both experts and the extraction pipeline identify as the most challenging dimension; expanding coverage of founding relations, where user demand significantly exceeds current data; and extending the knowledge graph toward the political sphere, which represents the most frequently cited unmet need among the surveyed experts.
-
-
-\paragraph{Use cases and the political sphere.} The most frequently selected CQs concerned funding chains (5/9), revolving doors between industry and government (4/9), and multi-hop connections between corporations and advocacy groups (4/9), the latter aligning well with LACK's demonstrated network reach (CQ9, 93.5\%).
+\vspace{-0.2cm}\paragraph{Use cases and the political sphere.} The most frequently selected CQs concerned funding chains (5/9), revolving doors between industry and government (4/9), and multi-hop connections between corporations and advocacy groups (4/9), the latter aligning well with LACK's demonstrated network reach (CQ9, 93.5\%).
 Several respondents flagged a gap outside LACK's current scope: direct connections to the political sphere (which politicians received funding, who met with which decision-makers) and recommended integrating sources such as the EU Transparency Register, LobbyFacts, parliamentary disclosure records, SourceWatch, OpenSecrets, and ProPublica Nonprofit Explorer.
-Respondents also recommended distinguishing intermediary actor types (lobby consultancies, law firms, PR agencies) currently not separated in the ontology.
-Overall, the feedback validates LACK's core design --- multi-source integration and the emphasis on funding, employment, and membership relations (all \textbf{Strong}) --- while highlighting three priorities, all reflected in the conclusion's future-work agenda: temporal enrichment, founding-relation coverage, and extension toward the political sphere.
+Respondents also recommended distinguishing intermediary actor types (lobby consultancies, law firms, PR agencies) currently not separated in the ontology. 
+%Overall, the feedback validates LACK's core design --- multi-source integration and the emphasis on funding, employment, and membership relations (all \textbf{Strong}) --- while highlighting three priorities, all reflected in the conclusion's future-work agenda: temporal enrichment, founding-relation coverage, and extension toward the political sphere.
+Overall, the feedback validates LACK's core design --- multi-source integration and the emphasis on employment and membership (\textbf{Strong}) alongside funding (\textbf{Moderate}) --- while highlighting three priorities, all reflected in the conclusion's future-work agenda: deepening funding coverage, extending entity-level temporal annotation, and connecting to the political sphere.
+% The survey remains open; findings will be updated as further responses are collected.
