@@ -100,3 +100,30 @@ By contrast, entities appearing in both sources, those prominent enough to be in
 NIL entities will be resolvable within the KG via their LACK URI and retain their label and source provenance; web page and parent entity fields, included as \textit{see also} statements, captured during entity linking but not yet promoted to \texttt{owl:sameAs} assertions, offer a path to further grounding and are left to future work.
 A residual data quality issue, 29 entities with inconsistent type assignments across pages, will be resolved in a future release.
 
+\begin{table}[t]
+\centering
+\caption{Mapping of competency questions to ontology relations and triple counts. Coverage ratio and tier discussion in Section~\ref{sec:evaluation}}
+% \caption{Coverage of competency questions: mapping to research questions, ontology relations, triple counts (before and after inferencing), affected entities, coverage ratio (entities affected / 27{,}974 total entities; for CQ10, reified statements with \texttt{lack:since}/\texttt{lack:until} / 51{,}848 total reified statements), and coverage tier.}
+\label{tab:coverage}
+% \resizebox{\textwidth}{!}{%
+\begin{tabular}{p{0.07\textwidth} >{\raggedright}p{0.18\textwidth} >{\raggedright}p{0.18\textwidth} >{\raggedright}p{0.22\textwidth} >{\raggedright}p{0.11\textwidth} >{\raggedright}p{0.08\textwidth} p{0.10\textwidth}}
+\hline
+\textbf{CQ} & \textbf{RQ (summary)} & \textbf{Relation(s)} & \textbf{Triples (before$\to$after)} & \textbf{Entities} & \textbf{(\%)} & \textbf{Tier} \\
+\hline
+CQ1  & Who is involved?           & (entities)                                      & 27,974 $\to$ 27,974   & 27,974 & 100.0 & N/A \\
+CQ2  & How are actors funded?     & \texttt{fundedBy} / \texttt{hasFunder}        & 5,210 $\to$ 10,420    & 3,421  & 12.2  & Moderate \\
+CQ3  & Who are the members?       & \texttt{memberOf} / \texttt{hasMember}        & 13,469 $\to$ 26,912   & 9,718  & 34.7  & Strong \\
+CQ4  & Who leads organisations?   & \texttt{leadsAt} / \texttt{hasLeader}         & 5,639 $\to$ 11,278    & 6,383  & 22.8  & Strong \\
+CQ5  & Employment history?        & \texttt{employedBy} / \texttt{hasEmployee}    & 5,463 $\to$ 21,276    & 10,943 & 39.1  & Strong \\
+CQ6  & Structural connections?    & \texttt{hasPartner}, \texttt{sponsored}       & 5,686 $\to$ 8,013     & 4,365  & 15.6  & Moderate \\
+CQ7  & Who founded a group?       & \texttt{founded} / \texttt{wasFoundedBy}      & 73 $\to$ 146          & 108    & 0.4   & Weak \\
+CQ8  & Derivative organisations?  & \texttt{derivedFrom} / \texttt{hasDerivation} & 1,922 $\to$ 2,883     & 1,310  & 4.7   & Weak \\
+CQ9  & Network reach?             & \texttt{associatedWith}                       & 3,216 $\to$ 91,219    & 26,169 & 93.5  & (Strong) \\
+CQ10 & Networks change over time? & \texttt{since} / \texttt{until} (reif.)       & 14,361 $\to$ 14,361   & ---    & 27.7  & Strong \\
+CQ11 & When were actors active?   & \texttt{activeSince} / \texttt{activeUntil}   & 836 $\to$ 836         & 734    & 2.6   & Weak \\
+CQ10+ CQ5 & Who moved between orgs? & \texttt{employedBy} + reif.                & (subset of CQ5/CQ10)  & ---    & ---   & --- \\
+\hline
+\end{tabular}%
+% }
+\vspace{-0.5cm}
+\end{table}
