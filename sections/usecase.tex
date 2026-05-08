@@ -1,25 +1,26 @@
-\section{Use Cases}
+\vspace{-0.3cm}\section{Use Cases}
 \label{sec:usecase}
 We demonstrate the value of LACK with two use cases. 
-The first use case identifies entities that may not have been related without integrating the data sources\footnote{We present more of these examples on our website: \url{https://climatesense-project.eu/lack/case-studies.html}.}
-The second use case connects the most connected LACK Collectives with the attendance list of COP30 (the United Nations Climate Change Conference), and identifies potential investigations.
-
-\paragraph{LACK enables integration of multiple independent sources.} 
+The first use case identifies entities that may be difficult to trace their connection without integrating the data sources\footnote{We present more of these examples on our website: \url{https://climatesense-project.eu/lack/case-studies.html}.}
+The second use case cross matches LACK Collectives with the attendees the attendees
+most connected LACK Collectives with the attendance list of COP30 (the United Nations Climate Change Conference), and identifies potential investigations.
+\begin{sloppypar}
+\paragraph{Case study: LACK enables integration of multiple independent sources.} 
 We provide two examples with the same structure: two statements, each drawn from a different source — the DeSmog Climate Disinformation Database and LobbyMap — share a common entity that acts as a bridge. 
 Neither source mentions the entities cited in the other — yet their combination, through the shared bridge entity, reveals a relationship that no single source makes visible\footnote{The connections revealed are structural, derived from publicly available data; they do not imply wrongdoing, shared intent, or direct collaboration, and are presented as research leads rather than evidential claims.}.
 
-\begin{sloppypar}\paragraph{Example 1: Darren Woods $\rightarrow$ Exxon $\rightarrow$ Heartland Institute}
+\textit{Example 1: Darren Woods $\rightarrow$ Exxon $\rightarrow$ Heartland Institute}
 \noindent\textbf{Bridge entity:} Exxon. \textbf{(InfluenceMap)} Darren Woods \texttt{lack:leadsAt} Exxon; \textbf{(DeSmog)} Exxon \texttt{lack:sponsored} Heartland Institute.
 InfluenceMap documents Woods leading Exxon; DeSmog records Exxon as a sponsor of the Heartland Institute, a think tank prominently associated with climate science denial.
-Neither source references the other's entity, yet LACK makes the chain explicit, linking a named corporate officer to a disinformation-adjacent organisation through his employer --- a pattern generalised by joining \texttt{lack:leadsAt} with \texttt{lack:sponsored} in a single SPARQL query.
-\end{sloppypar}
-\begin{sloppypar}
-\paragraph{Example 2: Cambridge Analytica $\rightarrow$ BP $\rightarrow$ Business Council of Australia}
+Neither source references the other's entity, yet LACK makes the chain explicit, linking a named corporate officer to a climate change denial organisation through his employer --- a pattern generalised by joining \texttt{lack:leadsAt} with \texttt{lack:sponsored} in a single SPARQL query.
+
+\textit{Example 2: Cambridge Analytica $\rightarrow$ BP $\rightarrow$ Business Council of Australia}
 \noindent\textbf{Bridge entity:} BP. \textbf{(DeSmog)} Cambridge Analytica \texttt{lack:hasPartner} BP; \textbf{(InfluenceMap)} BP \texttt{lack:memberOf} Business Council of Australia.
 DeSmog records a partnership between the data and political consultancy firm Cambridge Analytica and BP, while InfluenceMap separately documents BP's membership of the Business Council of Australia, an industry body with a record of opposing climate legislation.
 The two facts originate from different investigative contexts --- political data operations vs.\ fossil fuel industry lobbying in Australia --- and share only BP, yet LACK surfaces this cross-domain, cross-jurisdictional structural connection that neither source exposes alone.
 \end{sloppypar}
 
+Tracing such chains allows researchers to surface accountability relationships that are structurally present in the data but invisible within any single source.
 
 % %-----------------------------------------------------------------------
 % \subsection*{Case 3: Nick Stavropoulos $\rightarrow$ PG\&E $\rightarrow$ ZETA}
@@ -37,7 +38,7 @@ The two facts originate from different investigative contexts --- political data
 \paragraph{Case study: LACK's prominent collectives at COP30.}
 We cross-referenced LACK's 1{,}000 most heavily-described \texttt{lack:Collective} entities (ranked by outgoing IRI links) with the COP30 participant list via a simple heuristic label match.
 Of 944 distinct delegate matches, roughly 70\% flow through observer accreditation channels, 18\% appear in high-income national delegations (EU institutions, BNP Paribas, METI, the World Economic Forum), and only 43 in lower- or low-income country delegations.
-A qualitative look at the top-20 scope shows the LACK's most densely documented entities: the US climate countermovement (Heartland, Cato, ALEC, Heritage, Manhattan Institute) --- of which only three (US Chamber of Commerce, Shell, ExxonMobil) appear at COP30 at all.
+A qualitative look at the top-20 scope shows the LACK's most densely connected entities: the US climate countermovement (Heartland, Cato, ALEC, Heritage, Manhattan Institute) --- of which only three (US Chamber of Commerce, Shell, ExxonMobil) appear at COP30 at all.
 The cross-reference surfaces two findings worth investigation, which were invisible to either resource alone: the US climate countermovement does not engage with the UNFCCC track, and observer accreditation rather than national delegation is the dominant channel through which LACK-tracked organisations participate in COP.
 This is one example of the broader family of analyses LACK enables when paired with any external source of named climate-policy agents. 
 \end{sloppypar}

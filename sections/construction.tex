@@ -2,12 +2,12 @@
 \label{sec:construction}
 The LACK knowledge graph is produced by a four-phase pipeline that transforms the relation extraction outputs described in Section~\ref{sec:extraction} into a fully materialised, ontology-aligned RDF graph, implemented entirely as SPARQL queries executed with the SPARQL-Anything~\cite{sparqlanything} command-line tool, making it reproducible from the raw CSV inputs~\cite{lack-kgc}.
 
-\paragraph{Phase 1: Relation Alignment.}
+\vspace{-0.3cm}\paragraph{Phase 1: Relation Alignment.}
 \label{sec:construction:alignment}
 The relation extraction pipeline produces relations expressed as natural-language surface forms (e.g.\ \emph{is a member of}, \emph{has funded}).
 The first phase enumerates the distinct relation types appearing across both the Desmog and LobbyMap extraction outputs --- 152 types in total, covering 90,145 relation instances --- and aligns them to LACK ontology properties. We performed this task with Claude assistance and manually curated the result: a mapping table that associates each surface-form relation type with a canonical ontology IRI (e.g.\ \texttt{lack:memberOf}, \texttt{lack:fundedBy}), which is consumed by all subsequent phases\footnote{See this Google Sheet: \url{https://bit.ly/lack_4w4RdjH}.}.
 
-\begin{sloppypar}
+\vspace{-0.3cm}\begin{sloppypar}
 \paragraph{Phase 2: Entity URI Generation.}
 \label{sec:construction:entities}
 Stable, dereferenceable IRIs of the form \texttt{lack-entity:\textit{SHA1}} are minted for each entity, hashing the highest-priority identifier available: Wikidata QID, then Wikipedia URL, then web page URL, with surface form + evidence link as fallback.
@@ -33,7 +33,7 @@ Each entity is assigned a top-level type (\texttt{lack:Person} or \texttt{lack:C
 %
 % Each relation is represented following the pattern established in the ontology (Section~\ref{sec:ontology}): a direct typed triple connects source and target entities, while a reified \texttt{rdf:Statement} carries the evidence URL (\texttt{dct:source}) and, where available, temporal bounds (\texttt{lack:since}, \texttt{lack:until}).
 % The same logical relation may be attested by multiple evidence sources, yielding multiple reified instances for a single direct triple; the output graph contains 47,450 relations and 836 attributes with 51,848 corresponding reified statements, 17,449 \texttt{owl:sameAs}, and 104,757 \texttt{rdfs:seeAlso} links\footnote{Reified statements are more than triples, as the same triple may have more than one provenance URL.}.
-
+\vspace{-0.3cm}
 \paragraph{Phase 3: Relation Graph Construction}
 \label{sec:construction:relations}
 An in-memory index maps surface-form + evidence-link pairs to entity IRIs and is used to rewrite each extracted relation as a typed triple with the LACK property from Phase~1, following the ontology's reification pattern (Section~\ref{sec:ontology}): a direct triple between source and target, plus a reified \texttt{rdf:Statement} carrying the evidence URL (\texttt{dct:source}) and, where available, temporal bounds.
