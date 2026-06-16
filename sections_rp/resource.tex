@@ -1,6 +1,8 @@
+
+
 \begin{table}[t]
 \centering
-\caption{LACK KG statistics.}
+\caption{LACK KG statistics. Inferred relation triples overlap with asserted ones (e.g.\ \texttt{associatedWith} may also be asserted), so the post-inference relation count is not their sum. The graph total additionally includes reified statements, provenance, and \texttt{owl:sameAs}/\texttt{rdfs:seeAlso} links.}
 \label{tab:kg-stats}
 \small
 \begin{tabular}{lr}
@@ -14,14 +16,40 @@ Entities (Person / Collective / Total)
 \quad DBpedia links (Person / Collective / Total)
   & 3,516 / 5,210 / \textbf{8,726} \\
 \midrule
-Relations (Asserted / Inferred / Total)
-%  & 90,145 / 229,323 / \textbf{317,989} \\
-  & 47,450 / 142,737 / \textbf{213,147} \\
+Relations, asserted          & 47,450 \\
+Relations, after inference   & \textbf{188,862} \\
+All triples in the graph     & \textbf{213,147} \\
 Evidence (Desmog / LobbyMap / InfluenceMap / Total)
   & 943 / 964 / 338 / \textbf{2,245} \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+
+% \begin{table}[t]
+% \centering
+% \caption{LACK KG statistics.}
+% \label{tab:kg-stats}
+% \small
+% \begin{tabular}{lr}
+% \toprule
+% \textbf{Dimension} & \textbf{Count} \\
+% \midrule
+% Entities (Person / Collective / Total)
+%   & 10,370 / 17,604 / \textbf{27,945} \\
+% \quad Wikidata links (Person / Collective / Total)
+%   & 2,911 / 5,369 / \textbf{8,280} \\
+% \quad DBpedia links (Person / Collective / Total)
+%   & 3,516 / 5,210 / \textbf{8,726} \\
+% \midrule
+% Relations (Asserted / Inferred / Total)
+% %  & 90,145 / 229,323 / \textbf{317,989} \\
+%   & 47,450 / 142,737 / \textbf{213,147} \\
+% Evidence (Desmog / LobbyMap / InfluenceMap / Total)
+%   & 943 / 964 / 338 / \textbf{2,245} \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
 \section{Details, Availability, and Maintenance}
 \label{sec:resource}
 % PLACEHOLDER: KG statistics table — entity counts by type (Person / Collective)
