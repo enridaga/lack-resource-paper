@@ -1,0 +1,62 @@
+\section{The LACK Resource}
+\label{sec:lack}
+
+\paragraph{Sources.}
+LACK was built from the two most comprehensive English-language databases dedicated to climate-lobbying actors\footnote{Pages accessed in December 2025.}.
+The \textbf{DeSmog Climate Disinformation Database}~\cite{desmog}, maintained by DeSmog (an international investigative journalism organisation founded in 2006 and philanthropically funded), profiles individuals and organisations involved in climate denial, typically covering positions on climate science, affiliations, funding sources, and public statements; we collected all 943 profile pages.
+\textbf{LobbyMap}~\cite{lobbymap}, maintained by InfluenceMap (an independent non-profit think tank founded in 2015), provides analyst-scored, IPCC-benchmarked assessments of corporate and industry-association engagement with climate policy for approximately 1{,}000 companies and 330 associations; we collected the 964 LobbyMap Scores profiles plus 338 further organisations referenced within them (1,302 pages total).
+The two sources are complementary: DeSmog focuses on individuals and think tanks involved in active disinformation, while LobbyMap covers corporations and industry associations engaging with policy; well-known actors appear in both.
+The pages were collected using SPARQL Anything~\cite{daga2021opinionated}, querying DeSmog's HTML and the LobbyMap leaderboard JSON feed.
+
+\paragraph{Ontology.}
+The LACK ontology (Figure~\ref{fig:ontology}) was designed bottom-up from the investigative sources: recurring information types were formalised as twelve competency questions (CQ1--CQ12), which drove the design of both the schema and the extraction process\footnote{\url{https://climatesense-project.eu/lack/ontology.html}}.
+A guiding principle was to represent only what could be reliably and automatically extracted, deliberately excluding relation types (such as fine-grained roles) that could not be produced with sufficient confidence; this also motivated a purpose-built vocabulary, since general-purpose vocabularies such as schema.org~\cite{schemaorg} lack equivalents for lobbying-specific relations and would fragment the graph through intermediary role nodes.
+The ontology defines two top-level classes, \texttt{lack:Person} (an individual) and \texttt{lack:Collective} (any group organised around a shared purpose, deliberately broad to accommodate events, journals, campaigns, and networks alongside organisations).
+Each relation is defined with a domain, range, and inverse, organised in a hierarchy rooted at the symmetric catch-all \texttt{lack:associatedWith}.
+Many relationships are time-bounded, captured through entity-level bounds (\texttt{lack:activeSince}/\texttt{lack:activeUntil}) and relation-level annotations via RDF reification~\cite{rdfprimer}, where each temporally annotated triple is reified as an \texttt{rdf:Statement} carrying \texttt{lack:since}/\texttt{lack:until}; reification was chosen over RDF-star for broad compatibility with current RDF tooling.
+Provenance and source attribution reuse PROV-O~\cite{provo} and Dublin Core Terms~\cite{dcterms}, linking each reified statement to the extraction activity and to the source web page.
+
+\paragraph{Construction.}
+The knowledge graph is produced from the raw extraction outputs by a pipeline implemented entirely as SPARQL queries with SPARQL Anything~\cite{sparqlanything}, reproducible from the source CSVs~\cite{lack-kgc}.
+Relations are first extracted from the source pages by prompting Gemini 2.5 Flash~\cite{gemini25} with the allowed relation types and a strict JSON schema, then linked to authoritative identifiers through a hybrid entity-linking step combining Wikidata candidate retrieval, LLM-based disambiguation, and a web-search fallback, with Llama 3.3 70B~\cite{llama33} used at scale~\cite{lack-re,lack-el}.
+Construction then proceeds in five phases: (i) the 152 distinct surface-form relation types (90,145 instances) are aligned to ontology properties; (ii) stable IRIs are minted per entity by hashing the highest-priority identifier available (Wikidata QID, then Wikipedia, then web page, then surface form), each typed as \texttt{lack:Person} or \texttt{lack:Collective} with a granular subtype and, where available, \texttt{owl:sameAs} links to Wikidata and DBpedia; (iii) each relation is written as a typed triple plus a reified statement carrying evidence and temporal bounds; (iv) PROV-O provenance is attached; and (v) ontology entailments (inverse pairs, sub-property promotions, symmetric closure) are materialised, growing the graph from 47,450 asserted relations to 188,862 triples.
+
+\paragraph{Availability and Maintenance.}
+The LACK ontology and knowledge graph are published as Linked Open Data under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence.
+Version 1.1 was released in April 2026 and is accessible at \url{https://climatesense-project.eu/lack/} as a Turtle dump (\texttt{KG.ttl}), a live SPARQL endpoint powered by QLever\footnote{\url{https://sparql.climatesense.kmi.tools/climatesense}}, and an interactive exploration interface.
+Table~\ref{tab:kg-stats} summarises the key statistics; a full breakdown by property is on the LACK website.
+The ontology is separately available in Turtle and OWL Manchester Syntax under the persistent namespace \url{https://purl.net/climatesense/lack/ns#}, and the dataset is archived on Zenodo at \url{https://doi.org/10.5281/zenodo.19846035} with a VoID/DCAT description.
+The resource is maintained by KMi, rebuilt annually, and guaranteed available for at least five years under funder open data policy.
+\paragraph{Disclaimer.}
+LACK reorganises information from third-party investigative sources; the authors do not endorse or assume responsibility for the original claims, and the relations published surface structural connections rather than allegations against any named party.
+
+\begin{table}[t]
+\centering
+\caption{LACK KG statistics.}
+\label{tab:kg-stats}
+\small
+\begin{tabular}{lr}
+\toprule
+\textbf{Dimension} & \textbf{Count} \\
+\midrule
+Entities (Person / Collective / Total)
+  & 10,370 / 17,604 / \textbf{27,945} \\
+\quad Wikidata links (Person / Collective / Total)
+  & 2,911 / 5,369 / \textbf{8,280} \\
+\quad DBpedia links (Person / Collective / Total)
+  & 3,516 / 5,210 / \textbf{8,726} \\
+\midrule
+Relations (Asserted / Inferred / Total)
+  & 47,450 / 142,737 / \textbf{213,147} \\
+Evidence (Desmog / LobbyMap / InfluenceMap / Total)
+  & 943 / 964 / 338 / \textbf{2,245} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[trim={0 3.5cm 2cm 0cm},clip,width=\textwidth]{figures/lack-ontology-diagram.pdf}
+    \caption{Schema diagram of the LACK ontology.}
+\label{fig:ontology}
+\end{figure}
