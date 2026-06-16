@@ -8,13 +8,14 @@ The \textbf{DeSmog Climate Disinformation Database}~\cite{desmog}, maintained by
 The two sources are complementary: DeSmog focuses on individuals and think tanks involved in active disinformation, while LobbyMap covers corporations and industry associations engaging with policy; well-known actors appear in both.
 The pages were collected using SPARQL Anything~\cite{daga2021opinionated}, querying DeSmog's HTML and the LobbyMap leaderboard JSON feed.
 
+\begin{sloppypar}
 \paragraph{Ontology.}
 The LACK ontology (Figure~\ref{fig:ontology}) was designed bottom-up from the investigative sources: recurring information types were formalised as twelve competency questions (CQ1--CQ12), which drove the design of both the schema and the extraction process\footnote{\url{https://climatesense-project.eu/lack/ontology.html}}.
 A guiding principle was to represent only what could be reliably and automatically extracted, deliberately excluding relation types (such as fine-grained roles) that could not be produced with sufficient confidence; this also motivated a purpose-built vocabulary, since general-purpose vocabularies such as schema.org~\cite{schemaorg} lack equivalents for lobbying-specific relations and would fragment the graph through intermediary role nodes.
 The ontology defines two top-level classes, \texttt{lack:Person} (an individual) and \texttt{lack:Collective} (any group organised around a shared purpose, deliberately broad to accommodate events, journals, campaigns, and networks alongside organisations).
 Each relation is defined with a domain, range, and inverse, organised in a hierarchy rooted at the symmetric catch-all \texttt{lack:associatedWith}.
 Many relationships are time-bounded, captured through entity-level bounds (\texttt{lack:activeSince}/\texttt{lack:activeUntil}) and relation-level annotations via RDF reification~\cite{rdfprimer}, where each temporally annotated triple is reified as an \texttt{rdf:Statement} carrying \texttt{lack:since}/\texttt{lack:until}; reification was chosen over RDF-star for broad compatibility with current RDF tooling.
-Provenance and source attribution reuse PROV-O~\cite{provo} and Dublin Core Terms~\cite{dcterms}, linking each reified statement to the extraction activity and to the source web page.
+Provenance and source attribution reuse PROV-O~\cite{provo} and Dublin Core Terms~\cite{dcterms}, linking each reified statement to the extraction activity and to the source web page.\end{sloppypar}
 
 \paragraph{Construction.}
 The knowledge graph is produced from the raw extraction outputs by a pipeline implemented entirely as SPARQL queries with SPARQL Anything~\cite{sparqlanything}, reproducible from the source CSVs~\cite{lack-kgc}.
