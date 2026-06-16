@@ -39,7 +39,20 @@ Kaunas University of Technology, Kaunas, Lithuania \\ \email{monika.maciuliene@k
 % License: CC BY 4.0
 % DOI: [to be assigned]
 % URL: https://climatesense-project.eu/lack/
+[INDUSTRY PAPER]
+the paper makes a claim to empower ngos cop etc... with knowledge about lobbying
+to do that, we need to look on how we put together knowledhge
+with lack we do this and that
+discussion: for industry to use it what are the pitfalls what are the opportunities and challenges
+- changes in time
+- tracing fundings
+- changes in position
+- long tail issue with entities
+- how everything is western focused
 
+there has been contact with influencemap on how to redistribute
+[evaluation]
+include disagreements ratio
 \begin{abstract}
 Organised lobbying against climate action is extensively documented by investigative platforms such as DeSmog and LobbyMap, yet the information they produce remains fragmented, heterogeneous, and difficult to analyse at scale. We present LACK (Lobbying Agents, Climate, and Knowledge), a knowledge graph of ~28k entities and ~200k typed relations — covering affiliations, funding ties, managers, and partnerships — constructed from over 2k web pages.
 To our knowledge, LACK is the first knowledge graph dedicated to climate lobbying networks, enabling structured, cross-domain querying of agents, funding relationships, and influence strategies at scale.
@@ -58,16 +71,16 @@ We demonstrate its analytical potential through a use case and validate its util
 % \\\textbf{URL:} \url{https://climatesense-project.eu/lack/}
 
 %-----------------------------------------------------------------------
-\todo{Complete anonymisation re. ClimateSense links, references to supplementary material with author names etc...}
-\input{sections/introduction}
-\input{sections/related}
-\input{sections/extraction}
-\input{sections/ontology}
-\input{sections/construction}
-\input{sections/resource}
-\input{sections/usecase}
-\input{sections/evaluation}
-\input{sections/conclusion}
+% \todo{Complete anonymisation re. ClimateSense links, references to supplementary material with author names etc...}
+\input{sections_rp/introduction}
+\input{sections_rp/related}
+\input{sections_rp/extraction}
+\input{sections_rp/ontology}
+\input{sections_rp/construction}
+\input{sections_rp/resource}
+\input{sections_rp/usecase}
+\input{sections_rp/evaluation}
+\input{sections_rp/conclusion}
 
 %-----------------------------------------------------------------------
 
@@ -75,10 +88,10 @@ We demonstrate its analytical potential through a use case and validate its util
 LACK Relation Extraction~\cite{lack-re}, Entity Linking~\cite{lack-el}, and Knowledge Graph Construction~\cite{lack-kgc} are deposited on Zenodo.
 These resources are published under a Creative Commons Attribution Non-Commercial 4.0 International (CC BY NC 4.0) licence.
 
-\clearpage
-\section*{Declaration of use of Generative AI}
+% \clearpage
+% \section*{Declaration of use of Generative AI}
 
-Claude (Anthropic) was utilised to edit sections of this work, refine drafted text, tables, figures, and code (Sonnet 4.6). Gemini (Google) was utilised in the knowledge extraction pipeline as a prompt API with tool use, including URL fetching. Groq was utilised as an API with a LLaMA backend in the entity linking pipeline. %No generative AI tool is listed as an author.
+% Claude (Anthropic) was utilised to edit sections of this work, refine drafted text, tables, figures, and code (Sonnet 4.6). Gemini (Google) was utilised in the knowledge extraction pipeline as a prompt API with tool use, including URL fetching. Groq was utilised as an API with a LLaMA backend in the entity linking pipeline. %No generative AI tool is listed as an author.
 \bibliographystyle{splncs04}
 \bibliography{main}
 
