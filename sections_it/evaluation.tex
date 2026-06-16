@@ -1,0 +1,84 @@
+\section{Demonstration and Evaluation}
+\label{sec:evaluation}
+A resource intended for accountability work must be trustworthy before it can be useful.
+We therefore assess LACK in four steps: the accuracy of its extracted relations and entity links (Section~\ref{sec:eval:quality}), its coverage of the competency questions that drove its design (Section~\ref{sec:eval:coverage}), the analyses it enables through case studies (Section~\ref{sec:eval:cases}), and its perceived value to domain experts (Section~\ref{sec:eval:experts}).
+
+\subsection{Extraction and Linking Quality}
+\label{sec:eval:quality}
+We evaluated relation extraction on a sample of 300 relations drawn from 8 randomly selected DeSmog profile pages.
+Three annotators (the authors) worked in pairs, each covering approximately 100 relations, with disagreements resolved by discussion, assessing each relation for truthfulness (is it supported by the source page?), validity (is the relation type and its domain and range correctly applied?), and temporal correctness\footnote{Full annotation guidelines: \url{https://bit.ly/lack_42bhqzl}.}.
+Truthfulness accuracy is 0.93 (0.99 with partial credit), validity 0.91 (0.95 with partial), and temporal correctness 0.80 (0.91 with partial), where partial credit captures approximately correct extractions.
+Partly correct answers mostly stem from sub-role conflation (e.g.\ \texttt{is president of} used for a vice-president) and from organisation-level relations misapplied to person-organisation pairs; temporal correctness is the weakest dimension, with errors from missing dates and ambiguity between point-in-time and interval information.
+
+Entity linking was evaluated on 225 entities from the same pages, against a curated gold standard\footnote{Gold standard preparation: \url{https://bit.ly/lack_3QQPRsD}.} produced by four annotators with disagreements resolved by discussion.
+Accuracy is high across the primary output fields (Wikidata URI and Wikipedia URL both 0.88, entity subtype 0.86, parent entity 0.94), with balanced precision and recall for the two precisely-definable fields (0.93/0.85 and 0.88/0.88); the weakest field is the canonical web page (0.49 precision), reflecting the difficulty of identifying a single web presence for an entity.
+Of the 27,945 entities, 36.5\% are linked to Wikidata or DBpedia and 63.5\% remain without an external identifier.
+This high NIL rate is a domain characteristic rather than a pipeline failure: the climate-lobbying ecosystem is densely populated with minor think-tank staff, obscure consultants, short-lived coalitions, and regional trade bodies absent from general-purpose knowledge bases.
+By contrast, entities documented by both sources, those prominent enough to appear independently in DeSmog and LobbyMap, are linked at 95.7\% (488 of 510), confirming that the pipeline reliably grounds well-known actors.
+
+\subsection{Coverage of Competency Questions}
+\label{sec:eval:coverage}
+We assess the extent to which the graph answers the competency questions that drove its design.
+For each CQ, Table~\ref{tab:coverage} reports the ontology relation(s) involved, triple counts before and after inferencing, the distinct entities affected, and the resulting coverage ratio (entities affected over 27,974 total; for the temporal CQ10, reified statements carrying \texttt{lack:since}/\texttt{lack:until} over 51,848 total).
+We classify CQs into three tiers using natural breaks in the distribution of coverage ratios: the largest gap (7.5\,pp, between 12.2\% and 4.7\%) separates \textbf{Weak} from the rest, and the next (7.2\,pp, between 22.8\% and 15.6\%) separates \textbf{Strong} from \textbf{Moderate}.
+CQ9 is reported separately, since \texttt{associatedWith} is the top-level relation and its coverage is inflated by inference; CQ1 is degenerate (every entity satisfies it) and reported as N/A.
+Coverage is solid across the core transparency and network-structure questions, with employment, membership, leadership, and statement-level temporal annotation all in the Strong tier.
+The most striking result is network reach (CQ9): after inferencing, 93.5\% of entities are reachable via \texttt{associatedWith}, turning a sparse set of assertions into a near-complete connectivity structure.
+Temporal coverage is partial: statement-level annotation (CQ10) reaches the Strong tier, while entity-level bounds (CQ11) cover only 2.6\% of entities and should be treated as supplementary.
+Founding relations (CQ7) remain sparse, reflecting the difficulty of reliably extracting founding events.
+
+\begin{table}[t]
+\centering
+\caption{Mapping of competency questions to ontology relations, triple counts (before and after inferencing), affected entities, coverage ratio, and tier.}
+\label{tab:coverage}
+\begin{tabular}{p{0.07\textwidth} >{\raggedright}p{0.18\textwidth} >{\raggedright}p{0.18\textwidth} >{\raggedright}p{0.22\textwidth} >{\raggedright}p{0.11\textwidth} >{\raggedright}p{0.08\textwidth} p{0.10\textwidth}}
+\hline
+\textbf{CQ} & \textbf{RQ (summary)} & \textbf{Relation(s)} & \textbf{Triples (before$\to$after)} & \textbf{Entities} & \textbf{(\%)} & \textbf{Tier} \\
+\hline
+CQ1  & Who is involved?           & (entities)                                      & 27,974 $\to$ 27,974   & 27,974 & 100.0 & N/A \\
+CQ2  & How are actors funded?     & \texttt{fundedBy} / \texttt{hasFunder}        & 5,210 $\to$ 10,420    & 3,421  & 12.2  & Moderate \\
+CQ3  & Who are the members?       & \texttt{memberOf} / \texttt{hasMember}        & 13,469 $\to$ 26,912   & 9,718  & 34.7  & Strong \\
+CQ4  & Who leads organisations?   & \texttt{leadsAt} / \texttt{hasLeader}         & 5,639 $\to$ 11,278    & 6,383  & 22.8  & Strong \\
+CQ5  & Employment history?        & \texttt{employedBy} / \texttt{hasEmployee}    & 5,463 $\to$ 21,276    & 10,943 & 39.1  & Strong \\
+CQ6  & Structural connections?    & \texttt{hasPartner}, \texttt{sponsored}       & 5,686 $\to$ 8,013     & 4,365  & 15.6  & Moderate \\
+CQ7  & Who founded a group?       & \texttt{founded} / \texttt{wasFoundedBy}      & 73 $\to$ 146          & 108    & 0.4   & Weak \\
+CQ8  & Derivative organisations?  & \texttt{derivedFrom} / \texttt{hasDerivation} & 1,922 $\to$ 2,883     & 1,310  & 4.7   & Weak \\
+CQ9  & Network reach?             & \texttt{associatedWith}                       & 3,216 $\to$ 91,219    & 26,169 & 93.5  & (Strong) \\
+CQ10 & Networks change over time? & \texttt{since} / \texttt{until} (reif.)       & 14,361 $\to$ 14,361   & ---    & 27.7  & Strong \\
+CQ11 & When were actors active?   & \texttt{activeSince} / \texttt{activeUntil}   & 836 $\to$ 836         & 734    & 2.6   & Weak \\
+\hline
+\end{tabular}
+\vspace{-0.5cm}
+\end{table}
+
+\subsection{Case Studies}
+\label{sec:eval:cases}
+\begin{sloppypar}
+\paragraph{Integrating independent sources.}
+LACK's central value is making visible connections that no single source exposes.
+Each of the following examples joins two statements, drawn from different sources, that share a bridge entity; the connections are structural, derived from public data, and presented as research leads rather than allegations\footnote{The connections are structural and do not imply wrongdoing, shared intent, or direct collaboration.}.
+In the first, InfluenceMap records Darren Woods leading Exxon (\texttt{lack:leadsAt}) while DeSmog records Exxon sponsoring the Heartland Institute (\texttt{lack:sponsored}), a think tank associated with climate science denial; joining the two relations in a single SPARQL query links a named corporate officer to a denial organisation through his employer.
+In the second, DeSmog records a partnership between Cambridge Analytica and BP (\texttt{lack:hasPartner}) while InfluenceMap records BP's membership of the Business Council of Australia (\texttt{lack:memberOf}); the two facts originate in different investigative contexts and share only BP, yet LACK surfaces a cross-domain, cross-jurisdictional connection invisible to either source alone.
+\end{sloppypar}
+
+\begin{sloppypar}
+\paragraph{Cross-referencing with COP30.}
+Pairing LACK with an external source of named climate-policy agents enables a further family of analyses.
+We cross-referenced LACK's 1,000 most heavily-described \texttt{lack:Collective} entities with the COP30 participant list via heuristic label matching.
+Of 944 distinct delegate matches, roughly 70\% flow through observer accreditation channels, 18\% appear in high-income national delegations, and only 43 in lower- or low-income country delegations.
+Within the most densely connected entities, the US climate countermovement (Heartland, Cato, ALEC, Heritage, Manhattan Institute) is almost entirely absent from COP30, with only three (US Chamber of Commerce, Shell, ExxonMobil) present at all.
+The cross-reference surfaces two findings invisible to either resource alone: the US climate countermovement does not engage with the UNFCCC track, and observer accreditation, rather than national delegation, is the dominant channel through which LACK-tracked organisations participate in COP.
+\end{sloppypar}
+
+\subsection{Expert Evaluation}
+\label{sec:eval:experts}
+A 14-question online questionnaire was distributed via purposive sampling to researchers, fact-checkers, investigative journalists, NGO professionals, and policy analysts working on climate lobbying networks, across 25 organisational groups spanning academic networks, fact-checking organisations, investigative outlets, NGOs, and international bodies.
+Of 68 invitations, 9 were completed (13.2\%); while small, the sample spans the primary user communities, and the consistency of responses across professional backgrounds lends confidence to the findings.
+Respondents unanimously rated both the overall value of such a resource and the ability to search across multiple sources at M=4.62 on a 5-point scale, directly validating LACK's integration approach.
+
+On priority relation types, funding flows received the highest mean rating (M=4.75), followed by employment (M=4.50), and membership, sponsorship, and founding (each M=4.38).
+Cross-referencing with Table~\ref{tab:coverage}, employment (CQ5) and membership (CQ3) fall in the Strong tier, well-matched to expert demand; funding (CQ2), the top-rated category, is only Moderate (12.2\%), consistent with respondents' own remarks on how hard funding information is to obtain.
+Leadership (CQ4, M=4.25) is similarly well served (Strong, 22.8\%), while founding relations (CQ7) are the most significant mismatch (Weak), identifying founding data as a priority for enrichment.
+Temporal information was rated M=3.88 and flagged by half the respondents as one of the hardest dimensions to find, consistent with the partial temporal coverage reported above.
+Several respondents identified gaps outside LACK's current scope, notably direct connections to the political sphere and a need to distinguish intermediary actor types (lobby consultancies, law firms, PR agencies), and recommended integrating further sources such as the EU Transparency Register, LobbyFacts, SourceWatch, and OpenSecrets.
+We return to these gaps, and to the broader challenges they raise, in Section~\ref{sec:discussion}.
