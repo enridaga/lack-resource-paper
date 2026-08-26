@@ -1,0 +1,54 @@
+This is BibTeX, Version 0.99e (TeX Live 2026/Homebrew)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main_it.aux
+The style file: splncs04.bst
+Database file #1: main.bib
+Warning--entry type for "lack-el" isn't style-file defined
+--line 28 of file main.bib
+Warning--entry type for "lack" isn't style-file defined
+--line 157 of file main.bib
+Warning--entry type for "lack-kgc" isn't style-file defined
+--line 174 of file main.bib
+Warning--empty journal in gemini25
+You've used 35 entries,
+            2850 wiz_defined-function locations,
+            801 strings with 11674 characters,
+and the built_in function-call counts, 18586 in all, are:
+= -- 1486
+> -- 625
+< -- 28
++ -- 265
+- -- 222
+* -- 1175
+:= -- 2404
+add.period$ -- 52
+call.type$ -- 35
+change.case$ -- 238
+chr.to.int$ -- 0
+cite$ -- 36
+duplicate$ -- 1655
+empty$ -- 1680
+format.name$ -- 247
+if$ -- 4013
+int.to.chr$ -- 0
+int.to.str$ -- 35
+missing$ -- 346
+newline$ -- 111
+num.names$ -- 70
+pop$ -- 691
+preamble$ -- 1
+purify$ -- 177
+quote$ -- 0
+skip$ -- 458
+stack$ -- 0
+substring$ -- 907
+swap$ -- 901
+text.length$ -- 28
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 138
+warning$ -- 1
+while$ -- 149
+width$ -- 37
+write$ -- 375
+(There were 4 warnings)

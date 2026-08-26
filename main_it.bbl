@@ -1,0 +1,183 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{alexander2023manifesto}
+Alexander, R.J., Bartocci, M., Persico, O., Vetere, G.: Harnessing `{Il
+  Manifesto}' newspaper archive for knowledge base creation: Techniques and
+  findings in the `{MeMa}' project. In: Proceedings of the 9th Italian
+  Conference on Computational Linguistics ({CLiC-it} 2023). pp. 28--35. CEUR
+  Workshop Proceedings (2023), \url{https://aclanthology.org/2023.clicit-1.5/}
+
+\bibitem{asprino2023knowledge}
+Asprino, L., Daga, E., Gangemi, A., Mulholland, P.: Knowledge graph
+  construction with a fa{\c{c}}ade: A unified method to access heterogeneous
+  data sources on the web. ACM Transactions on Internet Technology
+  \textbf{23}(1),  1--31 (2023)
+
+\bibitem{ayoola2022refined}
+Ayoola, T., Tyagi, S., Fisher, J., Christodoulopoulos, C., Pierleoni, A.:
+  {ReFinED}: An efficient zero-shot-capable approach to end-to-end entity
+  linking. In: Proceedings of the 2022 Conference of the North American Chapter
+  of the Association for Computational Linguistics: Human Language
+  Technologies: Industry Track. pp. 209--220. Association for Computational
+  Linguistics (2022), \url{https://aclanthology.org/2022.naacl-industry.24/}
+
+\bibitem{baehr2026climate}
+Baehr, C., Bare, F., Heddesheimer, V.: Climate exposure drives firm political
+  behavior: Evidence from earnings calls and lobbying data. American Journal of
+  Political Science  (2026). \doi{10.1111/ajps.70062}, early View
+
+\bibitem{beelen2017digitization}
+Beelen, K., Thijm, T.A., Cochrane, C., Halvemaan, K., Hirst, G., Kimmins, M.,
+  Lijbrink, S., Marx, M., Naderi, N., Rheault, L., et~al.: Digitization of the
+  canadian parliamentary debates. Canadian Journal of Political Science/Revue
+  canadienne de science politique  \textbf{50}(3),  849--864 (2017)
+
+\bibitem{berven2020kg}
+Berven, A., Christensen, O.A., Moldeklev, S., Opdahl, A.L., Villanger, K.J.: A
+  knowledge-graph platform for newsrooms. Computers in Industry  \textbf{123},
+  103321 (2020). \doi{10.1016/j.compind.2020.103321}
+
+\bibitem{burel2025climafactskg}
+Burel, G., Alani, H.: Climafactskg: Towards an interlinked knowledge graph of
+  scientific evidence to fight climate misinformation. In: CEUR Workshop
+  Proceedings. vol.~4065, pp. 134--140 (2025)
+
+\bibitem{burel2024cimplekg}
+Burel, G., Mensio, M., Peskine, Y., Troncy, R., Papotti, P., Alani, H.:
+  Cimplekg: A continuously updated knowledge graph on misinformation, factors
+  and fact-checks. In: International Semantic Web Conference. pp. 97--114.
+  Springer (2024)
+
+\bibitem{christophides2020er}
+Christophides, V., Efthymiou, V., Palpanas, T., Papadakis, G., Stefanidis, K.:
+  An overview of end-to-end entity resolution for big data. ACM Computing
+  Surveys  \textbf{53}(6),  127:1--127:42 (2020). \doi{10.1145/3418896}
+
+\bibitem{climatesense}
+{ClimateSense Project}: {ClimateSense}: Climate misinformation surveillance and
+  analysis with multidimensional {GIS}. \url{https://climatesense-project.eu/}
+  (2025), accessed: 2026-04-09
+
+\bibitem{gemini25}
+Comanici, G., Bieber, E., Schaekermann, M., et~al.: Gemini 2.5: Pushing the
+  frontier with advanced reasoning, multimodality, long context, and next
+  generation agentic capabilities  (2025),
+  \url{https://arxiv.org/abs/2507.06261}
+
+\bibitem{lack}
+Daga, E.: enridaga/lack-zenodo-deposit: v1.1 (Apr 2026).
+  \doi{10.5281/zenodo.19847768}, \url{https://doi.org/10.5281/zenodo.19847768}
+
+\bibitem{lack-el}
+Daga, E.: Lack entity linking (enridaga/lack-el: v1.0) (2026).
+  \doi{10.5281/zenodo.20035041}
+
+\bibitem{lack-kgc}
+Daga, E.: {LACK Knowledge Graph Construction} (2026).
+  \doi{10.5281/zenodo.19861384}
+
+\bibitem{lack-re}
+Daga, E.: Lack relation extraction notebooks — supplementary material (2026).
+  \doi{10.5281/zenodo.20036778}
+
+\bibitem{daga2021opinionated}
+Daga, E., Asprino, L., Mulholland, P., Gangemi, A.: An opinionated approach to
+  sparql anything. In: Further with Knowledge Graphs: Proceedings of the 17th
+  International Conference on Semantic Systems, 6-9 September 2021, Amsterdam,
+  The Netherlands. vol.~53, p.~58. SAGE Publications Limited (2021)
+
+\bibitem{desmog}
+{DeSmog}: Climate disinformation database.
+  \url{https://www.desmog.com/climate-disinformation-database/} (2025),
+  accessed: December 2025
+
+\bibitem{dcterms}
+{Dublin Core Metadata Initiative}: {DCMI} metadata terms. Dcmi recommendation,
+  Dublin Core Metadata Initiative (2020),
+  \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}
+
+\bibitem{gallofre2022jkp}
+Gallofr{\'e}~Oca{\~n}a, M., Opdahl, A.L.: Supporting newsrooms with
+  journalistic knowledge graph platforms: Current state and future directions.
+  Technologies  \textbf{10}(3), ~68 (2022). \doi{10.3390/technologies10030068}
+
+\bibitem{graciotti2025lost}
+Graciotti, A., Lazzari, N., Daga, E., Presutti, V.: Lost and found: Enriching
+  knowledge graphs with “nil” persons from historical documents. Semantic
+  Web  (2026), to appear
+
+\bibitem{llama33}
+Grattafiori, A., et~al.: The {Llama} 3 herd of models. arXiv preprint
+  arXiv:2407.21783  (2024), \url{https://arxiv.org/abs/2407.21783}
+
+\bibitem{lobbymap}
+{InfluenceMap}: {LobbyMap Scores}. \url{https://lobbymap.org/LobbyMapScores}
+  (2025), accessed: December 2025
+
+\bibitem{uclclimatelobbying}
+Jordan, N., Coen, D.: {AI-Powered Climate Lobbying Database}: Automating text
+  extraction, network graphs, and policy position analysis. {UCL} Grand
+  Challenges, Climate Crisis Pump Priming Grant (2025),
+  \url{https://www.ucl.ac.uk/grand-challenges/case-studies/2025/jun/ai-powered-climate-lobbying-database},
+  accessed April 2026
+
+\bibitem{provo}
+Lebo, T., Sahoo, S., McGuinness, D., et~al.: {PROV-O}: The {PROV} ontology. W3c
+  recommendation, W3C (2013), \url{https://www.w3.org/TR/prov-o/}
+
+\bibitem{meng2019social}
+Meng, K.C., Rode, A.: The social cost of lobbying over climate policy. Nature
+  Climate Change  \textbf{9}(6),  472--476 (2019).
+  \doi{10.1038/s41558-019-0489-6}
+
+\bibitem{motta2025epistemology}
+Motta, E., Daga, E., Gangemi, A., Gjelsvik, M.L., Osborne, F., Salatino, A.:
+  The epistemology of fine-grained news classification. Semantic Web
+  \textbf{16}(3),  1--26 (2025). \doi{10.1177/22104968251344461}
+
+\bibitem{opdahl2022semantic}
+Opdahl, A.L., Al-Moslmi, T., Dang-Nguyen, D.T., Gallofr{\'e}~Oca{\~n}a, M.,
+  Tessem, B., Veres, C.: Semantic knowledge graphs for the news: A review. ACM
+  Computing Surveys  \textbf{55}(7),  1--38 (2022)
+
+\bibitem{oreskes2011merchants}
+Oreskes, N., Conway, E.M.: Merchants of doubt: How a handful of scientists
+  obscured the truth on issues from tobacco smoke to global warming. Bloomsbury
+  Publishing USA (2011)
+
+\bibitem{peeters2025llmem}
+Peeters, R., Steiner, A., Bizer, C.: Entity matching using large language
+  models. In: Proceedings of the 28th International Conference on Extending
+  Database Technology ({EDBT}) (2025). \doi{10.48786/edbt.2025.42}
+
+\bibitem{schemaorg}
+{Schema.org Community Group}: Schema.org. \url{https://schema.org/} (2011)
+
+\bibitem{rdfprimer}
+Schreiber, G., Raimond, Y.: {RDF} 1.1 primer. W3c note, W3C (2014),
+  \url{https://www.w3.org/TR/rdf11-primer/}
+
+\bibitem{sevgili2022neural}
+Sevgili, {\"O}., Shelmanov, A., Arkhipov, M., Panchenko, A., Biemann, C.:
+  Neural entity linking: A survey of models based on deep learning. Semantic
+  Web  \textbf{13}(3),  527--570 (2022). \doi{10.3233/SW-222986}
+
+\bibitem{skepticalscience}
+{Skeptical Science}: Skeptical science: Climate misinformation by source.
+  \url{https://skepticalscience.com/skepticquotes.php} (2025), accessed: April
+  2026
+
+\bibitem{suarez2011neon}
+Su{\'a}rez-Figueroa, M.C., G{\'o}mez-P{\'e}rez, A., Fern{\'a}ndez-L{\'o}pez,
+  M.: The neon methodology for ontology engineering. In: Ontology engineering
+  in a networked world, pp. 9--34. Springer (2011)
+
+\bibitem{van2016debates}
+Van~Aggelen, A., Hollink, L., Kemman, M., Kleppe, M., Beunders, H.: The debates
+  of the european parliament as linked open data. Semantic Web  \textbf{8}(2),
+  271--281 (2016)
+
+\end{thebibliography}
