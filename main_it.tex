@@ -11,6 +11,7 @@
 \usepackage[inline]{enumitem}
 \usepackage{tikz}\usetikzlibrary{positioning}
 \usepackage{xcolor}
+\usepackage{marvosym}
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
 
 \renewcommand\UrlFont{\color{blue}\rmfamily}
@@ -19,11 +20,11 @@
 \begin{document}
 
 \title{From Fragmented Records to Actionable Intelligence: LACK, a Knowledge Graph for Climate Accountability Practitioners}
-
-\author{Enrico Daga\inst{1} \and
+\titlerunning{LACK: A Knowledge Graph for Climate Accountability}
+\author{Enrico Daga\inst{1}\textsuperscript{(\Letter)} \and
 Monika Mačiulienė\inst{2} \and
 Gregoire Burel\inst{1} \and
-Jason Carvalho\inst{1} \and
+Jason Carvalho\inst{1} \and\\
 Arianna Graciotti\inst{3} \and
 Harith Alani\inst{1} }
 
@@ -55,45 +56,22 @@ Kaunas University of Technology, Kaunas, Lithuania \\ \email{monika.maciuliene@k
 % [evaluation]
 % include disagreements ratio
 \begin{abstract}
-Climate accountability work, carried out by investigative journalists, NGOs, and watchdog organisations, depends on knowing who lobbies against climate action and how these actors are connected. This evidence is documented in depth by platforms such as DeSmog and LobbyMap, but remains fragmented, heterogeneous, and hard to analyse at scale. We present LACK (Lobbying Agents, Climate, and Knowledge), a knowledge graph of $\sim$28k entities and $\sim$200k typed relations built from over 2k web pages, and, to our knowledge, the first dedicated to climate lobbying networks. By making these relationships queryable, LACK supports the tasks practitioners actually perform: tracing funding flows, tracking how actors' positions shift over time, and mapping influence networks across organisations. We demonstrate LACK through case studies, validate it with domain experts, and discuss the opportunities and challenges of building such resources automatically in this domain.
+Climate accountability work, carried out by investigative journalists, NGOs, and watchdog organisations, depends on knowing who lobbies against climate action and how these actors are connected.
+This evidence is documented in depth by platforms such as DeSmog and LobbyMap, but remains fragmented, heterogeneous, and hard to analyse at scale.
+We present LACK (Lobbying Agents, Climate, and Knowledge), to our knowledge the first openly published knowledge graph of climate lobbying networks: $\sim$28k entities and $\sim$47k asserted relations ($\sim$189k after inference), built from over 2k web pages.
+By making these relationships queryable, LACK is designed to support the tasks practitioners perform: tracing funding flows, tracking how actors' positions shift over time, and mapping influence networks across organisations.
+We demonstrate LACK through case studies, report how domain experts assess its value, and discuss the opportunities and challenges of building such resources automatically in this domain.
 \end{abstract}
-% \begin{abstract}
-% Climate accountability work, carried out by investigative journalists, NGOs, and watchdog organisations, depends on understanding who lobbies against climate action and how these actors are connected. 
-% While the evidence exists, documented in depth by platforms such as DeSmog and LobbyMap, it remains fragmented across sources, heterogeneous in form, and difficult to analyse at scale. 
-% We present LACK (Lobbying Agents, Climate, and Knowledge), a knowledge graph of $\sim$28k entities and $\sim$200k typed relations (covering affiliations, funding ties, managers, and partnerships), built from over 2k web pages and, to our knowledge, the first knowledge graph dedicated to climate lobbying networks. 
-% By making these relationships queryable, LACK supports the tasks practitioners actually perform: tracing funding flows, tracking how actors' positions shift over time, and mapping influence networks across organisations, turning fragmented records into actionable intelligence. 
-% We demonstrate LACK through a set of case studies and validate its utility with domain experts from the investigative journalism and climate accountability sector.
-% Beyond the resource itself, we discuss the opportunities and challenges of building large knowledge bases automatically in this domain, drawing on our engagement with practitioners in the sector.
-% % \keywords{Knowledge Graph \and Climate Lobbying \and Linked Data \and FAIR Data}
-% \end{abstract}
-
-
-% Resource links (required by submission format)
-% \noindent\textbf{Resource type:} Knowledge Graph\\
-% \textbf{License:} Creative Commons Attribution No-Commercial 4.0 International (CC BY NC 4.0)\footnote{
-% \url{https://creativecommons.org/licenses/by-nc/4.0/}}\\
-% \textbf{DOI: 10.5281/zenodo.19846036}\\
-% \textbf{Namespace:} \url{https://purl.net/climatesense/lack/ns#}
-% \\\textbf{URL:} \url{https://climatesense-project.eu/lack/}
 
 %-----------------------------------------------------------------------
-% \todo{Complete anonymisation re. ClimateSense links, references to supplementary material with author names etc...}
 \input{sections_it/introduction}
 \input{sections_it/related}
 \input{sections_it/lack}
 \input{sections_it/evaluation}
 \input{sections_it/discussion}
-
+\vspace{-0.5cm}
 %-----------------------------------------------------------------------
 
-% \paragraph{Supplemental Material.}
-% LACK Relation Extraction~\cite{lack-re}, Entity Linking~\cite{lack-el}, and Knowledge Graph Construction~\cite{lack-kgc} are deposited on Zenodo.
-% These resources are published under a Creative Commons Attribution Non-Commercial 4.0 International (CC BY NC 4.0) licence.
-
-% \clearpage
-% \section*{Declaration of use of Generative AI}
-
-% Claude (Anthropic) was utilised to edit sections of this work, refine drafted text, tables, figures, and code (Sonnet 4.6). Gemini (Google) was utilised in the knowledge extraction pipeline as a prompt API with tool use, including URL fetching. Groq was utilised as an API with a LLaMA backend in the entity linking pipeline. %No generative AI tool is listed as an author.
 \bibliographystyle{splncs04}
 \bibliography{main}
 
