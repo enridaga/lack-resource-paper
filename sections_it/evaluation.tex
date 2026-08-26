@@ -1,12 +1,12 @@
-\section{Demonstration and Evaluation}
+\vspace{-0.3cm}\section{Demonstration and Evaluation}
 \label{sec:evaluation}
 %A resource intended for accountability work must be trustworthy before it can be useful.
-We assess the quality and coverage of LACK, demonstrate the analyses it enables through case studies, and report its perceived value to domain experts.
+%We assess the quality and coverage of LACK, demonstrate the analyses it enables through case studies, and report its perceived value to domain experts.
 
-\subsection{Resource Quality and Coverage}
+\vspace{-0.3cm}\subsection{Resource Quality and Coverage}\vspace{-0.2cm}
 \label{sec:eval:quality}
 % We evaluated relation extraction on a sample of 300 relations drawn from 8 randomly selected DeSmog profile pages, with three annotators (the authors) working in pairs and disagreements resolved by discussion, assessing each relation for truthfulness (is it supported by the source page?), validity (is the relation type and its domain and range correctly applied?), and temporal correctness\footnote{Full annotation guidelines: \url{https://bit.ly/lack_42bhqzl}.}.
-We evaluated relation extraction on a sample of 300 relations drawn from 8 randomly selected DeSmog profile pages, with three annotators (the authors) working in pairs and disagreements resolved by discussion, assessing each relation for truthfulness, validity, and temporal correctness\footnote{Full annotation guidelines: \url{https://bit.ly/lack_42bhqzl}.}.
+We evaluated relation extraction on a sample of 300 relations drawn from 8 randomly selected DeSmog profile pages, with three annotators working in pairs and disagreements resolved by discussion, assessing each relation for truthfulness, validity, and temporal correctness\footnote{Full annotation guidelines: \url{https://bit.ly/lack_42bhqzl}.}.
 Truthfulness accuracy is 0.93 (0.99 with partial credit), validity 0.91 (0.95 with partial), and temporal correctness 0.80 (0.91 with partial), where partial credit captures approximately correct extractions; temporal correctness is the weakest dimension, with errors from missing dates and ambiguity between point-in-time and interval information.
 Entity linking, evaluated on 225 entities against a curated gold standard\footnote{Gold standard preparation: \url{https://bit.ly/lack_3QQPRsD}.}, is accurate across the primary output fields (Wikidata URI and Wikipedia URL both 0.88, parent entity 0.94). %, with the canonical web page the weakest (0.49 precision), reflecting the difficulty of identifying a single web presence for an entity.
 Of the 27,945 entities, 36.5\% are linked to Wikidata or DBpedia; the high NIL rate is a domain characteristic rather than a pipeline failure, since the climate-lobbying ecosystem is densely populated with minor think-tank staff, obscure consultants, short-lived coalitions, and regional trade bodies absent from general-purpose knowledge bases.
@@ -17,31 +17,33 @@ Coverage is solid across the core transparency and network-structure questions: 
 The most striking result is network reach: after inferencing, 93.5\% of entities are reachable via \texttt{lack:associatedWith}, turning a sparse set of assertions into a near-complete connectivity structure.
 Temporal coverage is partial, with statement-level annotation reaching the Strong tier but entity-level activity bounds covering only 2.6\% of entities.
 
-\subsection{Case Studies}
+\vspace{-0.3cm}\subsection{Case Studies}\vspace{-0.2cm}
 \label{sec:eval:cases}
 \begin{sloppypar}
-\paragraph{Integrating independent sources.}
+\paragraph{Integrating the sources.}
 LACK's central value is making visible connections that no single source exposes.
-Each of the following examples joins two statements, drawn from different sources, that share a bridge entity; the connections are structural, derived from public data, and presented as research leads rather than allegations\footnote{The connections are structural and do not imply wrongdoing, shared intent, or direct collaboration.}.
-In the first, InfluenceMap records Darren Woods leading Exxon (\texttt{lack:leadsAt}) while DeSmog records Exxon sponsoring the Heartland Institute (\texttt{lack:sponsored}), a think tank associated with climate science denial; joining the two relations in a single SPARQL query links a named corporate officer to a denial organisation through his employer.
-In the second, DeSmog records a partnership between Cambridge Analytica and BP (\texttt{lack:hasPartner}) while InfluenceMap records BP's membership of the Business Council of Australia (\texttt{lack:memberOf}); the two facts originate in different investigative contexts and share only BP, yet LACK surfaces a cross-domain, cross-jurisdictional connection invisible to either source alone.
+% Two examples joins two statements, drawn from different sources, that share a bridge entity; the connections are structural, derived from public data, and presented as research leads rather than allegations.
+For example, InfluenceMap records Darren Woods leading Exxon (\texttt{lack:leadsAt}) while DeSmog records Exxon sponsoring the Heartland Institute (\texttt{lack:sponsored}), a think tank associated with climate science denial; joining the two relations in a single SPARQL query links a named corporate officer to a denial organisation through his employer.
+In another example, DeSmog records a partnership between Cambridge Analytica and BP (\texttt{lack:hasPartner}) while InfluenceMap records BP's membership of the Business Council of Australia (\texttt{lack:memberOf}); the two facts originate in different investigative contexts and share only BP, yet LACK surfaces a cross-domain, cross-jurisdictional connection invisible to either source alone.
+LACK includes 27{,}757 of such cross-source two-hops paths.
 \end{sloppypar}
 
-\begin{sloppypar}
+\begin{sloppypar}\vspace{-0.3cm}
 \paragraph{Cross-referencing with COP30.}
-Pairing LACK with an external source of named climate-policy agents enables a further family of analyses.
+Pairing LACK with an external source of named climate-policy agents enables further analyses.
 We cross-referenced LACK's 1,000 most heavily-described \texttt{lack:Collective} entities with the COP30 participant list via heuristic label matching.
 Of 944 distinct delegate matches, roughly 70\% flow through observer accreditation channels, 18\% appear in high-income national delegations, and only 43 in lower- or low-income country delegations.
-Within the most densely connected entities, the US climate countermovement (Heartland, Cato, ALEC, Heritage, Manhattan Institute) is almost entirely absent from COP30, with only three (US Chamber of Commerce, Shell, ExxonMobil) present at all.
-The cross-reference surfaces two findings invisible to either resource alone: the US climate countermovement does not engage with the UNFCCC track, and observer accreditation, rather than national delegation, is the dominant channel through which LACK-tracked organisations participate in COP.
+Within the most densely connected entities, the US climate countermovement (Heartland, Cato, ALEC, Heritage, Manhattan Institute) is almost absent from COP30, with only three (US Chamber of Commerce, Shell, ExxonMobil) present at all.
+The cross-reference surfaces two findings invisible to either resource alone: the US climate countermovement does not engage with the UNFCCC track, and observer accreditation, rather than national delegation, is the dominant channel through which LACK-tracked collectives participate in COP.
 \end{sloppypar}
 
-\subsection{Expert Evaluation}
+\vspace{-0.3cm}\subsection{Expert Evaluation}\vspace{-0.2cm}
 \label{sec:eval:experts}
 A 14-question online questionnaire was distributed via purposive sampling to researchers, fact-checkers, investigative journalists, NGO professionals, and policy analysts working on climate lobbying networks, across 25 organisational groups spanning academic networks, fact-checking organisations, investigative outlets, NGOs, and international bodies.
-Of 68 invitations, 9 were completed (13.2\%); while small, the sample spans the primary user communities, and the consistency of responses across professional backgrounds lends confidence to the findings.
-Respondents unanimously rated both the overall value of such a resource and the ability to search across multiple sources at M=4.62 on a 5-point scale, directly validating LACK's integration approach.
-On priority relation types, funding flows received the highest mean rating (M=4.75), followed by employment (M=4.50), and membership, sponsorship, and founding (each M=4.38).
+Nine domain experts where involved in the evaluation: three researchers, alongside a fact-checker, a policy analyst, an educator, and an NGO professional, with one respondent spanning researcher, journalist, and NGO roles.
+Five of them work with climate lobbying information daily or weekly, so these are active practitioners, and while the sample is small, it spans the primary user communities, with responses consistent across professional backgrounds.
+Respondents unanimously rated both the overall value of such a resource and the ability to search across multiple sources at 4.62 on a 5-point scale, directly validating LACK's integration approach.
+On priority relation types, funding flows received the highest mean rating (4.75), followed by employment (4.50), and membership, sponsorship, and founding (each 4.38).
 These priorities track our coverage closely: employment and membership are both well served, whereas funding, the top-rated category, is only moderately covered, consistent with respondents' own remarks on how hard funding information is to obtain.
 Temporal information was rated M=3.88 and flagged by half the respondents as one of the hardest dimensions to find, consistent with the partial temporal coverage reported above.
 Several respondents identified gaps outside LACK's current scope, notably direct connections to the political sphere and a need to distinguish intermediary actor types (lobby consultancies, law firms, PR agencies), and recommended integrating further sources such as the EU Transparency Register, LobbyFacts, SourceWatch, and OpenSecrets.
