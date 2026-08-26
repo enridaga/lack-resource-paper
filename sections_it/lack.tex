@@ -1,3 +1,10 @@
+\begin{figure}[t]
+    \centering
+    \includegraphics[trim={0 3.5cm 2cm 0cm},clip,width=\textwidth]{figures/lack-ontology-diagram.pdf}
+    \vspace{-0.3cm}\caption{Schema diagram of the LACK ontology.}
+\label{fig:ontology}\vspace{-0.3cm}
+\end{figure}
+
 \section{The LACK Resource}
 \label{sec:lack}
 
@@ -11,14 +18,14 @@ The pages were collected using SPARQL Anything~\cite{daga2021opinionated}, query
 \begin{sloppypar}
 \paragraph{Ontology.}
 The LACK ontology (Figure~\ref{fig:ontology}) was designed bottom-up from the investigative sources: recurring information types were formalised as twelve competency questions (CQ1--CQ12), which drove the design of both the schema and the extraction process\footnote{\url{https://climatesense-project.eu/lack/ontology.html}}.
-A guiding principle was to represent only what could be reliably and automatically extracted, deliberately excluding relation types (such as fine-grained roles) that could not be produced with sufficient confidence; this also motivated a purpose-built vocabulary, since general-purpose vocabularies such as schema.org~\cite{schemaorg} lack equivalents for lobbying-specific relations and would fragment the graph through intermediary role nodes.
+A guiding principle was to represent only what could be reliably and automatically extracted, deliberately excluding relation types (such as fine-grained roles) that could not be produced with sufficient confidence; this also motivated a purpose-built vocabulary, since general-purpose vocabularies such as Schema.org\footnote{\url{http://schema.org}} lack equivalents for lobbying-specific relations and would fragment the graph through intermediary role nodes.
 The ontology defines two top-level classes, \texttt{lack:Person} (an individual) and \texttt{lack:Collective} (any group organised around a shared purpose, deliberately broad to accommodate events, journals, campaigns, and networks alongside organisations).
 Each relation is defined with a domain, range, and inverse, organised in a hierarchy rooted at the symmetric catch-all \texttt{lack:associatedWith}.
 Many relationships are time-bounded, captured through entity-level bounds (\texttt{lack:activeSince}/\texttt{lack:activeUntil}) and relation-level annotations via RDF reification~\cite{rdfprimer}, where each temporally annotated triple is reified as an \texttt{rdf:Statement} carrying \texttt{lack:since}/\texttt{lack:until}; reification was chosen over RDF-star for broad compatibility with current RDF tooling.
 Provenance and source attribution reuse PROV-O~\cite{provo} and Dublin Core Terms~\cite{dcterms}, linking each reified statement to the extraction activity and to the source web page.\end{sloppypar}
 
 \paragraph{Construction.}
-The knowledge graph is produced from the raw extraction outputs by a pipeline implemented entirely as SPARQL queries with SPARQL Anything~\cite{sparqlanything}, reproducible from the source CSVs~\cite{lack-kgc}.
+The knowledge graph is produced from the raw extraction outputs by a pipeline implemented with SPARQL Anything~\cite{asprino2023knowledge}, reproducible from the source CSVs~\cite{lack-kgc}.
 Relations are first extracted from the source pages by prompting Gemini 2.5 Flash~\cite{gemini25} with the allowed relation types and a strict JSON schema, then linked to authoritative identifiers through a hybrid entity-linking step combining Wikidata candidate retrieval, LLM-based disambiguation, and a web-search fallback, with Llama 3.3 70B~\cite{llama33} used at scale~\cite{lack-re,lack-el}.
 Construction then proceeds in five phases: (i) the 152 distinct surface-form relation types (90,145 instances) are aligned to ontology properties; (ii) stable IRIs are minted per entity by hashing the highest-priority identifier available (Wikidata QID, then Wikipedia, then web page, then surface form with source URL), each typed as \texttt{lack:Person} or \texttt{lack:Collective} with a granular subtype and, where available, \texttt{owl:sameAs} links to Wikidata and DBpedia; (iii) each relation is written as a typed triple plus a reified statement carrying evidence and temporal bounds; (iv) PROV-O provenance is attached; and (v) ontology entailments (inverse pairs, sub-property promotions, symmetric closure) are materialised, growing the graph from 47,450 asserted relations to 188,862 triples.
 
@@ -81,10 +88,3 @@ Evidence (Desmog / LobbyMap / InfluenceMap / Total)
 % \bottomrule
 % \end{tabular}
 % \end{table}
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[trim={0 3.5cm 2cm 0cm},clip,width=\textwidth]{figures/lack-ontology-diagram.pdf}
-    \vspace{-0.3cm}\caption{Schema diagram of the LACK ontology.}
-\label{fig:ontology}\vspace{-0.3cm}
-\end{figure}
