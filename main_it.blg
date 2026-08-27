@@ -6,13 +6,13 @@ Database file #1: main.bib
 Warning--entry type for "lack-el" isn't style-file defined
 --line 28 of file main.bib
 Warning--entry type for "lack" isn't style-file defined
---line 157 of file main.bib
+--line 158 of file main.bib
 Warning--entry type for "lack-kgc" isn't style-file defined
---line 174 of file main.bib
+--line 175 of file main.bib
 Warning--empty journal in gemini25
 You've used 35 entries,
             2850 wiz_defined-function locations,
-            801 strings with 11674 characters,
+            801 strings with 11505 characters,
 and the built_in function-call counts, 18586 in all, are:
 = -- 1486
 > -- 625
